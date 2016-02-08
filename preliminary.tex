@@ -1,5 +1,5 @@
 Let us consider the following optimization problem:
-\begin{subequations} 
+\begin{subequations}\label{eq:problem} 
 \begin{align}
 \min_{x,y} & \quad f(x,y)  \\
 \text{s.t.} & \quad l \leq x \leq u \\
@@ -7,4 +7,29 @@ Let us consider the following optimization problem:
 & \quad x \geq 0
 \end{align}
 \end{subequations}
-where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^n \times \mathbb{R} \rightarrow \mathbb{R}$ is a \textit{which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector.
+where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
+\begin{equation}
+\mathcal{F} = \{x \in \mathbb{R}^n : \mathbf{1}^T x = 1, l \leq x \leq u, x \geq 0 \}.
+\end{equation}
+Since the constraints of Problem (\ref{eq:problem}) are linear, we have that a feasible point $(x,y)$ is a stationary point of Problem (\ref{eq:problem}) if and only if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
+
+\begin{proposition}[Optimality conditions (Necessary)]\label{prop:KKT}
+Let $(x^*,y^*) \in \mathbb{R}^{n+1}$, with $x^* \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there are two multipliers $\lambda^* \in \mathbb{R}$, $\mu^* \in \mathbb{R}^n$ satisfying
+\begin{subequations}
+\begin{align}
+\frac{\partial f(x^*, y^*)}{\partial y} = 0 \\
+\frac{\partial f(x^*, y^*)}{\partial x_i} +\lambda^* - \mu^*_i =0 \\
+\mu^*_ix^{*}_i=0 \\
+\mu^*_i\ge0
+\end{align}
+\end{subequations}
+\end{proposition}
+
+\hspace{-1.8em} From Proposition (\ref{prop:KKT}) it follows that:
+
+\begin{corollary}
+If $(x^*, y^*) \in \mathbb{R}^{n+1}$ is a local optimum for Problem (\ref{eq:problem}), then
+\begin{equation}
+x_j^* > 0 \quad \Rightarrow \quad \frac{\partial f(x^*, y^*)}{\partial x_j} \leq \frac{\partial f(x^*, y^*)}{\partial x_i} \quad \forall i \in \{1, .., n\}
+\end{equation}
+\end{corollary}
