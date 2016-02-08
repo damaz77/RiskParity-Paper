@@ -33,3 +33,41 @@ If $(x^*, y^*) \in \mathbb{R}^{n+1}$ is a local optimum for Problem (\ref{eq:pro
 x_j^* > 0 \quad \Rightarrow \quad \frac{\partial f(x^*, y^*)}{\partial x_j} \leq \frac{\partial f(x^*, y^*)}{\partial x_i} \quad \forall i \in \{1, .., n\}
 \end{equation}
 \end{corollary}
+Given a feasible point $(x,y)$, we define two indexes $i^*, j^* \in \{1, .., n\}$ in the following way:
+\begin{subequations}\label{eq:gs}
+\begin{align}
+x_{i^*} < u_{i^*} \quad \text{and} \quad  \frac{\partial f(x,y)}{\partial x_{i^*}}\leq \frac{\partial f(x,y)}{\partial x_h} \quad h \text{ s.t. } x_h < u_h \\
+x_{j^*} > l_{j^*} \quad \text{and} \quad  \frac{\partial f(x,y)}{\partial x_{j^*}}\geq \frac{\partial f(x,y)}{\partial x_h} \quad h \text{ s.t. } x_h > l_h 
+\end{align}
+\end{subequations}
+
+\hspace{-1.8em} Now we define a direction $d^{i^*,j^*} \in \mathbb{R}^n$ with only two non-zero components such that:
+\begin{equation}\label{eq:direction}
+d^{i^*,j^*}_h = 
+\begin{cases}
+1, \quad \text{    } h=i^*\\
+-1, \text{    } \text{    } h=j^*\\
+0, \quad \text{    } \text{otherwise}
+\end{cases}
+\end{equation}
+
+\begin{proposition}
+Let $(x,y)$ a feasible point for Problem (\ref{eq:problem}). Then the direction $d^{i^*,j^*}$ is a descent direction for $f(x,y)$.
+\end{proposition}
+\begin{proof}
+From Eq.(\ref{eq:gs}) and Eq.(\ref{eq:direction}) we can write:
+\begin{equation}
+\nabla_x f(x,y)^T d^{i^*,j^*} = \frac{\partial f(x, y)}{\partial x_i^*} - \frac{\partial f(x, y)}{\partial x_j^*} \leq 0
+\end{equation}
+\textit{Manca da dimostrare il minore secco}.
+\end{proof}
+
+\subsection{Armijo-Type Line Search Algorithm}
+In this section, we describe the well-known Armijo-type line search along a feasible direction [1]. The procedure will be used in the decomposition method presented in the next section. Let $d^{(k)}$ be a feasible direction at $(x^{(k)}, y^{(k)})$ with $x^{(k)} \in \mathcal{F}$. We denote by $\beta_{\mathcal{F}}^{(k)}$ the maximum feasible steplength along $d^{(k)}$, namely $\beta_{\mathcal{F}}^{(k)}$ satisfies
+\begin{equation*}
+l \leq x + \beta d^{(k)} \leq u \quad \text{for every} \quad \beta \in [ 0, \beta_{\mathcal{F}}^{(k)} ]
+\end{equation*}
+We have at least an index $i \in \{1, .., n\}$ such that
+\begin{equation*}
+x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = l_i \qquad \text{or} \qquad x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = u_i 
+\end{equation*}
