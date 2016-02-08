@@ -7,7 +7,7 @@ Let us consider the following optimization problem:
 & \quad x \geq 0
 \end{align}
 \end{subequations}
-where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
+where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{TODO: which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
 \begin{equation}
 \mathcal{F} = \{x \in \mathbb{R}^n : \mathbf{1}^T x = 1, l \leq x \leq u, x \geq 0 \}.
 \end{equation}
@@ -59,7 +59,7 @@ From Eq.(\ref{eq:gs}) and Eq.(\ref{eq:direction}) we can write:
 \begin{equation}
 \nabla_x f(x,y)^T d^{i^*,j^*} = \frac{\partial f(x, y)}{\partial x_i^*} - \frac{\partial f(x, y)}{\partial x_j^*} \leq 0
 \end{equation}
-\textit{Manca da dimostrare il minore secco}.
+\textit{TODO: Manca da dimostrare il minore secco}.
 \end{proof}
 
 \subsection{Armijo-Type Line Search Algorithm}
@@ -71,3 +71,17 @@ We have at least an index $i \in \{1, .., n\}$ such that
 \begin{equation*}
 x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = l_i \qquad \text{or} \qquad x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = u_i 
 \end{equation*}
+Let $\beta_u$ be a positive scalar and set
+\begin{equation}
+\beta^{(k)} = \min \{\beta_{\mathcal{F}}^{(k)}, \beta_u\}
+\end{equation}
+
+\hspace{-1.8em}An Armijo-type line search algorithm is described below.\\
+\begin{algorithm}
+ \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\alpha^{(k)} = \min \{\beta^{(k)},\alpha \}$}
+ %\KwResult{A feasible step $\lambda$}
+ \While{$f(x^{(k)} + \lambda d^{(k)}) > f(x^{(k)}) + \gamma \lambda \nabla_x f(x^{(k)})^T d^{(k)}$}{
+  Set $\lambda = \delta \lambda$
+ }
+ \caption{Armijo-Type Line Search}
+\end{algorithm}
