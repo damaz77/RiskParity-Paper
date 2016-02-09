@@ -8,7 +8,7 @@ Let us consider the following optimization problem:
 \end{subequations}
 where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{TODO: which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
 \begin{equation}
-\mathcal{F} = \{x \in \mathbb{R}^n : \mathbf{1}^T x = 1, l \leq x \leq u, x \geq 0 \}.
+\mathcal{F} = \{x \in \mathbb{R}^n : \mathbf{1}^T x = 1, l \leq x \leq u\}.
 \end{equation}
 Since the constraints of Problem (\ref{eq:problem}) are linear, we have that a feasible point $(x,y)$ is a stationary point of Problem (\ref{eq:problem}) if and only if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
 
@@ -79,6 +79,7 @@ Let $\beta_u$ be a positive scalar and set
 \begin{algorithm}
  \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\alpha^{(k)} = \min \{\beta^{(k)},\alpha \}$}
  %\KwResult{A feasible step $\lambda$}
+ Set $\lambda = \alpha^{(k)}$\\
  \While{$f(x^{(k)} + \lambda d^{(k)}) > f(x^{(k)}) + \gamma \lambda \nabla_x f(x^{(k)})^T d^{(k)}$}{
   Set $\lambda = \delta \lambda$
  }
@@ -96,11 +97,16 @@ When we move along the direction $d^{i^*,j^*}$, defined in (\ref{eq:direction}),
 \end{align}
 \end{subequations}
 Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and then we obtain
-
 \begin{subequations}\label{eq:onecomp} 
 \begin{align}
 \min_{ x_{j^*}} & \quad f(x_{j^*}) \\
 \text{s.t.} & \quad x_{i^*} = c - x_{j^*} \\
-& \quad \max\{l_{j^*}, c - u_{i^*}\} \leq x_{j^*} \leq \min \{ u_{j^*}, c-l_{i^*}\}
+& \quad ll_{j^*} = \max\{l_{j^*}, c - u_{i^*}\} \leq x_{j^*} \leq \min \{ u_{j^*}, c-l_{i^*}\} = uu_{j^*}
 \end{align}
 \end{subequations}
+Because the domain is $I=[ll_{j^*}, uu_{j^*}]$, if $f(x_{j^*})$ is continuous in $I$, then $f$ has a minimum in $I$. If $f(x_{j^*})$ is differentiable in $I$ we can compute $f'(x_{j^*})$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
+Let $r* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i^*,j^*}$ is
+\begin{equation}
+\alpha^* = x_{j^*} - r^* > 0
+\end{equation} 
+\textit{TODO: problema di notazione, $x_{j^*}$ rappresenta il valore della componente $j^*$ del vettore $x$ prima della ricerca di linea}
