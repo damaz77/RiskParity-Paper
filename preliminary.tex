@@ -3,8 +3,7 @@ Let us consider the following optimization problem:
 \begin{align}
 \min_{x,y} & \quad f(x,y)  \\
 \text{s.t.} & \quad l \leq x \leq u \\
-& \quad \mathbf{1}^T x = 1 \\
-& \quad x \geq 0
+& \quad \mathbf{1}^T x = 1 
 \end{align}
 \end{subequations}
 where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{TODO: which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
@@ -13,7 +12,7 @@ where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow 
 \end{equation}
 Since the constraints of Problem (\ref{eq:problem}) are linear, we have that a feasible point $(x,y)$ is a stationary point of Problem (\ref{eq:problem}) if and only if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
 
-\begin{proposition}[Optimality conditions (Necessary)]\label{prop:KKT}
+\begin{proposition}[TODO: Optimality conditions (Necessary)]\label{prop:KKT}
 Let $(x^*,y^*) \in \mathbb{R}^{n+1}$, with $x^* \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there are two multipliers $\lambda^* \in \mathbb{R}$, $\mu^* \in \mathbb{R}^n$ satisfying
 \begin{subequations}
 \begin{align}
@@ -63,7 +62,7 @@ From Eq.(\ref{eq:gs}) and Eq.(\ref{eq:direction}) we can write:
 \end{proof}
 
 \subsection{Armijo-Type Line Search Algorithm}
-In this section, we describe the well-known Armijo-type line search along a feasible direction [1]. The procedure will be used in the decomposition method presented in the next section. Let $d^{(k)}$ be a feasible direction at $(x^{(k)}, y^{(k)})$ with $x^{(k)} \in \mathcal{F}$. We denote by $\beta_{\mathcal{F}}^{(k)}$ the maximum feasible steplength along $d^{(k)}$, namely $\beta_{\mathcal{F}}^{(k)}$ satisfies
+In this section, we describe the well-known Armijo-type line search along a feasible direction. The procedure will be used in the decomposition method presented in the next section. Let $d^{(k)}$ be a feasible direction at $(x^{(k)}, y^{(k)})$ with $x^{(k)} \in \mathcal{F}$. We denote by $\beta_{\mathcal{F}}^{(k)}$ the maximum feasible steplength along $d^{(k)}$, namely $\beta_{\mathcal{F}}^{(k)}$ satisfies
 \begin{equation*}
 l \leq x + \beta d^{(k)} \leq u \quad \text{for every} \quad \beta \in [ 0, \beta_{\mathcal{F}}^{(k)} ]
 \end{equation*}
@@ -85,3 +84,23 @@ Let $\beta_u$ be a positive scalar and set
  }
  \caption{Armijo-Type Line Search}
 \end{algorithm}
+
+\subsection{Exact Line Search}
+When we move along the direction $d^{i^*,j^*}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i^*}, x_{j^*}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
+\begin{subequations}\label{eq:twocomp} 
+\begin{align}
+\min_{x_{i^*}, x_{j^*}} & \quad f(x_{i^*}, x_{j^*})  \\
+\text{s.t.} & \quad l_{i^*} \leq x_{i^*}  \leq u_{i^*} \\
+& \quad l_{j^*} \leq x_{j^*}  \leq u_{j^*} \\
+& \quad x_{i^*}+x_{j^*} = \underbrace{1-\sum_{h\ne {i^*},{j^*}}x_h}_c
+\end{align}
+\end{subequations}
+Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and then we obtain
+
+\begin{subequations}\label{eq:onecomp} 
+\begin{align}
+\min_{ x_{j^*}} & \quad f(x_{j^*}) \\
+\text{s.t.} & \quad x_{i^*} = c - x_{j^*} \\
+& \quad \max\{l_{j^*}, c - u_{i^*}\} \leq x_{j^*} \leq \min \{ u_{j^*}, c-l_{i^*}\}
+\end{align}
+\end{subequations}
