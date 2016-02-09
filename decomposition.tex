@@ -1,1 +1,17 @@
-%%write something
+\begin{equation}
+y^{(k+1)} = \argmin_y f(x^{(k)},y)
+\end{equation}
+
+\begin{algorithm}
+ \KwData{Given the initial feasible guess $(x^{(0)}, y^{(0)})$}
+ Set $k = 0$\\
+ \While{(not convergence)}{
+  Compute $y^{(k+1)}$ \\
+  Compute $\nabla_{x} f(x^{(k)},y^{(k+1)})$ \\
+  Choose indexes $i^*(k), j^*(k)$ using the Gauss-Southwell rules \\
+  Choose a step $\alpha^{(k)}$  along the direction $d^{i^*(k),j^*(k)}$ \\
+  Set $x^{(k+1)} = x^{(k)} + \alpha^{(k)}d^{i^*(k),j^*(k)}$ \\
+  Set $k = k + 1$
+ }
+ \caption{Decomposition Algorithm}
+\end{algorithm}
