@@ -6,76 +6,133 @@ Let us consider the following optimization problem:
 & \quad \mathbf{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $x \in \mathbb{R}^n$, $y \in \mathbb{R}$, $f:\mathbb{R}^{n+1} \rightarrow \mathbb{R}$ is a \textit{TODO: which are the hypothesis on f?}, $l, u \in \mathbb{R}^n$ with $l < u$ and $\mathbf{1} \in \mathbb{R}^n$ is the identity vector. We indicate by $\mathcal{F}$ the feasible set of Problem (\ref{eq:problem}), namely
-\begin{equation}
-\mathcal{F} = \{x \in \mathbb{R}^n : \mathbf{1}^T x = 1, l \leq x \leq u\}.
-\end{equation}
-Since the constraints of Problem (\ref{eq:problem}) are linear, we have that a feasible point $(x,y)$ is a stationary point of Problem (\ref{eq:problem}) if and only if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
+where $x \in \R^n$, $y \in \R^k$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathbf{1} \in \R^n$ is all composed by ones. 
 
-\begin{proposition}[TODO: Optimality conditions (Necessary)]\label{prop:KKT}
-Let $(x^*,y^*) \in \mathbb{R}^{n+1}$, with $x^* \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there are two multipliers $\lambda^* \in \mathbb{R}$, $\mu^* \in \mathbb{R}^n$ satisfying
-\begin{subequations}
-\begin{align}
-\frac{\partial f(x^*, y^*)}{\partial y} = 0 \\
-\frac{\partial f(x^*, y^*)}{\partial x_i} +\lambda^* - \mu^*_i =0 \\
-\mu^*_ix^{*}_i=0 \\
-\mu^*_i\ge0
-\end{align}
-\end{subequations}
+Now we define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
+\begin{equation}
+\mathcal{F} = \{(x,y) \in \R^{n+k} : \mathbf{1}^T x = 1, l \leq x \leq u\}.
+\end{equation}
+Since the constraints of Problem (\ref{eq:problem}) respect constraints qualification conditions, a feasible point $(x,y)$ is a stationary, if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
+
+Let $L(x,y,\lambda,\mu,\gamma)$ the Lagrangian function associated to Problem (\ref{eq:problem}) then we can write KKT conditions.
+
+\begin{proposition}[Optimality conditions (Necessary)]\label{prop:KKT}
+
+Let $(x^*,y^*) \in \R^{n+k}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
+\begin{equation}
+ \begin{aligned}
+  &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)= \nabla_x F(x^*,y^*)+\lambda^*-\mu^*+\gamma^*=0\\
+ &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)=\nabla_y F(x^*,y^*) =0 \\
+    &\lambda^*_i(l-x_i^*)=0,\ \forall i\\
+ &\mu^*_i(x_i^*-u)=0,\ \forall i\\
+   & \lambda^*,\mu^*,\ge0 \\
+ \end{aligned}
+\end{equation}
 \end{proposition}
 
-\hspace{-1.8em} From Proposition (\ref{prop:KKT}) it follows that:
-
-\begin{corollary}
-If $(x^*, y^*) \in \mathbb{R}^{n+1}$ is a local optimum for Problem (\ref{eq:problem}), then
+From the first condition we have:
 \begin{equation}
-x_j^* > 0 \quad \Rightarrow \quad \frac{\partial f(x^*, y^*)}{\partial x_j} \leq \frac{\partial f(x^*, y^*)}{\partial x_i} \quad \forall i \in \{1, .., n\}
+ \nabla_x f(x^*,y^*)-\lambda^*+\mu^*+\gamma^*=0
 \end{equation}
-\end{corollary}
-Given a feasible point $(x,y)$, we define two indexes $i^*, j^* \in \{1, .., n\}$ in the following way:
-\begin{subequations}\label{eq:gs}
-\begin{align}
-x_{i^*} < u_{i^*} \quad \text{and} \quad  \frac{\partial f(x,y)}{\partial x_{i^*}}\leq \frac{\partial f(x,y)}{\partial x_h} \quad h \text{ s.t. } x_h < u_h \\
-x_{j^*} > l_{j^*} \quad \text{and} \quad  \frac{\partial f(x,y)}{\partial x_{j^*}}\geq \frac{\partial f(x,y)}{\partial x_h} \quad h \text{ s.t. } x_h > l_h 
-\end{align}
-\end{subequations}
 
-\hspace{-1.8em} Now we define a direction $d^{i^*,j^*} \in \mathbb{R}^n$ with only two non-zero components such that:
+Then there are three possible cases:
+\begin{equation}
+ \frac{\partial F(x^*,y^*)}{dx_i} = \begin{cases} -\mu_i^* -\gamma \hspace{1cm} x^*_i =u \\
+ -\gamma+\lambda^*_i \hspace{1cm} x^*_i =l \\
+ -\gamma \hspace{1.65cm} l<x^*_i <u 
+\end{cases}
+\end{equation}
+Then if $x^*_j>l$:
+\begin{equation}
+ \frac{\partial f(x^*)}{dx_j} \le \frac{\partial f(x^*)}{dx_i}, \forall i
+\end{equation}
+
+Let $(x,y) \in \mathcal{F}$, we define a set of all feasible direction in $(x,y)$:
+\begin{equation}
+ \mathcal{D}(x,y)=\{ d \in \R^{n+k}: \mathbf{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
+\end{equation}
+where:
+\begin{equation}
+ \begin{aligned}
+  &L(x)=\{ i: \ x_i=l\}\\
+  &U(x)=\{ i: \ x_i=u\}
+ \end{aligned}
+\end{equation}
+
+
+
+\subsection{Set of sparse feasible directions}
+Because of $y$ is unconstrainted, we pay attention only on the $x$ variable to find a feasible descent direction w.r.t. $x$. 
+In our case we want to build a set of sparse feasible direction in order to justify our decomposition approach.
+
+Let $(x,y) \in \mathcal{F}$ non stationary w.r.t. $x$, then it's easy to see that
+\begin{equation}
+ L(x)\ne \{1,\ldots,n\}
+\end{equation}
+hence $\exists i$ such that $x_i>0$ and $j \ne i$ such that:
+\begin{equation}
+ \frac{\partial f(x^*)}{dx_i} > \frac{\partial f(x^*)}{dx_j}, 
+\end{equation}
+
+\hspace{-1.8em} Now we define a direction $d^{i,j} \in \R^n$ with only two non-zero components such that:
 \begin{equation}\label{eq:direction}
-d^{i^*,j^*}_h = 
+d_h^{i,j}= 
 \begin{cases}
-1, \quad \text{    } h=i^*\\
--1, \text{    } \text{    } h=j^*\\
+1, \quad \text{    } h=j\\
+-1, \text{    } \text{    } h=i\\
 0, \quad \text{    } \text{otherwise}
 \end{cases}
 \end{equation}
 
 \begin{proposition}
-Let $(x,y)$ a feasible point for Problem (\ref{eq:problem}). Then the direction $d^{i^*,j^*}$ is a descent direction for $f(x,y)$.
+Let $(x,y)$ a feasible point for Problem (\ref{eq:problem}). Then the direction $d^{i,j}$ is  feasible and descent direction in $x$.
 \end{proposition}
 \begin{proof}
-From Eq.(\ref{eq:gs}) and Eq.(\ref{eq:direction}) we can write:
-\begin{equation}
-\nabla_x f(x,y)^T d^{i^*,j^*} = \frac{\partial f(x, y)}{\partial x_i^*} - \frac{\partial f(x, y)}{\partial x_j^*} \leq 0
-\end{equation}
-\textit{TODO: Manca da dimostrare il minore secco}.
+For the feasibility it is enough to see that $\mathbf{1}^Td^{i,j}=1-1=0$.
+Then we can apply sufficient conditions for descent direction in $x$, such that:
+\begin{equation*}
+ \nabla_xf(x,y)^Td^{i,j} =  \frac{\partial f(x)}{dx_j} - \frac{\partial f(x)}{dx_i}<0; 
+\end{equation*}
 \end{proof}
 
-\subsection{Armijo-Type Line Search Algorithm}
-In this section, we describe the well-known Armijo-type line search along a feasible direction. The procedure will be used in the decomposition method presented in the next section. Let $d^{(k)}$ be a feasible direction at $(x^{(k)}, y^{(k)})$ with $x^{(k)} \in \mathcal{F}$. We denote by $\beta_{\mathcal{F}}^{(k)}$ the maximum feasible steplength along $d^{(k)}$, namely $\beta_{\mathcal{F}}^{(k)}$ satisfies
-\begin{equation*}
-l \leq x + \beta d^{(k)} \leq u \quad \text{for every} \quad \beta \in [ 0, \beta_{\mathcal{F}}^{(k)} ]
-\end{equation*}
-We have at least an index $i \in \{1, .., n\}$ such that
-\begin{equation*}
-x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = l_i \qquad \text{or} \qquad x_i^{(k)} + \beta_{\mathcal{F}}^{(k)} d_i^{(k)} = u_i 
-\end{equation*}
-Let $\beta_u$ be a positive scalar and set
+As always, we should choose the steepest descent direction composed by only two non-zero components.
+This can be done computing the \emph{Most Violating Pair} $(i,j)$ such that $x_i>0$ and:
 \begin{equation}
-\beta^{(k)} = \min \{\beta_{\mathcal{F}}^{(k)}, \beta_u\}
+ (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x^*)}{dx_l} - \frac{\partial f(x^*)}{dx_m}  \right\}
 \end{equation}
 
-\hspace{-1.8em}An Armijo-type line search algorithm is described below.\\
+If one doesn't want to use decomposition methods, he can define a direction $d_{xy} \in \R^{n+k}$ such that:
+\begin{equation}
+ d_{xy}=\{d^{i,j},-\nabla_yf(x,y)^
+ \}
+\end{equation}
+
+\subsection{Armijo-Type Line Search Algorithm}
+In this section, we briefly describe the well-known Armijo-type line search along a feasible descent direction. The procedure will be used in the decomposition method presented in the next section. 
+Let $d^{k} \in \mathcal{D}(x_k)$  $x^{k} \in \mathcal{F}$. In particular we choose $d^{k}=d^{i,j}_k$ with MVP $(i(k),j(k))$.
+We denote by $\Delta_{k}$ the maximum feasible step along $d^{k}$. 
+
+It is easy to see that:
+\begin{equation*}
+\Delta_k=\min \{ x^k_{j(k)}-l, u-x^k_{i(k)}\}
+\end{equation*}
+Then at iteration $k+1$ we have:
+\begin{equation*}
+x^{k+1}_{j(k)}=\begin{cases}
+ l \ &\alpha_k=x^k_{j(k)}-l\\
+ x^k_{j(k)}-u+x^k_{i(k)} \ &\alpha_k=u-x^k_{i(k)}
+ \end{cases}
+\end{equation*}
+and:
+\begin{equation*}
+x^{k+1}_{i(k)}=\begin{cases}
+ x^k_{j(k)}-l+x^k_{i(k)} \ &\alpha_k=x^k_{j(k)}-l\\
+ u \ &\alpha_k=u-x^k_{i(k)}
+ \end{cases}
+\end{equation*}
+
+
+\iffalse
 \begin{algorithm}
  \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\alpha^{(k)} = \min \{\beta^{(k)},\alpha \}$}
  %\KwResult{A feasible step $\lambda$}
@@ -85,7 +142,7 @@ Let $\beta_u$ be a positive scalar and set
  }
  \caption{Armijo-Type Line Search}
 \end{algorithm}
-
+\fi
 \subsection{Exact Line Search}
 When we move along the direction $d^{i^*,j^*}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i^*}, x_{j^*}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
 \begin{subequations}\label{eq:twocomp} 
