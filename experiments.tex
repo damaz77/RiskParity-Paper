@@ -1,5 +1,47 @@
+We compare the convergence properties of the algorithms in term of number of times that one algorithm converges to a stationary point that is the minimum point for the convex formulation.
+
+\begin{table}
+\begin{minipage}{.4\linewidth}
+\centering
+\begin{tabular}{ c | c | c | c }
+n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+5    & 100.0\% & 100.0\% & 100.0\%\\\hline
+10   & 100.0\% & 100.0\% & 100.0\%\\\hline
+20   & 100.0\% & 100.0\% & 100.0\%\\\hline
+50   & 99.0\%  & 99.4\%  & 99.5\%\\\hline
+100  & 85.4\%  & 87.0\%  & 91.2\%\\\hline
+200  & 40.0\%  & 45.0\%  & 52.0\%\\\hline
+300  & 22.0\%  & 24.0\%  & 34.0\%\\\hline
+500  & 0.0\%   & 6.0\%   & 3.0\%\\\hline
+750  & 0.0\%   & 2.0\%   & 0.0\%\\\hline
+1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+\end{tabular}
+\caption{$x^{(0)}_i = \frac{1}{n} \quad \forall i$}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\linewidth}
+\centering
+\begin{tabular}{ c | c| c | c}
+n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
+10   & 100.0\%  & 100.0\% & 100.0\%\\\hline
+20   & 99.8\%   & 99.8\%  & 99.8\%\\\hline
+50   & 100.0\%  & 99.8\%  & 99.1\%\\\hline
+100  & 100.0\%  & 99.8\%  & 96.6\% \\\hline
+200  & 100.0\%  & 99.6\%  & 94.8\% \\\hline
+300  & 100.0\%  & 99.0\%  & 92.0\% \\\hline
+500  & 100.0\%  & 99.0\%  & 92.5\%\\\hline
+750  & 99.0\%   & 98.0\%  & 86.5\%\\\hline
+1000 & 96.0\%   & 95.0\%  & 76.0\%\\\hline
+1250 & 90.0\%   & 93.0\%  & 76.5\%\\\hline
+\end{tabular}
+\caption{$x^{(0)}= [1, 0, .., 0]$}
+\end{minipage}
+\end{table}
 
 \begin{figure}
+\begin{minipage}{\linewidth}
 \makebox[\textwidth][c]{
 \begin{tikzpicture}
 \begin{axis}[%
@@ -71,7 +113,9 @@ title=\textbf{Average execution time with {$\epsilon=10^{-6}$}},
 \end{axis}
 \end{tikzpicture}
 }
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \makebox[\textwidth][c]{
 \begin{tikzpicture}
 \begin{axis}[%
@@ -119,6 +163,7 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-6}$}}
 \end{axis}
 \end{tikzpicture}
 }
+\end{minipage}
 \end{figure}
 
 \begin{figure}
@@ -176,9 +221,8 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-6}$}}
     area legend,
     legend style={
     legend columns=5,
-        at={(xticklabel cs:0.5)},
-        anchor=north,
-        draw=none
+        at={(xticklabel cs:0.5, 20)},
+        anchor=north
     }
     ]
 \addplot[ybar, fill=step] plot coordinates {(5,73) (10,73) 

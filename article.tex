@@ -5,7 +5,7 @@
 \usepackage[english]{babel}
 \usepackage[ruled,vlined, linesnumbered]{algorithm2e}
 \usepackage{pgfplots}
-
+\usepackage{subcaption} 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \definecolor{step}{HTML}{D7191C}
 \definecolor{derivative}{HTML}{2B83BA}
@@ -18,7 +18,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
-
+\renewcommand{\arraystretch}{1.2}
 \newcommand{\R}{\mathbb{R}}
 \setlength\parindent{0pt}
 \newenvironment{proof}[1][Proof]{\begin{trivlist}
@@ -46,6 +46,9 @@
 \section{Convergence analysis}
 \input{convergence}
 
+\section{A case study: Portfolio Selection}
+\input{portfolio}
+
 \section{Computational experiments}
 \input{experiments}
 
@@ -53,7 +56,5 @@
 
 
 \begin{thebibliography}{9}
-
 \input{bibliography}
-
 \end{thebibliography}

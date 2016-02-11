@@ -1,0 +1,24 @@
+In this section, we show that the general framework presented above can be used to a specific class of portfolio selection problem, namely the Risk Parity portfolio selection. Let $x \in \R^n$ be the portfolio, where $x_i$ represents the fraction of budget that is invested in the asset $i$, and let $Q$ be the covariance matrix between the assets; in \cite{bai} is introduced the following least-square optimization problem:
+\begin{subequations}\label{eq:riskparity} 
+\begin{align}
+\min_{x,\theta} & \quad f(x,\theta) = \sum_{i=i}^n \left({x_i q_i^T \cdot x} - \theta \right)^2\\
+\text{s.t.} & \quad l \leq x \leq u \\
+& \quad \mathbf{1}^T x = 1 
+\end{align}
+\end{subequations}
+where $q_i$ is the $i$-th column of $Q$. Note that the problem is not necessary convex with respect to $x$ but it is strictly convex and coercive with respect to $\theta$. Infact we have:
+\begin{equation}
+\frac{\partial^2}{d^2\theta} f(x,\theta) = 2 
+\end{equation}
+which is a sufficient condition for a strictly convex function. At each iteration $k$, we have 
+\begin{equation}
+\theta^{(k+1)} = \argmin_\theta f(x^{(k)},\theta)
+\end{equation}
+$f$ is strictly convex with respect to $\theta$, so we can find $\theta^{(k+1)}$ as a solution of
+\begin{equation}
+\nabla_\theta f(x^{(k)},\theta) = 0 
+\end{equation}
+That is
+\begin{equation}
+\theta^{(k+1)} = \frac{\sum_{i=1}^n x_i^{(k)} q_i^T \cdot x^{(k)}}{n}
+\end{equation}
