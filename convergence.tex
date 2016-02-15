@@ -19,8 +19,8 @@ Finally we have
 f(x^{k+1}, y^{k+1}) \leq f(x^{k}, y^{k})
 \end{equation}
 so we have that the points of the sequence $\{(x^{k}, y^{k})\}$ belongs to the level set $\mathcal{L}_0$. Let $(x^*,y^*)$ be a limit point of $\{(x^k, y^k)\}$, i.e. there exist an infinite subset $K \subseteq N$ such that
-\begin{equation}
-\lim_{k \in K, k \rightarrow \infty} (x^k, y^k) = (x^*,y^*)
+\begin{equation}\label{eq:asim}
+\lim_{k \in K, k \rightarrow \infty} (x^k, y^k) = (x^*,y^*) \qquad \lim_{k \in K, k \rightarrow \infty} d^{i(k),j(k)} = d^*
 \end{equation}
 By contradiction, let us assume that $(x^*,y^*)$ is not a solution. In this case, at least one of the following conditions hold:
 \begin{subequations}
@@ -37,17 +37,47 @@ From (\ref{eq:dis}) and thanks to (\ref{eq:dec}), we can extend the Armijo conve
 \begin{equation}
 \lim_{k \in K, k \rightarrow \infty} \parallel \nabla_y f(x^{k}, y^{k}) \parallel =  \parallel \nabla_y f(x^{*}, y^{*}) \parallel = 0
 \end{equation}
-So we have proved that Point (\ref{eq:a}) cannot hold.\\
+So we have proved that (\ref{eq:a}) cannot hold.\\
 For Point (\ref{eq:b}), the algorithm performs an Armijo line search along $d^{i(k),j(k)}$ to determine the step $\alpha^{k}$. Thanks to Armijo we can write
 \begin{equation}\label{eq:armijoprop}
 \lim_{k \in K, k \rightarrow \infty} \alpha^{k} \parallel d^{i(k),j(k)} \parallel \frac{ \left| \nabla_x f(x^{k}, y^{k+1})^T d^{i(k),j(k)} \right|}{\parallel d^{i(k),j(k)} \parallel} = 0
 \end{equation}
 From (\ref{eq:direction}), we know that $\parallel d^{i(k),j(k)} \parallel = \sqrt{2} \enskip\forall k$, so from (\ref{eq:armijoprop}) it follows
-\begin{equation}
+\begin{equation}\label{eq:armijoprop2}
 \lim_{k \in K, k \rightarrow \infty} \alpha^{k}  \left| \nabla_x f(x^{k}, y^{k+1})^T d^{i(k),j(k)} \right| = 0
 \end{equation}
-Now we show that, if (\ref{eq:b}) holds, then necessarily
-\begin{equation}
-\lim_{k \in K, k \rightarrow \infty} \alpha^k \neq 0
+By contradiction, assume that 
+\begin{equation}\label{eq:wrong}
+\lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(x^*, y^*)^T d^* = -\eta < 0
 \end{equation}
+(in particular, (\ref{eq:b}) implies (\ref{eq:wrong})).
+From (\ref{eq:wrong}) and (\ref{eq:armijoprop2}) it follows that
+\begin{equation}\label{eq:alpha}
+\lim_{k \in K, k \rightarrow \infty} \alpha^k = 0
+\end{equation}
+Then, for large enough values of $k$, i.e. for $k \geq \hat{k}$, it must be $\alpha^k < \Delta^k$. From the Armijo properties we have, for $k \geq \hat{k}$:
+\begin{equation}\label{eq:arm1}
+f(x^k + \frac{\alpha^k}{\delta} d^{i(k),j(k)}, y^k) - f(x^k,y^k) 
+\end{equation}
+For the mean value theorem, we can write
+\begin{equation}\label{eq:arm2}
+f(x^k + \frac{\alpha^k}{\delta} d^{i(k),j(k)}, y^k) = f(x^k, y^k) + \frac{\alpha^k}{\delta} \nabla_x f(z^k, y^k)^T d^{i(k),j(k)}
+\end{equation}
+where $z^k = x^k + \vartheta_k \frac{\alpha^k}{\delta} d^{i(k),j(k)}$ and $\vartheta_k \in (0,1)$. From (\ref{eq:arm2}) and (\ref{eq:arm1}), for $k \geq \hat{k}$, we have
+\begin{equation}\label{eq:nabla}
+\nabla_x f(z^k, y^k)^T d^{i(k),j(k)}  > \gamma \nabla_x f(x^k , y^k)^T d^{i(k),j(k)}
+\end{equation}
+Using (\ref{eq:asim}) and (\ref{eq:alpha}) it must be
+\begin{equation}
+\lim_{k \in K, k \rightarrow \infty} z^k = \lim_{k \in K, k \rightarrow \infty} x^k + \vartheta_k \frac{\alpha^k}{\delta} d^{i(k),j(k)} = x^*
+\end{equation}
+Taking the limit value of each member of (\ref{eq:nabla}) we have
+\begin{equation}
+\nabla_x f(x^*, y^*)^T d^* \geq \gamma \nabla_x f(x^*, y^*)^T d^*
+\end{equation}
+From (\ref{eq:wrong}) we have
+\begin{equation}
+\eta \leq \gamma \eta
+\end{equation}
+that does not hold, since $\gamma < 1$. So we have proved that also (\ref{eq:b}) cannot hold.
 \end{proof}
