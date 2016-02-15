@@ -55,9 +55,20 @@ From (\ref{eq:wrong}) and (\ref{eq:armijoprop2}) it follows that
 \begin{equation}\label{eq:alpha}
 \lim_{k \in K, k \rightarrow \infty} \alpha^k = 0
 \end{equation}
-Then, for large enough values of $k$, i.e. for $k \geq \hat{k}$, it must be $\alpha^k < \Delta^k$. From the Armijo properties we have, for $k \geq \hat{k}$:
+In general, we have that
+\begin{equation}
+\lim_{k \in K, k \rightarrow \infty} \alpha^k \leq \lim_{k \in K, k \rightarrow \infty} \Delta^k
+\end{equation}
+We have to differentiate between two cases:
+\begin{subequations}
+\begin{align}
+& \lim_{k \in K, k \rightarrow \infty} \Delta^k > 0 \label{eq:great}\\
+& \lim_{k \in K, k \rightarrow \infty} \Delta^k = 0 \label{eq:zero}
+\end{align}
+\end{subequations}
+If (\ref{eq:great}) holds, for large enough values of $k$, i.e. for $k \geq \hat{k}$, it must be $\alpha^k < \Delta^k$. From the Armijo properties we have, for $k \geq \hat{k}$:
 \begin{equation}\label{eq:arm1}
-f(x^k + \frac{\alpha^k}{\delta} d^{i(k),j(k)}, y^k) - f(x^k,y^k) 
+f(x^k + \frac{\alpha^k}{\delta} d^{i(k),j(k)}, y^k) - f(x^k,y^k) > \gamma \frac{\alpha^k}{\delta} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)}
 \end{equation}
 For the mean value theorem, we can write
 \begin{equation}\label{eq:arm2}
@@ -79,5 +90,11 @@ From (\ref{eq:wrong}) we have
 \begin{equation}
 \eta \leq \gamma \eta
 \end{equation}
-that does not hold, since $\gamma < 1$. So we have proved that also (\ref{eq:b}) cannot hold.
+that does not hold, since $\gamma < 1$. So we have proved that, if (\ref{eq:great}) holds, (\ref{eq:b}) cannot hold. \\
+If (\ref{eq:zero}) holds, we can't assume that for $k \geq \hat{k}$ we have $\alpha^k < \Delta^k$. So we need to use Proposition (\ref{proposition:david}) that assures us that
+there exists a number $M$ such that, for every $k \in K$, there exists an index $m(k)$ such that $k + m(k) \in K$, $0 \leq m(k) \leq M$ and 
+\begin{equation}\label{eq:result}
+\alpha^{k + m(k)} < \Delta^{k + m(k)}
+\end{equation}
+Thanks to (\ref{eq:result}), we can repeat the demonstration used in the case (\ref{eq:great}) and prove that, if (\ref{eq:zero}) holds, then (\ref{eq:b}) cannot hold.
 \end{proof}
