@@ -18,15 +18,15 @@ Finally we have
 \begin{equation}
 f(x^{k+1}, y^{k+1}) \leq f(x^{k}, y^{k})
 \end{equation}
-so we have that the points of the sequence $\{(x^{k}, y^{k})\}$ belongs to the level set $\mathcal{L}_0$. Let $(x^*,y^*)$ be a limit point of $\{(x^k, y^k)\}$, i.e. there exist an infinite subset $K \subseteq N$ such that
+so we have that the points of the sequence $\{(x^{k}, y^{k})\}$ belongs to the level set $\mathcal{L}_0$. Let $(\overline{x},\overline{y})$ be a limit point of $\{(x^k, y^k)\}$, i.e. there exist an infinite subset $K \subseteq N$ such that
 \begin{equation}\label{eq:asim}
-\lim_{k \in K, k \rightarrow \infty} (x^k, y^k) = (x^*,y^*) \qquad \lim_{k \in K, k \rightarrow \infty} d^{i(k),j(k)} = d^*
+\lim_{k \in K, k \rightarrow \infty} (x^k, y^k) = (\overline{x},\overline{y}) \qquad \lim_{k \in K, k \rightarrow \infty} d^{i(k),j(k)} = \overline{d}
 \end{equation}
-By contradiction, let us assume that $(x^*,y^*)$ is not a solution. In this case, at least one of the following conditions hold:
+By contradiction, let us assume that $(\overline{x},\overline{y})$ is not a solution. In this case, at least one of the following conditions hold:
 \begin{subequations}
 \begin{align}
-&\nabla_y f(x^*,y^*) \neq 0  \label{eq:a}\\
-&\exists \enskip i, j \enskip  \text{s.t.} \enskip x^*_i > l_i \enskip  \text{and} \enskip  \nabla_x f(x^*,y^*)^T d^{i,j} < 0 \label{eq:b}
+&\nabla_y f(\overline{x},\overline{y}) \neq 0  \label{eq:a}\\
+&\exists \enskip i, j \enskip  \text{s.t.} \enskip \overline{x}_i > l_i \enskip  \text{and} \enskip  \nabla_x f(\overline{x},\overline{y})^T d^{i,j} < 0 \label{eq:b}
 \end{align}
 \end{subequations}
 For Point (\ref{eq:a}), we recall that for (\ref{eq:updatey}) $y^{k+1}$ minimizes $f(x^{k},y)$ with respect to $y$. So, if we imagine to perform Armijo along a descent direction (for example, $-\nabla_y f(x^{k},y^{k})$) we have
@@ -35,7 +35,7 @@ f(x^{k}, y^{k+1}) \leq f(x^{k}, y^{k}) - \gamma \alpha \parallel \nabla_y f(x^{k
 \end{equation}
 From (\ref{eq:dis}) and thanks to (\ref{eq:dec}), we can extend the Armijo convergence properties to $(x^{k+1}, y^{k+1})$. In particular, for Armijo we can write
 \begin{equation}
-\lim_{k \in K, k \rightarrow \infty} \parallel \nabla_y f(x^{k}, y^{k}) \parallel =  \parallel \nabla_y f(x^{*}, y^{*}) \parallel = 0
+\lim_{k \in K, k \rightarrow \infty} \parallel \nabla_y f(x^{k}, y^{k}) \parallel =  \parallel \nabla_y f(\overline{x},\overline{y}) \parallel = 0
 \end{equation}
 So we have proved that (\ref{eq:a}) cannot hold.\\
 For Point (\ref{eq:b}), the algorithm performs an Armijo line search along $d^{i(k),j(k)}$ to determine the step $\alpha^{k}$. Thanks to Armijo we can write
@@ -48,7 +48,7 @@ From (\ref{eq:direction}), we know that $\parallel d^{i(k),j(k)} \parallel = \sq
 \end{equation}
 By contradiction, assume that 
 \begin{equation}\label{eq:wrong}
-\lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(x^*, y^*)^T d^* = -\eta < 0
+\lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(\overline{x},\overline{y})^T \overline{d} = -\eta < 0
 \end{equation}
 (in particular, (\ref{eq:b}) implies (\ref{eq:wrong})).
 From (\ref{eq:wrong}) and (\ref{eq:armijoprop2}) it follows that
@@ -80,11 +80,11 @@ where $z^k = x^k + \vartheta_k \frac{\alpha^k}{\delta} d^{i(k),j(k)}$ and $\vart
 \end{equation}
 Using (\ref{eq:asim}) and (\ref{eq:alpha}) it must be
 \begin{equation}
-\lim_{k \in K, k \rightarrow \infty} z^k = \lim_{k \in K, k \rightarrow \infty} x^k + \vartheta_k \frac{\alpha^k}{\delta} d^{i(k),j(k)} = x^*
+\lim_{k \in K, k \rightarrow \infty} z^k = \lim_{k \in K, k \rightarrow \infty} x^k + \vartheta_k \frac{\alpha^k}{\delta} d^{i(k),j(k)} = \overline{x}
 \end{equation}
 Taking the limit value of each member of (\ref{eq:nabla}) we have
 \begin{equation}
-\nabla_x f(x^*, y^*)^T d^* \geq \gamma \nabla_x f(x^*, y^*)^T d^*
+\nabla_x f(\overline{x},\overline{y})^T \overline{d} \geq \gamma \nabla_x f(\overline{x},\overline{y})^T \overline{d}
 \end{equation}
 From (\ref{eq:wrong}) we have
 \begin{equation}
