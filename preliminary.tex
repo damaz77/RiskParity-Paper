@@ -149,26 +149,26 @@ x^{k+1}_{i(k)}=\begin{cases}
 \end{proof}
 
 \subsection{Exact Line Search}
-When we move along the direction $d^{i^*,j^*}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i^*}, x_{j^*}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
+When we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i(k)}, x_{j(k)}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
 \begin{subequations}\label{eq:twocomp} 
 \begin{align}
-\min_{x_{i^*}, x_{j^*}} & \quad f(x_{i^*}, x_{j^*})  \\
-\text{s.t.} & \quad l_{i^*} \leq x_{i^*}  \leq u_{i^*} \\
-& \quad l_{j^*} \leq x_{j^*}  \leq u_{j^*} \\
-& \quad x_{i^*}+x_{j^*} = \underbrace{1-\sum_{h\ne {i^*},{j^*}}x_h}_c
+\min_{x_{i(k)}, x_{j(k)}} & \quad f(x_{i(k)}, x_{j(k)})  \\
+\text{s.t.} & \quad l_{i(k)} \leq x_{i(k)}  \leq u_{i(k)} \\
+& \quad l_{j(k)} \leq x_{j(k)}  \leq u_{j(k)} \\
+& \quad x_{i(k)}+x_{j(k)} = \underbrace{1-\sum_{h\ne {i(k)},{j(k)}}x_h}_c
 \end{align}
 \end{subequations}
 Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and then we obtain
 \begin{subequations}\label{eq:onecomp} 
 \begin{align}
-\min_{ x_{j^*}} & \quad f(x_{j^*}) \\
-\text{s.t.} & \quad x_{i^*} = c - x_{j^*} \\
-& \quad ll_{j^*} = \max\{l_{j^*}, c - u_{i^*}\} \leq x_{j^*} \leq \min \{ u_{j^*}, c-l_{i^*}\} = uu_{j^*}
+\min_{ x_{j(k)}} & \quad f(x_{j(k)}) \\
+\text{s.t.} & \quad x_{i(k)} = c - x_{j(k)} \\
+& \quad ll_{j(k)} = \max\{l_{j(k)}, c - u_{i(k)}\} \leq x_{j(k)} \leq \min \{ u_{j(k)}, c-l_{i(k)}\} = uu_{j(k)}
 \end{align}
 \end{subequations}
-Because the domain is $I=[ll_{j^*}, uu_{j^*}]$, if $f(x_{j^*})$ is continuous in $I$, then $f$ has a minimum in $I$. If $f(x_{j^*})$ is differentiable in $I$ we can compute $f'(x_{j^*})$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
-Let $r* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i^*,j^*}$ is
+Because the domain is $I=[ll_{j(k)}, uu_{j(k)}]$, and $f(x_{j(k)})$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(x_{j(k)})$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
+Let $r* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i(k),j(k)}$ is
 \begin{equation}
-\alpha^* = x_{j^*} - r^* > 0
+\alpha^* = x_{j(k)} - r^* > 0
 \end{equation} 
-\textit{TODO: problema di notazione, $x_{j^*}$ rappresenta il valore della componente $j^*$ del vettore $x$ prima della ricerca di linea}
+\textit{TODO: problema di notazione, $x_{j(k)}$ rappresenta il valore della componente $j(k)$ del vettore $x$ prima della ricerca di linea}
