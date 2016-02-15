@@ -62,7 +62,7 @@ where:
 
 
 \subsection{Set of sparse feasible directions}
-Because of $y$ is unconstrainted, we pay attention only on the $x$ variable to find a feasible descent direction w.r.t. $x$. 
+Because of we will describe our decomposition method with respect to $x$ and $y$, we have to pay attention only on the $x$ variable to find a feasible descent direction w.r.t. $x$. 
 In our case we want to build a set of sparse feasible direction in order to justify our decomposition approach.
 
 Let $(x,y) \in \mathcal{F}$ non stationary w.r.t. $x$, then it's easy to see that
@@ -132,17 +132,22 @@ x^{k+1}_{i(k)}=\begin{cases}
 \end{equation*}
 
 
-\iffalse
 \begin{algorithm}
- \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\alpha^{(k)} = \min \{\beta^{(k)},\alpha \}$}
+ \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\Delta^{(k)} =\min \{ x^k_{j(k)}-l, u-x^k_{i(k)}\}$ }
  %\KwResult{A feasible step $\lambda$}
- Set $\lambda = \alpha^{(k)}$\\
- \While{$f(x^{(k)} + \lambda d^{(k)}) > f(x^{(k)}) + \gamma \lambda \nabla_x f(x^{(k)})^T d^{(k)}$}{
-  Set $\lambda = \delta \lambda$
+ Set $\alpha = \Delta^{(k)}$\\
+ \While{$f(x^{k},y^k) + \alpha d^{k}) > f(x^{k},y^k) + \gamma \alpha \nabla_x f(x^{k},y^k)^T d^{k}$}{
+  Set $\alpha = \delta \alpha$
  }
  \caption{Armijo-Type Line Search}
 \end{algorithm}
-\fi
+
+\begin{proposition}
+ If we apply Armijo type line-search, using MVP and a descetìnt direction $d_k^{i,j}$ then exists $N \in \N$ such that at most for $N$ consecutive iterations, $\alpha_k=\Delta_k$.
+\end{proposition}
+\begin{proof}
+\end{proof}
+
 \subsection{Exact Line Search}
 When we move along the direction $d^{i^*,j^*}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i^*}, x_{j^*}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
 \begin{subequations}\label{eq:twocomp} 
