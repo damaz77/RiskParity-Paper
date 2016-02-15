@@ -11,7 +11,7 @@ From (\ref{eq:updatey}) we have
 f(x^{(k)}, y^{(k+1)}) \leq f(x^{(k)}, y^{(k)})
 \end{equation}
 and from the update rule of $x$ it follows (thanks to the Armijo properties)
-\begin{equation}
+\begin{equation}\label{eq:dec}
 f(x^{(k+1)}, y^{(k+1)}) \leq f(x^{(k)}, y^{(k+1)})
 \end{equation}
 Finally we have
@@ -23,8 +23,32 @@ Let $(x^*,y^*)$ be a limit point of $\{(x^k, y^k)\}$, i.e. there exist an infini
 \lim_{k \in K, k \rightarrow \infty} (x^k, y^k) = (x^*,y^*)
 \end{equation}
 By contradiction, let us assume that $(x^*,y^*)$ is not a solution. In this case, at least one of the following conditions hold:
+\begin{subequations}
+\begin{align}
+&\nabla_y f(x^*,y^*) \neq 0 \\
+&\exists \enskip i, j \enskip  \text{s.t.} \enskip x^*_i > l_i \enskip  \text{and} \enskip  \nabla_x f(x^*,y^*)^T d^{i,j} < 0
+\end{align}
+\end{subequations}
+For Point (1), we recall that for (\ref{eq:updatey}) $y^{(k+1)}$ minimizes $f(x^{(k)},y)$ with respect to $y$. So, if we imagine to perform Armijo along a descent direction (for example, $-\nabla_y f(x^{(k)},y^{(k)})$) we have
+\begin{equation}
+f(x^{(k)}, y^{(k+1)}) \leq f(x^{(k)}, y^{(k)}) - \gamma \alpha \parallel \nabla_y f(x^{(k)}, y^{(k)}) \parallel ^2
+\end{equation}
+Thanks to (\ref{eq:dec}) we can extend the Armijo convergence properties to $(x^{(k+1)}, y^{(k+1)})$. In particular, for Armijo we can write
+\begin{equation}
+\lim_{k \rightarrow \infty} \parallel \nabla_y f(x^{(k)}, y^{(k)}) \parallel =  \parallel \nabla_y f(x^{*}, y^{*}) \parallel = 0
+\end{equation}
+So we have demonstrate that Point (1) cannot hold.\\
+For Point (2), the algorithm performs an Armijo line search along $d^{i(k),j(k)}$ to determine the step $\alpha^{(k)}$. Thanks to Armijo we can write
+\begin{equation}\label{eq:armijoprop}
+\lim_{k \rightarrow \infty} \alpha^{(k)} \parallel d^{i(k),j(k)} \parallel \frac{ \left| \nabla_x f(x^{(k)}, y^{(k+1)})^T d^{i(k),j(k)} \right|}{\parallel d^{i(k),j(k)} \parallel} = 0
+\end{equation}
+From (\ref{eq:direction}), we know that $\parallel d^{i(k),j(k)} \parallel = \sqrt{2}$, so from (\ref{eq:armijoprop}) it follows
+\begin{equation}
+\lim_{k \rightarrow \infty} \alpha^{(k)}  \left| \nabla_x f(x^{(k)}, y^{(k+1)})^T d^{i(k),j(k)} \right| = 0
+\end{equation}
+So, at least one of the following conditions hold:
 \begin{enumerate}
-\item $\nabla_y f(x^*,y^*) \neq 0$
-\item $\exists \enskip i, j \enskip  \text{s.t.} \enskip x^*_i > l_i \enskip  \text{and} \enskip  \nabla_x f(x^*,y^*)^T d^{i,j} < 0$
+\item $\lim_{k \rightarrow \infty} \alpha^{(k)} = 0$
+\item $\lim_{k \rightarrow \infty} \left| \nabla_x f(x^{(k)}, y^{(k+1)})^T d^{i(k),j(k)} \right| = 0$
 \end{enumerate}
 \end{proof}
