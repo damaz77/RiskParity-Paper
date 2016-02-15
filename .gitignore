@@ -3,4 +3,5 @@
 *.log
 *.synctex.gz
 *.bbl
-*.blg 
+*.blg
+*.pdf 
