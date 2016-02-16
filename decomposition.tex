@@ -1,22 +1,22 @@
 The algorithm follows the Gauss-Seidel scheme with 2 blocks of variables ($x$ and $y$). At each iteration, we optimize $f$ w.r.t. one block of variables, considering the other block fixed. \\
 The $y$-block of variables is unconstrained, so we can find
 \begin{equation}\label{eq:updatey}
-y^{(k+1)} = \argmin_{y \in \mathbb{R}^m} f(x^{(k)},y)
+y^{k+1} = \argmin_{y \in \mathbb{R}^m} f(x^{k},y)
 \end{equation}
 using the first-order necessary condition, i.e. \textit{TODO: ma questo vale se f è convessa rispetto ad y}
 \begin{equation}
-\nabla_y f(x^{(k)}, y^{(k)}) = 0
+\nabla_y f(x^{k}, y^{k}) = 0
 \end{equation}
 
 \begin{algorithm}
- \KwData{Given the initial feasible guess $(x^{(0)}, y^{(0)})$}
+ \KwData{Given the initial feasible guess $(x^{0}, y^{0})$}
  Set $k = 0$\\
  \While{(not convergence)}{
-  Compute $y^{(k+1)}$ as in (\ref{eq:updatey})\\
-  Compute $\nabla_{x} f(x^{(k)},y^{(k+1)})$ \\
+  Compute $y^{k+1}$ as in (\ref{eq:updatey})\\
+  Compute $\nabla_{x} f(x^{k},y^{k+1})$ \\
   Choose indexes $i(k), j(k)$ using the Gauss-Southwell rules \\
-  Choose a step $\alpha^{(k)}$  along the direction $d^{i(k),j(k)}$ \\
-  Set $x^{(k+1)} = x^{(k)} + \alpha^{(k)}d^{i(k),j(k)}$ \\
+  Choose a step $\alpha^{k}$  along the direction $d^{i(k),j(k)}$ \\
+  Set $x^{k+1} = x^{k} + \alpha^{k}d^{i(k),j(k)}$ \\
   Set $k = k + 1$
  }
  \caption{Decomposition Algorithm}

@@ -6,11 +6,11 @@ Let us consider the following optimization problem:
 & \quad \mathbf{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $x \in \R^n$, $y \in \R^k$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathbf{1} \in \R^n$ is all composed by ones. 
+where $x \in \R^n$, $y \in \R^m$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathbf{1} \in \R^n$ is all composed by ones. 
 
 Now we define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
 \begin{equation}
-\mathcal{F} = \{(x,y) \in \R^{n+k} : \mathbf{1}^T x = 1, l \leq x \leq u\}.
+\mathcal{F} = \{(x,y) \in \R^{n+m} : \mathbf{1}^T x = 1, l \leq x \leq u\}.
 \end{equation}
 Since the constraints of Problem (\ref{eq:problem}) respect constraints qualification conditions, a feasible point $(x,y)$ is a stationary point, if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
 
@@ -18,7 +18,7 @@ Let $L(x,y,\lambda,\mu,\gamma)$ the Lagrangian function associated to Problem (\
 
 \begin{proposition}[Optimality conditions (Necessary)]\label{prop:KKT}
 
-Let $(x^*,y^*) \in \R^{n+k}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
+Let $(x^*,y^*) \in \R^{n+m}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
 \begin{equation}
  \begin{aligned}
   &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)= \nabla_x F(x^*,y^*)+\lambda^*-\mu^*+\gamma^*=0\\
@@ -42,14 +42,14 @@ Then there are three possible cases:
  -\gamma \hspace{1.65cm} l<x^*_i <u 
 \end{cases}
 \end{equation}
-Then if $x^*_j>l$:
+Then if $x^*_j>l$: \textit{TODO: io ho sempre fatto al contrario tra $i$ e $j$}
 \begin{equation}
  \frac{\partial f(x^*)}{dx_j} \le \frac{\partial f(x^*)}{dx_i}, \forall i
 \end{equation}
 
 Let $(x,y) \in \mathcal{F}$, we define a set of all feasible direction in $(x,y)$:
 \begin{equation}
- \mathcal{D}(x,y)=\{ d \in \R^{n+k}: \mathbf{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
+ \mathcal{D}(x,y)=\{ d \in \R^{n+m}: \mathbf{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
 \end{equation}
 where:
 \begin{equation}
@@ -101,7 +101,7 @@ This can be done computing the \emph{Most Violating Pair} $(i,j)$ such that $x_i
  (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x^*)}{dx_l} - \frac{\partial f(x^*)}{dx_m}  \right\}
 \end{equation}
 
-If one doesn't want to use decomposition methods, he can define a direction $d_{xy} \in \R^{n+k}$ such that:
+If one doesn't want to use decomposition methods, he can define a direction $d_{xy} \in \R^{n+m}$ such that:
 \begin{equation}
  d_{xy}=\{d^{i,j},-\nabla_yf(x,y)^
  \}
