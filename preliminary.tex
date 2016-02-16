@@ -132,7 +132,7 @@ x^{k+1}_{i(k)}=\begin{cases}
 \end{equation*}
 
 
-\begin{algorithm}
+\begin{algorithm}[ht]
  \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\Delta^{(k)} =\min \{ x^k_{j(k)}-l, u-x^k_{i(k)}\}$ }
  %\KwResult{A feasible step $\lambda$}
  Set $\alpha = \Delta^{(k)}$\\
@@ -143,10 +143,61 @@ x^{k+1}_{i(k)}=\begin{cases}
 \end{algorithm}
 
 \begin{proposition}\label{proposition:david}
- If we apply Armijo type line-search, using MVP and a descent direction $d_k^{i,j}$ then exists $N \in \N$ such that at most for $N$ consecutive iterations, $\alpha_k=\Delta_k$.
+ If we apply Armijo type line-search, using MVP and a descent direction $d_k^{i,j}$ then exists $N \in \N$ such that at most after $N$ consecutive iterations, $\alpha_k<\Delta_k$,i.e.:
+ \begin{equation}
+  a^{k+M}<\Delta^{k+M}
+ \end{equation}
 \end{proposition}
 \begin{proof}
+First of all we have to define $a-norm$ of a vector, such that:
+\begin{equation*}
+\begin{aligned}
+ ||x||_a:= |\{x_i| x_i >a_i\}| \\
+ ||x||_b:= |\{x_i| x_i <b_i\}| 
+ \end{aligned}
+\end{equation*}
 \end{proof}
+
+The maximum feasible step at every iteration is
+\begin{equation}
+\Delta_k= \min \{ x^k_{j(k)}-a_{j(k)}, b_{i(k)}-x^k_{i(k)}\}
+\end{equation}
+
+Then, once renaming $i(k)=i,j(k)=j$, at iteration $k+1$ we have:
+\begin{equation*}
+x^{k+1}_{j}=\begin{cases}
+ a_j \ &x^k_{i}\le b_i+a_j-x^k_{j}\\
+ x^k_{j}-b_i+x^k_{i} \ &x^k_{i}> b_i+a_j-x^k_{j}
+ \end{cases}
+\end{equation*}
+and:
+\begin{equation*}
+x^{k+1}_{i}=\begin{cases}
+ x^k_{j}-a_j+x^k_{i} \ &x^k_{i}\le b_i+a_j-x^k_{j}\\
+ b_i \ &x^k_{i}> b_i+a_j-x^k_{j}
+ \end{cases}
+\end{equation*}
+
+Hence we have the follwing cases:
+\begin{equation}
+ ||x^{k+1}||_a=\begin{cases} ||x_{k}||_a\hspace{2cm} x^k_{i}> b_i+a_j-x^k_{j} \\
+ ||x_k||_a-1\hspace{2cm} else               
+              \end{cases}
+\end{equation}
+and:
+\begin{equation}
+ ||x^{k+1}||_b=\begin{cases} ||x_{k}||_b\hspace{2cm} x^k_{i}\le b_i+a_j-x^k_{j} \\
+ ||x_k||_b-1\hspace{2cm} else               
+              \end{cases}
+\end{equation}
+
+Because of the sequences of $||\cdot||_a, ||\cdot||_b$ are not increasing.
+Indeed the two first cases hold for at most $2n!$ consecutive iteration (they are simple permutation of vector $x^k$ ) and the two second cases hold for at most $n-1$ consecutive iterations,
+we can conclude that there is a number $M(k) \in \mathbb{N}$ such that:
+\begin{equation}
+ \alpha_{k+M(k)} < \Delta_{k+M(k)}
+\end{equation}
+and $M(k)\le 2(n-1)n!$.
 
 \subsection{Exact Line Search}
 When we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i(k)}, x_{j(k)}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
