@@ -15,7 +15,7 @@ n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
 1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 \end{tabular}
-\caption{$x^{(0)}_i = \frac{1}{n} \quad \forall i$}
+\caption{$x^{(0)}_i = 1/n \quad \forall i$}
 \end{minipage}
 \hfill
 \begin{minipage}{.4\linewidth}
@@ -62,32 +62,33 @@ title=\textbf{Average execution time with {$\epsilon=10^{-6}$}},
 };
 \label{Subplot:exe_e6_exact}
 
-%\addplot [color=red,solid,mark=x,mark options={solid}]
-%  table[row sep=crcr]{%
-%100	 .118   \\
-%200	 .313	\\
-%300	 .625	\\
-%500	 1.884	\\
-%750	 5.20	\\
-%1000 12.38  \\
-%1250 24.99 \\
-%};
-%\label{Subplot:exe_e6_armijo}
+\addplot [color=red,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+100	 .073   \\
+200	 .184	\\
+300	 .344	\\
+500	 1.074	\\
+750	 2.934	\\
+1000 6.96  \\
+1250 14.06 \\
+1500 24.98 \\
+};
+\label{Subplot:exe_e6_armijo}
 
 \addplot [color=gr,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
 100	.008		\\
 200	.028		\\
 300	.074	    \\
-500	.315	    \\
-750	 1.092  \\
+500	.353	    \\
+750	 1.197  \\
 1000 3.15	\\
 1250 6.617	\\
 1500 11.765 \\
 };
 \label{Subplot:exe_e8_snopt}
 \addlegendentry{Optimal Step}
-%\addlegendentry{Armijo Step}
+\addlegendentry{Armijo Step}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
