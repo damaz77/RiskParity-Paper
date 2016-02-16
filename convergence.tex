@@ -26,7 +26,7 @@ By contradiction, let us assume that $(\overline{x},\overline{y})$ is not a solu
 \begin{subequations}
 \begin{align}
 &\nabla_y f(\overline{x},\overline{y}) \neq 0  \label{eq:a}\\
-&\exists \enskip i, j \enskip  \text{s.t.} \enskip \overline{x}_i > l_i \enskip  \text{and} \enskip  \nabla_x f(\overline{x},\overline{y})^T d^{i,j} < 0 \label{eq:b}
+&\exists \enskip i, j \enskip  \text{s.t.} \enskip \overline{x}_i > l_i \enskip  \text{and} \enskip  \nabla_x f(\overline{x},\overline{y})^T d^{i,j} = -\eta < 0 \label{eq:b}
 \end{align}
 \end{subequations}
 For Point (\ref{eq:a}), we recall that for (\ref{eq:updatey}) $y^{k+1}$ minimizes $f(x^{k},y)$ with respect to $y$. So, if we imagine to perform Armijo along a descent direction (for example, $-\nabla_y f(x^{k},y^{k})$) we have
@@ -46,11 +46,10 @@ From (\ref{eq:direction}), we know that $\parallel d^{i(k),j(k)} \parallel = \sq
 \begin{equation}\label{eq:armijoprop2}
 \lim_{k \in K, k \rightarrow \infty} \alpha^{k}  \left| \nabla_x f(x^{k}, y^{k+1})^T d^{i(k),j(k)} \right| = 0
 \end{equation}
-By contradiction, assume that 
+From (\ref{eq:b}) we can write
 \begin{equation}\label{eq:wrong}
 \lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(\overline{x},\overline{y})^T \overline{d} = -\eta < 0
 \end{equation}
-(in particular, (\ref{eq:b}) implies (\ref{eq:wrong})).
 From (\ref{eq:wrong}) and (\ref{eq:armijoprop2}) it follows that
 \begin{equation}\label{eq:alpha}
 \lim_{k \in K, k \rightarrow \infty} \alpha^k = 0
