@@ -1,42 +1,56 @@
-\begin{table}
-\begin{minipage}{.4\linewidth}
-\centering
-\begin{tabular}{ c | c | c | c }
-n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
-5    & 100.0\% & 100.0\% & 100.0\%\\\hline
-10   & 100.0\% & 100.0\% & 100.0\%\\\hline
-20   & 100.0\% & 100.0\% & 100.0\%\\\hline
-50   & 99.0\%  & 99.4\%  & 99.5\%\\\hline
-100  & 85.4\%  & 87.0\%  & 91.2\%\\\hline
-200  & 40.0\%  & 45.0\%  & 52.0\%\\\hline
-300  & 22.0\%  & 24.0\%  & 34.0\%\\\hline
-500  & 0.0\%   & 6.0\%   & 3.0\%\\\hline
-750  & 0.0\%   & 2.0\%   & 0.0\%\\\hline
-1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
-1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
-\end{tabular}
-\caption{$x^{(0)}_i = 1/n \quad \forall i$}
-\end{minipage}
-\hfill
-\begin{minipage}{.4\linewidth}
-\centering
-\begin{tabular}{ c | c| c | c}
-n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
-5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
-10   & 100.0\%  & 100.0\% & 100.0\%\\\hline
-20   & 99.8\%   & 99.8\%  & 99.8\%\\\hline
-50   & 100.0\%  & 99.8\%  & 99.1\%\\\hline
-100  & 100.0\%  & 99.8\%  & 96.6\% \\\hline
-200  & 100.0\%  & 99.6\%  & 94.8\% \\\hline
-300  & 100.0\%  & 99.0\%  & 92.0\% \\\hline
-500  & 100.0\%  & 99.0\%  & 92.5\%\\\hline
-750  & 99.0\%   & 98.0\%  & 86.5\%\\\hline
-1000 & 96.0\%   & 95.0\%  & 76.0\%\\\hline
-1250 & 90.0\%   & 93.0\%  & 76.5\%\\\hline
-\end{tabular}
-\caption{$x^{(0)}= [1, 0, .., 0]$}
-\end{minipage}
-\end{table}
+%\begin{table}
+%\begin{minipage}{.4\linewidth}
+%\centering
+%\begin{tabular}{ c | c | c | c }
+%n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+%5    & 100.0\% & 100.0\% & 100.0\%\\\hline
+%10   & 100.0\% & 100.0\% & 100.0\%\\\hline
+%20   & 100.0\% & 100.0\% & 100.0\%\\\hline
+%50   & 99.0\%  & 99.4\%  & 99.5\%\\\hline
+%100  & 85.4\%  & 87.0\%  & 91.2\%\\\hline
+%200  & 40.0\%  & 45.0\%  & 52.0\%\\\hline
+%300  & 22.0\%  & 24.0\%  & 34.0\%\\\hline
+%500  & 0.0\%   & 6.0\%   & 3.0\%\\\hline
+%750  & 0.0\%   & 2.0\%   & 0.0\%\\\hline
+%1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+%1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+%\end{tabular}
+%\caption{$x^{(0)}_i = 1/n \quad \forall i$}
+%\end{minipage}
+%\hfill
+%\begin{minipage}{.4\linewidth}
+%\centering
+%\begin{tabular}{ c | c| c | c}
+%n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+%5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
+%10   & 100.0\%  & 100.0\% & 100.0\%\\\hline
+%20   & 99.8\%   & 99.8\%  & 99.8\%\\\hline
+%50   & 100.0\%  & 99.8\%  & 99.1\%\\\hline
+%100  & 100.0\%  & 99.8\%  & 96.6\% \\\hline
+%200  & 100.0\%  & 99.6\%  & 94.8\% \\\hline
+%300  & 100.0\%  & 99.0\%  & 92.0\% \\\hline
+%500  & 100.0\%  & 99.0\%  & 92.5\%\\\hline
+%750  & 99.0\%   & 98.0\%  & 86.5\%\\\hline
+%1000 & 96.0\%   & 95.0\%  & 76.0\%\\\hline
+%1250 & 90.0\%   & 93.0\%  & 76.5\%\\\hline
+%\end{tabular}
+%\caption{$x^{(0)}= [1, 0, .., 0]$}
+%\end{minipage}
+%\end{table}
+\subsection{Experiments description}
+In this section we compare the decomposition algorithm (both with Armijo and exact line search) against SNOPT \cite{snopt}.
+The decomposition algorithm is written in \textit{Python 2.7} while we use the official Python interface for SNOPT. We also use \texttt{numpy} library, linked with \texttt{blas} and \texttt{ATLAS} libraries. The PC used for the experiments is equipped with and Intel i7 3630QM processor, 8GB of RAM and a Linux based distribution.\\
+In order to obtain comparable results, in our scheme we use a \textit{stop criterion} that is the same used by SNOPT, i.e. we stop the algorithm when
+\begin{equation}
+\left| \nabla_{x_{j(k)}} f(x^k,y^k) - \nabla_{x_{i(k)}} f(x^k,y^k)\right| < \epsilon
+\end{equation}
+In SNOPT, this is (almost) equivalent to set the \texttt{Major optimality tolerance} optional parameter to $\epsilon$. 
+In all the following experiments we used the NASDAQ-2196 dataset \cite{nasdaq}; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons.
+In Fig.(\ref{fig:perf}) all the results are reported for $\epsilon = 10^{-10}$. This value of $\epsilon$ is such that the obtained solutions $(x^*,y^*)$ satisfies
+\begin{equation}\label{eq:reseps}
+\max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
+\end{equation}
+where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$.
 
 \begin{figure}
 \begin{minipage}{\linewidth}
@@ -47,31 +61,31 @@ width=0.8\textwidth,
 xlabel={\# of assets},
 ylabel={Exe Time (s)},
 legend pos=north west,
-title=\textbf{Average execution time with {$\epsilon=10^{-6}$}},
+title=\textbf{Average execution time with {$\epsilon=10^{-10}$}},
 ]
 \addplot [color=blue,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
-100	.103\\
-200	.240	\\
-300	.421 	\\
-500	1.043 	\\
-750	2.651		\\
-1000 5.170  \\
-1250 8.81 \\
-1500 15.261 \\
+100	.148\\
+200	.346	\\
+300	.583	\\
+500	1.486	\\
+750	3.147		\\
+1000 6.431 \\
+1250 11.57 \\
+1500 18.6\\
 };
 \label{Subplot:exe_e6_exact}
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
-100	 .073   \\
-200	 .184	\\
-300	 .344	\\
-500	 1.074	\\
-750	 2.934	\\
-1000 6.96  \\
-1250 14.06 \\
-1500 24.98 \\
+100	 .101   \\
+200	 .269	\\
+300	 .481	\\
+500	 1.417	\\
+750	 3.763	\\
+1000 8.72  \\
+1250 17.16 \\
+1500 28.75 \\
 };
 \label{Subplot:exe_e6_armijo}
 
@@ -104,39 +118,34 @@ xlabel={\# of assets},
 ylabel={Iterations},
 scaled y ticks=false,
 legend pos=north west,
-title=\textbf{Average iterations number with {$\epsilon=10^{-6}$}}
+title=\textbf{Average iterations number with {$\epsilon=10^{-10}$}}
 ]
 \addplot [color=blue,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
-%5	22\\
-%10	37\\
-%20	68\\
-%30	105\\
-50	188\\
-75	300\\
-100	422\\
-200	927\\
-300	1462\\
-500	2606\\
-750	4215\\
-1000	5626\\
-1250	7215\\
+%50	242\\
+%75	379\\
+100	609 \\
+200	1315 \\
+300	2053 \\
+500	3538\\
+750	5343 \\
+1000	7200\\
+1250	9251\\
+1500    11011\\
 };
+
 \addplot [color=red,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-%5	26		\\
-%10	49		\\
-%20	92		\\
-%30	140		\\
-50	240		\\
-75	385		\\
-100	584		\\
-200	1203		\\
-300	1992		\\
-500	3705		\\
-750	6292		\\
-1000	 9254	\\
-1250	 12498	\\
+ table[row sep=crcr]{%
+%%50	309    \\
+%%75	483    \\
+100	782    \\
+200	1754		\\
+300	2763		\\
+500	5048		\\
+750	8225		\\
+1000	 11871	\\
+1250	 15552	\\
+1500	 19347\\
 };
 \addlegendentry{Optimal Step}
 \addlegendentry{Armijo Step}
@@ -144,5 +153,6 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-6}$}}
 \end{tikzpicture}
 }
 \end{minipage}
+\label{perf}
 \end{figure}
 
