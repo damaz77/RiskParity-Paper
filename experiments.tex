@@ -109,6 +109,7 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-10}$}}
 1250	 15552	\\
 1500	 19347\\
 };
+
 \addlegendentry{Optimal Step}
 \addlegendentry{Armijo Step}
 \end{axis}
@@ -118,42 +119,42 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-10}$}}
 \label{perf}
 \end{figure}
 
-%\begin{table}
-%\begin{minipage}{.4\linewidth}
-%\centering
-%\begin{tabular}{ c | c | c | c }
-%n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
-%5    & 100.0\% & 100.0\% & 100.0\%\\\hline
-%10   & 100.0\% & 100.0\% & 100.0\%\\\hline
-%20   & 100.0\% & 100.0\% & 100.0\%\\\hline
-%50   & 99.0\%  & 99.4\%  & 99.5\%\\\hline
-%100  & 85.4\%  & 87.0\%  & 91.2\%\\\hline
-%200  & 40.0\%  & 45.0\%  & 52.0\%\\\hline
-%300  & 22.0\%  & 24.0\%  & 34.0\%\\\hline
-%500  & 0.0\%   & 6.0\%   & 3.0\%\\\hline
-%750  & 0.0\%   & 2.0\%   & 0.0\%\\\hline
-%1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
-%1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
-%\end{tabular}
-%\caption{$x^{(0)}_i = 1/n \quad \forall i$}
-%\end{minipage}
-%\hfill
-%\begin{minipage}{.4\linewidth}
-%\centering
-%\begin{tabular}{ c | c| c | c}
-%n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
-%5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
-%10   & 100.0\%  & 100.0\% & 100.0\%\\\hline
-%20   & 99.8\%   & 99.8\%  & 99.8\%\\\hline
-%50   & 100.0\%  & 99.8\%  & 99.1\%\\\hline
-%100  & 100.0\%  & 99.8\%  & 96.6\% \\\hline
-%200  & 100.0\%  & 99.6\%  & 94.8\% \\\hline
-%300  & 100.0\%  & 99.0\%  & 92.0\% \\\hline
-%500  & 100.0\%  & 99.0\%  & 92.5\%\\\hline
-%750  & 99.0\%   & 98.0\%  & 86.5\%\\\hline
-%1000 & 96.0\%   & 95.0\%  & 76.0\%\\\hline
-%1250 & 90.0\%   & 93.0\%  & 76.5\%\\\hline
-%\end{tabular}
-%\caption{$x^{(0)}= [1, 0, .., 0]$}
-%\end{minipage}
-%\end{table}
+\begin{table}
+\begin{minipage}{.4\linewidth}
+\centering
+\begin{tabular}{ c | c | c | c }
+n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+5    & 100.0\% & 100.0\% & 100.0\%\\\hline
+10   & 100.0\% & 100.0\% & 100.0\%\\\hline
+20   & 100.0\% & 100.0\% & 100.0\%\\\hline
+50   & 99.0\%  & 99.4\%  & 99.5\%\\\hline
+100  & 85.4\%  & 87.0\%  & 91.2\%\\\hline
+200  & 40.0\%  & 45.0\%  & 52.0\%\\\hline
+300  & 22.0\%  & 24.0\%  & 34.0\%\\\hline
+500  & 0.0\%   & 6.0\%   & 3.0\%\\\hline
+750  & 0.0\%   & 2.0\%   & 0.0\%\\\hline
+1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
+\end{tabular}
+\caption{$x^{0}_i = 1/n \quad \forall i$}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\linewidth}
+\centering
+\begin{tabular}{ c | c| c | c}
+n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
+10   & 100.0\%  & 100.0\% & 99.9\%\\\hline
+20   & 100.0\%  & 100.0\%  & 100.0\%\\\hline
+50   & 100.0\%  & 99.9\%  & 99.9\%\\\hline
+100  & 99.9\%   & 100.0\%  & 99.6\% \\\hline
+200  & 100.0\%  & 100.0\%  & 98.8\% \\\hline
+300  & 100.0\%  & 100.0\%  & 96.6\% \\\hline
+500  & 99.5\%   & 99.2\%   & 88.0\%\\\hline
+750  & 99.5\%   & 99.2\%  & 83.0\%\\\hline
+1000 & 98.0\%   & 95.2\%  & 83.0\%\\\hline
+1250 & 91.5\%   & 93.2\%  & 73.0\%\\\hline
+\end{tabular}
+\caption{$x^{0}= [1, 0, .., 0]$}
+\end{minipage}
+\end{table}
