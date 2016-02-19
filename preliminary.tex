@@ -71,7 +71,7 @@ Let $(x,y) \in \mathcal{F}$ non stationary w.r.t. $x$, then it's easy to see tha
 \end{equation}
 hence $\exists i$ such that $x_i>0$ and $j \ne i$ such that:
 \begin{equation}
- \frac{\partial f(x^*)}{dx_i} > \frac{\partial f(x^*)}{dx_j}, 
+ \frac{\partial f(x)}{dx_i} > \frac{\partial f(x)}{dx_j}, 
 \end{equation}
 
 Now we define a direction $d^{i,j} \in \R^n$ with only two non-zero components such that:
@@ -98,7 +98,7 @@ Then we can apply sufficient conditions for descent direction in $x$, such that:
 As always, we should choose the steepest descent direction composed by only two non-zero components.
 This can be done computing the \emph{Most Violating Pair} $(i,j)$ such that $x_i>0$ and:
 \begin{equation}
- (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x^*)}{dx_l} - \frac{\partial f(x^*)}{dx_m}  \right\}
+ (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x)}{dx_l} - \frac{\partial f(x)}{dx_m}  \right\}
 \end{equation}
 
 If one doesn't want to use decomposition methods, he can define a direction $d_{xy} \in \R^{n+m}$ such that:
@@ -149,49 +149,49 @@ x^{k+1}_{i(k)}=\begin{cases}
  \end{equation}
 \end{proposition}
 \begin{proof}
-First of all we have to define $a-norm$ of a vector, such that:
+First of all we have to consider $l_i = l, u_i=u, \forall i$ and we define $l-norm (u-norm)$ of a vector, such that:
 \begin{equation*}
 \begin{aligned}
- ||x||_a:= |\{x_i| x_i >a_i\}| \\
- ||x||_b:= |\{x_i| x_i <b_i\}| 
+ ||x||_l:= |\{x_i| x_i >l\}| \\
+ ||x||_u:= |\{x_i| x_i <u\}| 
  \end{aligned}
 \end{equation*}
 \end{proof}
 
 The maximum feasible step at every iteration is
 \begin{equation}
-\Delta_k= \min \{ x^k_{j(k)}-a_{j(k)}, b_{i(k)}-x^k_{i(k)}\}
+\Delta_k= \min \{ x^k_{j(k)}-l, u-x^k_{i(k)}\}
 \end{equation}
 
 Then, once renaming $i(k)=i,j(k)=j$, at iteration $k+1$ we have:
 \begin{equation*}
 x^{k+1}_{j}=\begin{cases}
- a_j \ &x^k_{i}\le b_i+a_j-x^k_{j}\\
- x^k_{j}-b_i+x^k_{i} \ &x^k_{i}> b_i+a_j-x^k_{j}
+ l \ &x^k_{i}\le u+l-x^k_{j}\\
+ x^k_{j}-u+x^k_{i} \ &x^k_{i}> u+l-x^k_{j}
  \end{cases}
 \end{equation*}
 and:
 \begin{equation*}
 x^{k+1}_{i}=\begin{cases}
- x^k_{j}-a_j+x^k_{i} \ &x^k_{i}\le b_i+a_j-x^k_{j}\\
- b_i \ &x^k_{i}> b_i+a_j-x^k_{j}
+ x^k_{j}-l+x^k_{i} \ &x^k_{i}\le u+l-x^k_{j}\\
+ u \ &x^k_{i}> u+l-x^k_{j}
  \end{cases}
 \end{equation*}
 
 Hence we have the follwing cases:
 \begin{equation}
- ||x^{k+1}||_a=\begin{cases} ||x_{k}||_a\hspace{2cm} x^k_{i}> b_i+a_j-x^k_{j} \\
- ||x_k||_a-1\hspace{2cm} else               
+ ||x^{k+1}||_l=\begin{cases} ||x_{k}||_l\hspace{2cm} x^k_{i}> u+l-x^k_{j} \\
+ ||x_k||_l-1\hspace{2cm} else               
               \end{cases}
 \end{equation}
 and:
 \begin{equation}
- ||x^{k+1}||_b=\begin{cases} ||x_{k}||_b\hspace{2cm} x^k_{i}\le b_i+a_j-x^k_{j} \\
- ||x_k||_b-1\hspace{2cm} else               
+ ||x^{k+1}||_u=\begin{cases} ||x_{k}||_u\hspace{2cm} x^k_{i}\le u+l-x^k_{j} \\
+ ||x_k||_u-1\hspace{2cm} else               
               \end{cases}
 \end{equation}
 
-Because of the sequences of $||\cdot||_a, ||\cdot||_b$ are not increasing.
+Because of the sequences of $||\cdot||_l, ||\cdot||_u$ are not increasing.
 Indeed the two first cases hold for at most $2n!$ consecutive iteration (they are simple permutation of vector $x^k$ ) and the two second cases hold for at most $n-1$ consecutive iterations,
 we can conclude that there is a number $M(k) \in \mathbb{N}$ such that:
 \begin{equation}
@@ -212,14 +212,13 @@ When we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}
 Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and then we obtain
 \begin{subequations}\label{eq:onecomp} 
 \begin{align}
-\min_{ x_{j(k)}} & \quad f(x_{j(k)}) \\
-\text{s.t.} & \quad x_{i(k)} = c - x_{j(k)} \\
-& \quad ll_{j(k)} = \max\{l_{j(k)}, c - u_{i(k)}\} \leq x_{j(k)} \leq \min \{ u_{j(k)}, c-l_{i(k)}\} = uu_{j(k)}
+\min_{\xi} & \quad f(\xi) \\
+\text{s.t.} & \quad x_{i(k)} = c - \xi \\
+& \quad ll_{j(k)} = \max\{l_{j(k)}, c - u_{i(k)}\} \leq \xi \leq \min \{ u_{j(k)}, c-l_{i(k)}\} = uu_{j(k)}
 \end{align}
 \end{subequations}
-Because the domain is $I=[ll_{j(k)}, uu_{j(k)}]$, and $f(x_{j(k)})$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(x_{j(k)})$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
-Let $r* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i(k),j(k)}$ is
+Because the domain is $I=[ll_{j(k)}, uu_{j(k)}]$, and $f(\xi)$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(\xi)$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
+Let $\xi^* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i(k),j(k)}$ is
 \begin{equation}
-\alpha^* = x_{j(k)} - r^* > 0
+\alpha_k^* = x_{j(k)} - \xi^* > 0
 \end{equation} 
-\textit{TODO: problema di notazione, $x_{j(k)}$ rappresenta il valore della componente $j(k)$ del vettore $x$ prima della ricerca di linea}
