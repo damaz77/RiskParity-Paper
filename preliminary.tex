@@ -42,7 +42,7 @@ Then there are three possible cases:
  -\gamma \hspace{1.65cm} l<x^*_i <u 
 \end{cases}
 \end{equation}
-Then if $x^*_i>l$: \textit{TODO: io ho sempre fatto al contrario tra $i$ e $j$}
+Then if $x^*_i>l$: 
 \begin{equation}
  \frac{\partial f(x^*,y^*)}{dx_i} \le \frac{\partial f(x^*,y^*)}{dx_h}, \forall h
 \end{equation}
@@ -238,10 +238,10 @@ Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and the
 \end{subequations}
 where:
 \begin{equation}
-\begin{align}
+\begin{aligned}
  l_{\xi} = \max\{l_{j(k)}, c - u_{i(k)}\}\\
  u_{\xi}= \min \{ u_{j(k)}, c-l_{i(k)}\}  
- \end{align}
+ \end{aligned}
 \end{equation}
 
 Because the domain is $I=[l_{\xi}, u_{\xi}]$, and $f(\xi)$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(\xi)$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
