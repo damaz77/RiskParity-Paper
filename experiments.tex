@@ -63,8 +63,8 @@ title=\textbf{Average execution time with {$\epsilon=10^{-10}$}},
 1500 11.765 \\
 };
 \label{Subplot:exe_e8_snopt}
-\addlegendentry{Optimal Step}
-\addlegendentry{Armijo Step}
+\addlegendentry{Exact LS}
+\addlegendentry{Armijo LS}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
@@ -78,9 +78,8 @@ title=\textbf{Average execution time with {$\epsilon=10^{-10}$}},
 width=0.8\textwidth,
 xlabel={\# of assets},
 ylabel={Iterations},
-scaled y ticks=false,
 legend pos=north west,
-title=\textbf{Average iterations number with {$\epsilon=10^{-10}$}}
+title=\textbf{Average \# of iterations with {$\epsilon=10^{-10}$}}
 ]
 \addplot [color=blue,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
@@ -110,8 +109,8 @@ title=\textbf{Average iterations number with {$\epsilon=10^{-10}$}}
 1500	 19347\\
 };
 
-\addlegendentry{Optimal Step}
-\addlegendentry{Armijo Step}
+\addlegendentry{Exact LS}
+\addlegendentry{Armijo LS}
 \end{axis}
 \end{tikzpicture}
 }
