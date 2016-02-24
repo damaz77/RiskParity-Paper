@@ -4,14 +4,14 @@ The $y$-block of variables is unconstrained, so we can find
 y^{k+1} = \argmin_{y \in \mathbb{R}^m} f(x^{k},y)
 \end{equation}
 
-\begin{algorithm}
+\begin{algorithm}[ht]
  \KwData{Given the initial feasible guess $(x^{0}, y^{0})$}
  Set $k = 0$\\
  \While{(not convergence)}{
   Compute $y^{k+1}$ as in (\ref{eq:updatey})\\
   Compute $\nabla_{x} f(x^{k},y^{k+1})$ \\
   Choose indexes $i(k), j(k)$ using the Gauss-Southwell rules \\
-  Choose a step $\alpha^{k}$  along the direction $d^{i(k),j(k)}$, with QLS or Exact LS\\
+  Choose a step $\alpha^{k}$  along the direction $d^{i(k),j(k)}$, with QLS or ELS\\
   Set $x^{k+1} = x^{k} + \alpha^{k}d^{i(k),j(k)}$ \\
   Set $k = k + 1$
  }

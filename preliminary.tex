@@ -3,16 +3,16 @@ Let us consider the following optimization problem:
 \begin{align}
 \min_{x,y} & \quad f(x,y)  \\
 \text{s.t.} & \quad l \leq x \leq u \\
-& \quad \mathbf{1}^T x = 1 
+& \quad \mathds{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $x \in \R^n$, $y \in \R^m$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathbf{1} \in \R^n$ is all composed by ones. 
+where $x \in \R^n$, $y \in \R^m$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. 
 
 Now we define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
 \begin{equation}
-\mathcal{F} = \{(x,y) \in \R^{n+m} : \mathbf{1}^T x = 1, l \leq x \leq u\}.
+\mathcal{F} = \{(x,y) \in \R^{n+m} : \mathds{1}^T x = 1, l \leq x \leq u\}.
 \end{equation}
-Since the constraints of Problem (\ref{eq:problem}) respect constraints qualification conditions, a feasible point $(x,y)$ is a stationary point, if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
+Since the constraints of Problem (\ref{eq:problem}) respect constraints qualification conditions, a point $(x,y) \in \mathcal{F}$ is critical, if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
 
 Let $L(x,y,\lambda,\mu,\gamma)$ the Lagrangian function associated to Problem (\ref{eq:problem}) then we can write KKT conditions.
 
@@ -21,10 +21,10 @@ Let $L(x,y,\lambda,\mu,\gamma)$ the Lagrangian function associated to Problem (\
 Let $(x^*,y^*) \in \R^{n+m}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
 \begin{equation}
  \begin{aligned}
-  &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)= \nabla_x F(x^*,y^*)+\lambda^*-\mu^*+\gamma^*=0\\
- &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)=\nabla_y F(x^*,y^*) =0 \\
-    &\lambda^*_i(l-x_i^*)=0,\ \forall i\\
- &\mu^*_i(x_i^*-u)=0,\ \forall i\\
+  &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)= \nabla_x f(x^*,y^*)+\lambda^*-\mu^*+\gamma^*=0\\
+ &\nabla_y L(x^*,y^*,\lambda^*,\mu^*,\gamma^*)=\nabla_y f(x^*,y^*) =0 \\
+    &\lambda^*_i(l_i-x_i^*)=0,\ \forall i\\
+ &\mu^*_i(x_i^*-u_i)=0,\ \forall i\\
    & \lambda^*,\mu^*\ge0 \\
  \end{aligned}
 \end{equation}
@@ -37,32 +37,36 @@ From the first condition we have:
 
 Then there are three possible cases:
 \begin{equation}
- \frac{\partial F(x^*,y^*)}{dx_i} = \begin{cases} -\mu_i^* -\gamma \hspace{1cm} x^*_i =u \\
+ \frac{\partial f(x^*,y^*)}{dx_i} = \begin{cases} -\mu_i^* -\gamma \hspace{1cm} x^*_i =u \\
  -\gamma+\lambda^*_i \hspace{1cm} x^*_i =l \\
  -\gamma \hspace{1.65cm} l<x^*_i <u 
 \end{cases}
 \end{equation}
-Then if $x^*_i>l$: 
+Then if $x^*_i>l_i$: 
 \begin{equation}
  \frac{\partial f(x^*,y^*)}{dx_i} \le \frac{\partial f(x^*,y^*)}{dx_h}, \forall h
 \end{equation}
 
+After writing KKT optimality condition we focus on feasible direction in a feasibile point.
+
 Let $(x,y) \in \mathcal{F}$, we define a set of all feasible direction in $(x,y)$:
 \begin{equation}
- \mathcal{D}(x,y)=\{ d \in \R^{n+m}: \mathbf{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
+ \mathcal{D}(x,y)=\{ d \in \R^{n+m}: \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
 \end{equation}
 where:
 \begin{equation}
  \begin{aligned}
-  &L(x)=\{ i: \ x_i=l\}\\
-  &U(x)=\{ i: \ x_i=u\}
+  &L(x)=\{ i: \ x_i=l_i\}\\
+  &U(x)=\{ i: \ x_i=u_i\}
  \end{aligned}
 \end{equation}
 
-
+and $d_x \in \R^n$ represent direction $d$ with respect to $x$ variable.
 
 \subsection{Set of sparse feasible directions}
-Because of we will describe our decomposition method with respect to $x$ and $y$, we have to pay attention only on the $x$ variable to find a feasible descent direction w.r.t. $x$. 
+Because of we will describe our decomposition method with respect to $x$ and $y$, we have to pay attention only on the $x$ variable in order to find a feasible descent direction in $(x,y)$.
+Then when we will talk about line search algorithm, we always refer to $x$ variable.
+
 In our case we want to build a set of sparse feasible direction in order to justify our decomposition approach.
 
 Let $(x,y) \in \mathcal{F}$ non stationary w.r.t. $x$, then it's easy to see that
@@ -85,27 +89,29 @@ d_h^{i,j}=
 \end{equation}
 
 \begin{proposition}
-Let $(x,y)$ a feasible point for Problem (\ref{eq:problem}). Then the direction $d^{i,j}$ is  feasible and descent direction in $x$.
+Let $(x,y) \in \mathcal{F}$, then the direction $d^{i,j}$ is a feasible and descent direction in $x$.
 \end{proposition}
 \begin{proof}
-For the feasibility it is enough to see that $\mathbf{1}^Td^{i,j}=1-1=0$.
+For the feasibility it is enough to see that $\mathds{1}^Td^{i,j}=1-1=0$.
 Then we can apply sufficient conditions for descent direction in $x$, such that:
 \begin{equation*}
- \nabla_xf(x,y)^Td^{i,j} =  \frac{\partial f(x)}{dx_i} - \frac{\partial f(x)}{dx_j}<0; 
+ \nabla_xf(x,y)^Td^{i,j} =  \frac{\partial f(x,y)}{dx_i} - \frac{\partial f(x,y)}{dx_j}<0; 
 \end{equation*}
 \end{proof}
 
 As always, we should choose the steepest descent direction composed by only two non-zero components.
 This can be done computing the \emph{Most Violating Pair} $(i,j)$ such that $x_j>l_j$ and:
 \begin{equation}
- (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x)}{dx_l} - \frac{\partial f(x)}{dx_m}  \right\}
+ (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x,y)}{dx_l} - \frac{\partial f(x,y)}{dx_m}  \right\}
 \end{equation}
 
-If one doesn't want to use decomposition methods, he can define a direction $d_{xy} \in \R^{n+m}$ such that:
+If we don't use decomposition methods, we can alternatively define a feasible descent direction $d \in \R^{n+m}$, in $(x,y)$ such that:
 \begin{equation}
- d_{xy}=\{d^{i,j},-\nabla_yf(x,y)\}
+ d=\left(\begin{matrix}d^{i,j}\\
+ -\nabla_yf(x,y)
+   \end{matrix}\right)
 \end{equation}
-
+\iffalse
 \subsection{Armijo-Type Line Search Algorithm}
 In this section, we briefly describe the well-known Armijo-type line search along a feasible descent direction. The procedure will be used in the decomposition method presented in the next section. 
 Let $d^{k} \in \mathcal{D}(x_k)$  $x^{k} \in \mathcal{F}$. In particular we choose $d^{k}=d^{i,j}_k$ with MVP $(i(k),j(k))$.
@@ -124,7 +130,7 @@ It is easy to see that:
  }
  \caption{Armijo-Type Line Search}
 \end{algorithm}
-\iffalse
+
 Then at iteration $k+1$ we have:
 \begin{equation*}
 x^{k+1}_{j(k)}=\begin{cases}
@@ -200,14 +206,29 @@ we can conclude that there is a number $M(k) \in \mathbb{N}$ such that:
 \end{equation}
 and $M(k)\le 2(n-1)n!$.
 \fi
-\subsection{Quadratic Line Search}
-Another possible line search method is quadratic line search, which is very useful in convergence analysis because it guarantees that the distance between two consecutive points converges to zero.
-The QLS algorithm procedure is Armijo-like, but the step $\alpha_k$ is accepted if it satisfies:
+\subsection{Quadratic Line Search (QLS)}
+In order to find a feasible step along a descent direction in $x^k$, we use a line search method called quadratic line search.
+
+It's easy to see that the maximum feasible step at every iteration $k$ is:
+\begin{equation}
+\Delta_k= \min \{ x^k_{j(k)}-l_{j(k)}, u_{i(k)}-x^k_{i(k)}\}
+\end{equation}
+The QLS algorithm procedure (algorithm \ref{alg:QLS}) starts from $\alpha_k = \Delta_k$ and decreases $\alpha_k$ until:
 \begin{equation}
 f(x_k+\alpha_kd_k) \le  f(x_k)- \gamma (\alpha_k||d_k||)^2
 \end{equation}
  where $d_k$ is a descent direction in $x_k$.
 
+
+
+Altough the most famous line search method is Armijo-Type, its most important drawback is that it can't guarantee that:
+\begin{equation}
+ \displaystyle \lim_{k\rightarrow \infty} ||x^{k+1}-x^{k}|| =0
+\end{equation}
+
+
+
+ 
  \begin{algorithm}[ht]
  \KwData{Given $\alpha > 0$, $\delta \in (0,1)$, $\gamma \in (0, 1/2)$ and the initial stepsize $\Delta^{k} =\min \{ x^k_{j(k)}-l, u-x^k_{i(k)}\}$ }
  %\KwResult{A feasible step $\lambda$}
@@ -215,11 +236,12 @@ f(x_k+\alpha_kd_k) \le  f(x_k)- \gamma (\alpha_k||d_k||)^2
  \While{$f(x^{k},y^k) + \alpha d^{k}) > f(x^{k},y^k) - \gamma \left(\alpha ||d^{k}||\right)^2$}{
   Set $\alpha = \delta \alpha$
  }
- \caption{QLS Line Search}
+ \caption{QLS Line Search}\label{alg:QLS}
 \end{algorithm}
 
-\subsection{Exact Line Search}
-When we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i(k)}, x_{j(k)}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
+QLS algorithm has also the same convergency properties \cite{sciandrone-galligari-dilorenzo} of Armijo-type.
+\subsection{Exact Line Search (ELS)}
+In our case when we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}), we modify only 2 variables ($x_{i(k)}, x_{j(k)}$) leaving the others unchanged. Thus, we can see our $f(x,y)$ as a function of two components, i.e. we can rewrite Problem (\ref{eq:problem}) as
 \begin{subequations}\label{eq:twocomp} 
 \begin{align}
 \min_{x_{i(k)}, x_{j(k)}} & \quad f(x_{i(k)}, x_{j(k)})  \\
@@ -228,7 +250,7 @@ When we move along the direction $d^{i(k),j(k)}$, defined in (\ref{eq:direction}
 & \quad x_{i(k)}+x_{j(k)} = \underbrace{1-\sum_{h\ne {i(k)},{j(k)}}x_h}_c
 \end{align}
 \end{subequations}
-Thanks to the last constraint, we can substitute $x_{i^*} = c - x_{j^*}$ and then we obtain
+Thanks to the last constraint, we can substitute $x_{i(k)} = c - x_{j(k)}$ and then we obtain
 \begin{subequations}\label{eq:onecomp} 
 \begin{align}
 \min_{\xi} & \quad f(\xi) \\
@@ -244,8 +266,10 @@ where:
  \end{aligned}
 \end{equation}
 
-Because the domain is $I=[l_{\xi}, u_{\xi}]$, and $f(\xi)$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(\xi)$. Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
-Let $\xi^* = \argmin_{r \in R} f(r)$, then the optimal step $\alpha^*$ along the direction $d^{i(k),j(k)}$ is
+Because the domain is $I=[l_{\xi}, u_{\xi}]$, and $f(\xi)$ is continuous and differentiable in $I$, then $f$ has a minimum in $I$ and we can compute $f'(\xi)$. 
+
+Let $R = \{ r \enskip | \enskip f'(r) = 0, r \in I \}$ be set set of the real feasible roots of $f'$. Each $r \in R$ can be a local maximum, minimum or flex; if $R = \{ \emptyset \}$, then the minimum of $f$ is on the extreme points of $I$.\\ 
+Let $\xi^* =\displaystyle \argmin_{r \in R}\{ f(r)\}$, the optimal step $\alpha_k^*$ along the direction $d^{i(k),j(k)}$ is
 \begin{equation}
 \alpha_k^* = x_{j(k)} - \xi^* > 0
 \end{equation} 

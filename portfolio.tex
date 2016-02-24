@@ -12,13 +12,13 @@ where $\theta \in \R$ and $q_i$ is the $i$-th column of $Q$. Note that the probl
 \end{equation}
 which is a sufficient condition for a strictly convex function. At each iteration $k$, we have 
 \begin{equation}
-\theta^{(k+1)} = \argmin_\theta f(x^{(k)},\theta)
+\theta^{k+1} = \argmin_\theta f(x^{k},\theta)
 \end{equation}
-$f$ is strictly convex with respect to $\theta$, so we can find $\theta^{(k+1)}$ as a solution of
+$f$ is strictly convex with respect to $\theta$, so we can find $\theta^{k+1}$ as a solution of
 \begin{equation}
-\nabla_\theta f(x^{(k)},\theta) = 0 
+\frac{\partial f(x^{k},\theta)}{d\theta} = 0 
 \end{equation}
 That is
 \begin{equation}
-\theta^{(k+1)} = \frac{\sum_{i=1}^n x_i^{(k)} q_i^T \cdot x^{(k)}}{n}
+\theta^{k+1} = \frac{\sum_{i=1}^n x_i^{k} q_i^T \cdot x^{k}}{n}
 \end{equation}

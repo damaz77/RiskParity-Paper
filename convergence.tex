@@ -51,9 +51,9 @@ From (\ref{eq:direction}), we know that $\parallel d^{i(k),j(k)} \parallel = \sq
 %\lim_{k \in K, k \rightarrow \infty} \alpha^{k}  \left| \nabla_x f(x^{k}, y^{k+1})^T d^{i(k),j(k)} \right| = 0
 \lim_{k \in K, k \rightarrow \infty} \alpha^{k}=0
 \end{equation}
-From (\ref{eq:b}) we can write
+From (\ref{eq:b}) and because of $\overline{d}$ is limit of steepest descent direction in $\overline{x}$  we can write
 \begin{equation}\label{eq:wrong}
-\lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(\overline{x},\overline{y})^T \overline{d} = -\eta < 0
+\lim_{k \in K, k \rightarrow \infty} \nabla_x f(x^k, y^k)^T d^{i(k),j(k)} = \nabla_x f(\overline{x},\overline{y})^T \overline{d} = \eta_1 \le \eta < 0
 \end{equation}
 In general, we have that
 \begin{equation}
@@ -86,18 +86,18 @@ Taking the limit value of each member of (\ref{eq:nabla}) we have
 \begin{equation}
 \nabla_x f(\overline{x},\overline{y})^T \overline{d} \geq 0 %\gamma \nabla_x f(\overline{x},\overline{y})^T \overline{d}
 \end{equation}
-which contradicts:
+which contradicts that $\exists i,j$ such that $\overline{x}_i >l_i$ and:
 \begin{equation}
-\nabla_x f(\overline{x},\overline{y})^T \overline{d} =\eta <0
+\nabla_x f(\overline{x},\overline{y})^T d^{i,j} =\eta <0
 \end{equation}
 
 %that does not hold, since $\gamma < 1$. So we have proved that, if (\ref{eq:great}) holds, (\ref{eq:b}) cannot hold. \\
 
-If (\ref{eq:zero}) holds, we have to define the following subset of indexes,for all iteration $k$:
+If (\ref{eq:zero}) holds, we have to define the following subset of indexes, for all iteration $k$:
 \begin{equation}
  \begin{aligned}
-   L(x^k) =\{ i \in\{1,\ldots,n \}| x^k_i = a_i\}\\
-  R(x^k) =\{i \in\{1,\ldots,n \} | x^k_i = b_i\}
+   L(x^k) =\{ i \in\{1,\ldots,n \}: x^k_i = a_i\}\\
+  U(x^k) =\{i \in\{1,\ldots,n \} : x^k_i = b_i\}
  \end{aligned}
 \end{equation}
 
@@ -105,7 +105,7 @@ In next iterations $k+m$, $m\ge 0$ we have at least one of these two possible ca
 \begin{subequations}
 \begin{align}
  j(k+m) &\in L(x^{k+m+1})\label{eq:SetCasesA}\\
- i(k+m) &\in R(x^{k+m+1})\label{eq:SetCasesB}
+ i(k+m) &\in U(x^{k+m+1})\label{eq:SetCasesB}
 \end{align}
 \end{subequations}
 
@@ -130,16 +130,16 @@ and:
 
 For the MVP selection rule $\forall k_i \in K$ must hold:
 \begin{equation}
- \frac{\nabla_xf(x^{k_i},y^{k_i})}{dx_{i^*}} \le \frac{\nabla_xf(x^{k_i},y^{k_i})}{dx_{h}}, \ \forall h
+ \frac{\partial f(x^{k_i},y^{k_i})}{dx_{i^*}} \le \frac{\partial f(x^{k_i},y^{k_i})}{dx_{h}}, \ \forall h
 \end{equation}
 
 But  $\forall k_i \in K,\exists p(k_i)$ with  $k_i <p(k_i)<k_{i+1}$ such that:
 \begin{equation}
- i^* \not \in R(x^{p(k_i)+1})
+ i^* \not \in U(x^{p(k_i)+1})
 \end{equation}
 and then
 \begin{equation}
- \frac{\nabla_xf(x^{p(k_i)},y^{p(k_i)})}{dx_{i^*}} \ge \frac{\nabla_xf(x^{p(k_i)},y^{p(k_i)})}{dx_{h}}, \ \forall h
+ \frac{\partial f(x^{p(k_i)},y^{p(k_i)})}{dx_{i^*}} \ge \frac{\partial f(x^{p(k_i)},y^{p(k_i)})}{dx_{h}}, \ \forall h
 \end{equation}
 
 
@@ -166,7 +166,7 @@ Then:
 
 At limit point $x^*$, from previous equations we have:
 \begin{equation*}
- \frac{\nabla_xf(x^{*},y^{*})}{dx_{i^*}} = \frac{\nabla_xf(x^{*},y^{*})}{dx_{h}}, \ \forall h
+ \frac{\partial f(x^{*},y^{*})}{dx_{i^*}} = \frac{\partial f(x^{*},y^{*})}{dx_{h}}, \ \forall h
 \end{equation*}
 that satisfies KKT optimality conditions.
 
