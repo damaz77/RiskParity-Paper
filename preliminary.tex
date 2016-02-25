@@ -1,16 +1,44 @@
-Let us consider the following optimization problem:
-\begin{subequations}\label{eq:problem} 
+We use volatility as risk measure of the fully invested portfolio, i.e.
+\begin{equation}
+\mathcal{R}(x) = \sigma(x) = \sqrt{x^T Q x}
+\end{equation}
+where $Q$ is the covariance matrix. Using the Euler decomposition, we can express the total risk as the sum of contributions from each asset in the portfolio:
+\begin{equation}
+\mathcal{R}(x) = \sum_{i=1}^n RC_i 
+\end{equation}
+where $RC_i$ is the risk contribution of the $i$-th asset, that has the form
+\begin{equation}
+RC_i = x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}
+\end{equation}
+In the Risk Parity formulation, our aim is to satisfy the following set of constraints:
+\begin{equation}\label{eq:rpconst}
+x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}= x_j \frac{\partial \mathcal{R}(x)}{\partial x_j} \quad \forall i,j
+\end{equation}
+We can also express (\ref{eq:rpconst}) in the following equivalent way:
+\begin{equation}
+x_i (Q x)_i = x_j (Q x)_j \quad \forall i,j
+\end{equation}
+In \cite{maillard} is proposed a least-square approach for solving the Risk Parity problem:
+\begin{subequations}
 \begin{align}
-\min_{x,y} & \quad f(x,y)  \\
+\min_x & \quad \sum_{i=i}^n \sum_{j=1}^{n}\left(x_i(Q x)_i - x_j(Q x)_j\right)^2\\
 \text{s.t.} & \quad l \leq x \leq u \\
 & \quad \mathds{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $x \in \R^n$, $y \in \R^m$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. 
+The formulation proposed in \cite{tutuncu} introduces a free variable $y$, that is also optimized:
+\begin{subequations}\label{eq:problem} 
+\begin{align}
+\min_{x,y} & \quad f(x,y) =  \sum_{i=i}^n \left(x_i(Q x)_i - y\right)^2 \\
+\text{s.t.} & \quad l \leq x \leq u \\
+& \quad \mathds{1}^T x = 1 
+\end{align}
+\end{subequations}
+where $x \in \R^n$, $y \in \R$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. 
 
 Now we define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
 \begin{equation}
-\mathcal{F} = \{(x,y) \in \R^{n+m} : \mathds{1}^T x = 1, l \leq x \leq u\}.
+\mathcal{F} = \{(x,y) \in \R^{n+1} : \mathds{1}^T x = 1, l \leq x \leq u\}.
 \end{equation}
 Since the constraints of Problem (\ref{eq:problem}) respect constraints qualification conditions, a point $(x,y) \in \mathcal{F}$ is critical, if the Karush-Kuhn-Tucker (KKT) conditions are satisfied.
 
@@ -18,7 +46,7 @@ Let $L(x,y,\lambda,\mu,\gamma)$ the Lagrangian function associated to Problem (\
 
 \begin{proposition}[Optimality conditions (Necessary)]\label{prop:KKT}
 
-Let $(x^*,y^*) \in \R^{n+m}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
+Let $(x^*,y^*) \in \R^{n+1}$, with $(x^*,y^*) \in \mathcal{F}$, a local optimum for Problem (\ref{eq:problem}). Then there exist three multipliers $\lambda^* \in \R^n$, $\mu^* \in \R^n, \gamma^* \in \R$ such that:
 \begin{equation}
  \begin{aligned}
   &\nabla_x L(x^*,y^*\lambda^*,\mu^*,\gamma^*)= \nabla_x f(x^*,y^*)+\lambda^*-\mu^*+\gamma^*=0\\
@@ -51,7 +79,7 @@ After writing KKT optimality condition we focus on feasible direction in a feasi
 
 Let $(x,y) \in \mathcal{F}$, we define a set of all feasible direction in $(x,y)$:
 \begin{equation}
- \mathcal{D}(x,y)=\{ d \in \R^{n+m}: \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
+ \mathcal{D}(x,y)=\{ d \in \R^{n+1}: \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
 \end{equation}
 where:
 \begin{equation}
@@ -105,7 +133,7 @@ This can be done computing the \emph{Most Violating Pair} $(i,j)$ such that $x_j
  (i,j) \in \arg \min_{l,m} \left\{\frac{\partial f(x,y)}{dx_l} - \frac{\partial f(x,y)}{dx_m}  \right\}
 \end{equation}
 
-If we don't use decomposition methods, we can alternatively define a feasible descent direction $d \in \R^{n+m}$, in $(x,y)$ such that:
+If we don't use decomposition methods, we can alternatively define a feasible descent direction $d \in \R^{n+1}$, in $(x,y)$ such that:
 \begin{equation}
  d=\left(\begin{matrix}d^{i,j}\\
  -\nabla_yf(x,y)
