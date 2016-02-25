@@ -64,8 +64,8 @@ legend pos=north west
 \end{axis}
 \end{tikzpicture}
 }
-\label{fig:perf}
 \caption{Comparison of average execution time with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset}
+\label{fig:perf}
 \end{figure}
 
 
@@ -112,8 +112,8 @@ legend pos=north west
 \end{axis}
 \end{tikzpicture}
 }
-\label{fig:it}
 \caption{Comparison of average number of iterations performed to converge with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset}
+\label{fig:it}
 \end{figure}
 
 \subsection{Convergence to a Risk Parity solution}
@@ -121,9 +121,8 @@ In this section we evaluate the probability to converge to a critical point $(x^
 \begin{equation}\label{eq:reseps}
 \max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
 \end{equation}
-where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$. In Table (\ref{tab:1}) and (\ref{tab:2}) we compare the probability to reach a Risk Parity solution for both the decomposition algorithm (with inexact and exact line search) and SNOPT, using different choices of the starting point $x^0$. \textit{TODO: inserire commenti}
+where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$. In Table (\ref{tab:first}) and (\ref{tab:second}) we compare the probability to reach a Risk Parity solution for both the decomposition algorithm (with inexact and exact line search) and SNOPT, using different choices of the starting point $x^0$. In Figure (\ref{fig:sparsity}) we measure the probability to reach a Risk Parity solution varying the sparsity of the initial guess $x^0$, i.e. the percentage of components of $x^0$ fixed to 0. \textit{TODO: inserire commenti}
 \begin{table}
-\begin{minipage}{.4\linewidth}
 \centering
 \begin{tabular}{ c | c | c | c }
 n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
@@ -139,13 +138,14 @@ n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
 1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 \end{tabular}
-\label{tab:1}
 \caption{Probability to converge to a Risk Parity solution using $x^{0}_i = 1/n \quad \forall i$}
-\end{minipage}
-\hfill
-\begin{minipage}{.4\linewidth}
+\label{tab:first}
+\end{table}
+
+
+\begin{table}
 \centering
-\begin{tabular}{ c | c| c | c}
+\begin{tabular}{ c | c | c | c}
 n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
 5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
 10   & 100.0\%  & 100.0\% & 99.9\%\\\hline
@@ -159,10 +159,131 @@ n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
 1000 & 98.0\%   & 95.2\%  & 83.0\%\\\hline
 1250 & 91.5\%   & 93.2\%  & 73.0\%\\\hline
 \end{tabular}
-\label{tab:2}
 \caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$}
-\end{minipage}
+\label{tab:second}
 \end{table}
+
+\begin{figure}
+\begin{center}
+\makebox[0.5\textwidth][c]{
+\begin{tikzpicture}
+\begin{axis}[%
+xlabel={\% of sparsity of $x_0$},
+ylabel={\% of convergence at RP},
+scaled y ticks=false,
+legend pos=south east
+]
+
+\addplot [color=blue,solid,mark=none,mark options={solid}]
+  table[row sep=crcr]{%
+0 2 \\
+10 2 \\
+20 2.5 \\
+30 3 \\
+35 4.5 \\
+36 6.5
+37 14.5 \\
+38 26.5 \\
+39 47.5 \\
+40 60 \\
+45 80\\
+50 87 \\
+60 96 \\
+70 100 \\
+80 100 \\
+90 100 \\
+100 100 \\
+};
+
+\addplot [color=cyan,solid,mark=none,mark options={solid}]
+  table[row sep=crcr]{%
+0 18\\
+10 18 \\
+20 14 \\
+30 17.3 \\
+35 18.5 \\
+36.67 29.1 \\
+38.3 47 \\
+40 66 \\
+45 93 \\
+50 95 \\
+60 99.3 \\
+70 100 \\
+80 100 \\
+90 100 \\
+100 100\\
+};
+
+\addplot [color=red,solid,mark=none,mark options={solid}]
+  table[row sep=crcr]{%
+0 42.3 \\
+10 39 \\
+20 40.6 \\
+30 37.3 \\
+35 37.3 \\
+37.5 48.7 \\
+38.5 54.7 \\
+40 63.6 \\
+45 93.3 \\
+50 97 \\
+60 99 \\
+70 100 \\
+80 100 \\
+90 100 \\
+100 100\\
+};
+
+\addplot [color=black,solid,mark=none,mark options={solid}]
+  table[row sep=crcr]{%
+0 84.4 \\
+10 79.2 \\
+20 71.8 \\
+30 61.6 \\
+35 66.2 \\
+39 66.4 \\
+40 69.4 \\
+42 76 \\
+43 79.6 \\
+44 82.8\\
+45 87.6 \\
+50 97.4 \\
+60 99.8 \\
+70 100 \\
+80 100 \\
+90 100 \\
+100 100\\
+};
+
+\addplot [color=green,solid,mark=none,mark options={solid}]
+  table[row sep=crcr]{%
+0 98 \\
+10 92.2 \\
+20 88.6\\
+30 83.4 \\
+40 81.2 \\
+45 83.6 \\
+50 93.4 \\
+55 98.6 \\
+60 99.6 \\
+70 100 \\
+80 100 \\
+90 100 \\
+100 100 \\
+};
+\addlegendentry{n=500}
+\addlegendentry{n=300}
+\addlegendentry{n=200}
+\addlegendentry{n=100}
+\addlegendentry{n=50}
+\end{axis}
+
+\end{tikzpicture}
+}
+\end{center}
+
+\caption{\% of computations that find an RP solution, varying the sparsity of the initial guess $x^0$, for different number of assets $n$}
+\label{fig:sparsity}
+\end{figure}
 
 \subsection{Bounds on assets}\label{bounded}
 In this section we use different combinations for the box constraints $l$ and $u$ and we compare the values assumed by the objective function in the critical point reached by the different algorithms. In these tests we take:
@@ -176,6 +297,7 @@ We denote with $x_{GS}$ the solution produced by the decomposition algorithm and
 \item $\#(f_{>})$: number of times that we have $x_{GS} \neq x_{SNOPT}$ and $f(x_{GS}) > f(x_{SNOPT})$
 \item $E_{>}$: the average of $f(x_{SNOPT})/f(x_{GS})$ when $f(x_{GS}) > f(x_{SNOPT})$
 \end{itemize}
+Tables (\ref{tab:results1}), (\ref{tab:results2}), (\ref{tab:results3}) and (\ref{tab:results4}) gather all the tests done for different values of the box constraints.
 
 \begin{table}
 \begin{center}
