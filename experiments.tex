@@ -7,23 +7,18 @@ In order to obtain comparable results, in our scheme we use a \textit{stop crite
 \left| \frac{\partial f(x^k,y^k)}{d{x_{j(k)}}} - \frac{\partial f(x^k,y^k)}{d{x_{i(k)}} }\right| < \epsilon
 \end{equation}
 In SNOPT, this is (almost) equivalent to set the \texttt{Major optimality tolerance} optional parameter to $\epsilon$. 
-In all the following experiments we used the NASDAQ-2196 dataset \cite{nasdaq}; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons.
-All the results are reported for $\epsilon = 10^{-10}$. This value of $\epsilon$ is such that the obtained solutions $(x^*,y^*)$ satisfies
-\begin{equation}\label{eq:reseps}
-\max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
-\end{equation}
-where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$.
+In all the following experiments we used the NASDAQ-2196 dataset\footnotemark[1]; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons. In our experiments we set $l = [0,..,0] \in \mathbb{R}^n$ and  $u = [1,..,1] \in \mathbb{R}^n$ except in section (\ref{bounded}) where we use different box constraints.
+\footnotetext[1]{NASDAQ-2196 dataset can be downloaded at \url{http://host.uniroma3.it/docenti/cesarone/datasetsw3_tardella.html}}
 
+\subsection{Execution time}
+In Figure (\ref{fig:perf}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT. \textit{TODO: inserire commenti}
 \begin{figure}
-\begin{minipage}{\linewidth}
 \makebox[\textwidth][c]{
 \begin{tikzpicture}
 \begin{axis}[%
-width=0.8\textwidth,
 xlabel={\# of assets},
 ylabel={Exe Time (s)},
-legend pos=north west,
-title=\textbf{Average execution time with {$\epsilon=10^{-10}$}},
+legend pos=north west
 ]
 \addplot [color=blue,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
@@ -62,24 +57,27 @@ title=\textbf{Average execution time with {$\epsilon=10^{-10}$}},
 1250 6.617	\\
 1500 11.765 \\
 };
-\label{Subplot:exe_e8_snopt}
+\label{Subplot:exe_e6_snopt}
 \addlegendentry{Exact LS}
 \addlegendentry{Armijo LS}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
 }
-\end{minipage}
+\label{fig:perf}
+\caption{Comparison of average execution time with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset}
+\end{figure}
 
-\begin{minipage}{\linewidth}
+
+\subsection{Iterations}
+In Figure (\ref{fig:it}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact). \textit{TODO: inserire commenti}
+\begin{figure}
 \makebox[\textwidth][c]{
 \begin{tikzpicture}
 \begin{axis}[%
-width=0.8\textwidth,
 xlabel={\# of assets},
 ylabel={Iterations},
-legend pos=north west,
-title=\textbf{Average \# of iterations with {$\epsilon=10^{-10}$}}
+legend pos=north west
 ]
 \addplot [color=blue,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
@@ -114,15 +112,21 @@ title=\textbf{Average \# of iterations with {$\epsilon=10^{-10}$}}
 \end{axis}
 \end{tikzpicture}
 }
-\end{minipage}
-\label{perf}
+\label{fig:it}
+\caption{Comparison of average number of iterations performed to converge with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset}
 \end{figure}
 
+\subsection{Convergence to a Risk Parity solution}
+In this section we evaluate the probability to converge to a critical point $(x^*,y^*)$ that is also a Risk Parity solution, i.e. that satisfies 
+\begin{equation}\label{eq:reseps}
+\max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
+\end{equation}
+where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$. In Table (\ref{tab:1}) and (\ref{tab:2}) we compare the probability to reach a Risk Parity solution for both the decomposition algorithm (with inexact and exact line search) and SNOPT, using different choices of the starting point $x^0$. \textit{TODO: inserire commenti}
 \begin{table}
 \begin{minipage}{.4\linewidth}
 \centering
 \begin{tabular}{ c | c | c | c }
-n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
 5    & 100.0\% & 100.0\% & 100.0\%\\\hline
 10   & 100.0\% & 100.0\% & 100.0\%\\\hline
 20   & 100.0\% & 100.0\% & 100.0\%\\\hline
@@ -135,13 +139,14 @@ n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
 1000 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 1250 & 0.0\%   & 0.0\%   & 0.0\%\\\hline
 \end{tabular}
-\caption{$x^{0}_i = 1/n \quad \forall i$}
+\label{tab:1}
+\caption{Probability to converge to a Risk Parity solution using $x^{0}_i = 1/n \quad \forall i$}
 \end{minipage}
 \hfill
 \begin{minipage}{.4\linewidth}
 \centering
 \begin{tabular}{ c | c| c | c}
-n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
+n &  G-S$_{(ALS)}$ & G-S$_{(ELS)}$  & SNOPT \\\hline
 5    & 100.0\%  & 100.0\% & 100.0\%\\\hline
 10   & 100.0\%  & 100.0\% & 99.9\%\\\hline
 20   & 100.0\%  & 100.0\%  & 100.0\%\\\hline
@@ -154,6 +159,99 @@ n &  G-S$_{(LS)}$ & G-S$_{(OPT)}$  & SNOPT \\\hline
 1000 & 98.0\%   & 95.2\%  & 83.0\%\\\hline
 1250 & 91.5\%   & 93.2\%  & 73.0\%\\\hline
 \end{tabular}
-\caption{$x^{0}= [1, 0, .., 0]$}
+\label{tab:2}
+\caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$}
 \end{minipage}
+\end{table}
+
+\subsection{Bounds on assets}\label{bounded}
+In this section we use different combinations for the box constraints $l$ and $u$ and we compare the values assumed by the objective function in the critical point reached by the different algorithms. In these tests we take:
+\begin{equation}
+x_i^0 = \frac{1}{n} \quad \forall i \in \{1, .., n \}
+\end{equation}
+We denote with $x_{GS}$ the solution produced by the decomposition algorithm and with $x_{SNOPT}$ the solution produced by SNOPT. In the following tables, we denote with
+\begin{itemize}
+\item $\#(f_{<})$: number of times that we have $x_{GS} \neq x_{SNOPT}$ and $f(x_{GS}) < f(x_{SNOPT})$
+\item $E_{<}$: the average of $f(x_{GS})/f(x_{SNOPT})$ when $f(x_{GS}) < f(x_{SNOPT})$
+\item $\#(f_{>})$: number of times that we have $x_{GS} \neq x_{SNOPT}$ and $f(x_{GS}) > f(x_{SNOPT})$
+\item $E_{>}$: the average of $f(x_{SNOPT})/f(x_{GS})$ when $f(x_{GS}) > f(x_{SNOPT})$
+\end{itemize}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c | c | c | c | c}
+n &  $\quad \#(f_<) \quad$ & $\quad E_< \quad$ &  $\quad \#(f_>) \quad$ & $ \quad E_> \quad$  \\\hline
+5 & 0/1000     & - & 0/1000 & -     \\\hline
+10 & 0/1000    & -   & 0/1000 & -        \\\hline
+20 & 0/1000    & -   & 0/1000 & -        \\\hline
+50 & 12/1000   & 0.64 & 0/1000 & -       \\\hline
+75 & 78/1000  & 0.71  & 0/1000 & -      \\\hline
+100 & 115/1000 & 0.81  & 0/1000 & -      \\\hline
+150 & 187/1000 & 0.90 & 0/1000 & -       \\\hline
+200 & 269/1000 & 0.95 & 0/1000 & -       \\\hline
+500 & 384/1000 & 0.99 & 0/1000 & -     \\\hline
+\end{tabular}
+\caption{$l_i = \frac{1}{2n}, \quad u_i = \frac{2}{n} \quad \forall i$}
+\label{tab:results1}
+\end{center}
+\end{table}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c | c | c | c | c}
+n &  $\quad \#(f_<) \quad$ & $\quad E_< \quad$ &  $\quad \#(f_>) \quad$ & $ \quad E_> \quad$  \\\hline
+5 & 0/1000     & - & 0/1000 & -     \\\hline
+10 & 0/1000    & -   & 0/1000 & -        \\\hline
+20 & 0/1000    & -   & 0/1000 & -        \\\hline
+50 & 10/1000   & $1.80 \times 10^{-11} $ & 0/1000 & -       \\\hline
+75 & 67/1000  & 0.03  & 0/1000 & -      \\\hline
+100 & 60/1000 & 0.02  & 0/1000 & -    \\\hline
+150 & 90/1000 & 0.16 & 1/1000 & 0.03       \\\hline
+200 & 79/1000 & 0.33 & 5/1000 & 0.39       \\\hline
+500 & 120/1000 & 0.86 & 86/1000 & 0.89     \\\hline
+\end{tabular}
+\caption{$l_i = \frac{1}{4n}, \quad u_i = \frac{4}{n} \quad \forall i$}
+\label{tab:results2}
+\end{center}
+\end{table}
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c | c | c | c | c}
+
+n &  $\quad \#(f_<) \quad$ & $\quad E_< \quad$ &  $\quad \#(f_>) \quad$ & $ \quad E_> \quad$  \\\hline
+5  & 3/1000    & $3.54 \times 10^{-12} $&    0/1000 & -  \\\hline
+10 & 10/1000   & 0.51 &    27/1000 & 0.17  \\\hline
+20 & 47/1000   & 0.13 &     4/1000 & 0.48     \\\hline
+50 & 71/1000   & 0.14 &     12/1000 & 0.46     \\\hline
+75 & 78/1000   & 0.29 &     2/1000 & 0.84     \\\hline
+100 & 102/1000   & 0.41 &     1/1000 & 0.93     \\\hline
+150 & 122/1000   & 0.61 &     2/1000 & 0.93    \\\hline
+200 & 142/1000   & 0.75 &     0/1000 & -   \\\hline
+500 & 217/1000   & 0.96 &     0/1000 & -   \\\hline
+\end{tabular}
+\caption{$l_i = -1, \quad u_i = \frac{2}{n} \quad \forall i$}
+\label{tab:results3}
+\end{center}
+\end{table}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c | c | c | c | c}
+
+n &  $\quad \#(f_<) \quad$ & $\quad E_< \quad$ &  $\quad \#(f_>) \quad$ & $ \quad E_> \quad$  \\\hline
+5  & 0/1000    & - &    0/1000 & -  \\\hline
+10 & 0/1000   & - &    0/1000 & -   \\\hline
+20 & 0/1000   & - &    0/1000 & -     \\\hline
+50 & 6/1000   & 0.22 &     0/1000 & -     \\\hline
+75 & 44/1000   & 0.19 &     0/1000 & -     \\\hline
+100 & 53/1000   & 0.51 &     32/1000 & 0.61   \\\hline
+150 & 80/1000   & 0.54 &     82/1000 & 0.52    \\\hline
+200 & 75/1000   & 0.54 &     171/1000 & 0.42    \\\hline
+500 & 159/1000   & 0.61 &     300/1000 & 0.46   \\\hline
+\end{tabular}
+\caption{$l_i = -1, \quad u_i = 1 \quad \forall i$}
+\label{tab:results4}
+\end{center}
 \end{table}

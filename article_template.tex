@@ -6,9 +6,11 @@
 \usepackage{amsthm}
 \usepackage[ruled,vlined, linesnumbered]{algorithm2e}
 \usepackage{pgfplots}
-
 \usepackage[utf8]{inputenc}
-
+\usepackage{url}
+\usepackage{tikz}
+\tikzset{
+  font={\fontsize{9pt}{12}\selectfont}}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -98,9 +100,7 @@ TODO\sep Portfolio\sep Risk-Parity \sep decomposition \sep optimization
 \clearpage
 \section{Convergence analysis}
 \input{convergence}
-\clearpage
-\section{A case study: Portfolio Selection}
-\input{portfolio}
+
 \clearpage
 \section{Computational experiments}
 \input{experiments}

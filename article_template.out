@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Preliminary background}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Set of sparse feasible directions}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Quadratic Line Search \(QLS\)}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Exact Line Search \(ELS\)}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{A decomposition framework}{}% 6
+\BOOKMARK [1][-]{section.4}{Convergence analysis}{}% 7
+\BOOKMARK [1][-]{section.5}{Computational experiments}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Experiments description}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Execution time}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.3}{Iterations}{section.5}% 11
+\BOOKMARK [1][-]{section.6}{Bibliography}{}% 12

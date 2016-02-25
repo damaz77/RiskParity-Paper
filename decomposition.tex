@@ -1,8 +1,21 @@
 The algorithm follows the Gauss-Seidel scheme with 2 blocks of variables ($x$ and $y$). At each iteration, we optimize $f$ w.r.t. one block of variables, considering the other block fixed. \\
-The $y$-block of variables is unconstrained, so we can find
-\begin{equation}\label{eq:updatey}
-y^{k+1} = \argmin_{y \in \mathbb{R}^m} f(x^{k},y)
+Note that problem (\ref{eq:problem}) is not necessary convex with respect to $x$ but it is strictly convex and coercive with respect to $y$. Infact we have:
+\begin{equation}
+\frac{\partial^2}{d^2y} f(x,y) = 2 
 \end{equation}
+which is a sufficient condition for a strictly convex function. At each iteration $k$, we have 
+\begin{equation}\label{eq:updatey}
+y^{k+1} = \argmin_y f(x^{k},y)
+\end{equation}
+$f$ is strictly convex with respect to $y$, so we can find $y^{k+1}$ as a solution of
+\begin{equation}
+\frac{\partial f(x^{k},y)}{\partial y} = 0 
+\end{equation}
+That is
+\begin{equation}
+y^{k+1} = \frac{\sum_{i=1}^n x_i^{k} (Q x^{k})_i}{n}
+\end{equation}
+
 
 \begin{algorithm}[ht]
  \KwData{Given the initial feasible guess $(x^{0}, y^{0})$}
