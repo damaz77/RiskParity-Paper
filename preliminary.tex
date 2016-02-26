@@ -37,7 +37,7 @@ The formulation proposed in \cite{tutuncu} introduces a free variable $y$ that i
 where $x \in \R^n$, $y \in \R$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. \\
 Note that the formulation (\ref{eq:problem}) is non-convex.  If the optimization problem above has an optimal value of zero, then the RP portfolio is achieved. Otherwise, the value of $\sum_{i=i}^n \left( x_i(Q x)_i - y\right)^2$  can be regarded as a minimum variance measure towards our goal. Note that, since (\ref{eq:problem}) is a non-convex problem, in theory it is hard to solve and may produce local solutions. Anyway, we have the following lemma (for the proof see \cite{tutuncu}):
 \begin{lemma}\label{rplemma}
-Let $f(x,y) = \sum_{i=i}^n \left( x_i(Q x)_i - y \right)^2$. A solution pair $\{x,y\}$ is a global optimum with $f(x,y)=0$ if and only if $\nabla_xf(x,y) = 0$ and $\frac{\partial F}{\partial y} = 0$.
+Let $f(x,y) = \sum_{i=i}^n \left( x_i(Q x)_i - y \right)^2$. A solution pair $\{x,y\}$ is a global optimum with $f(x,y)=0$ if and only if $\nabla_xf(x,y) = 0$ and $\frac{\partial f(x,y)}{\partial y} = 0$.
 \end{lemma}
 Lemma (\ref{rplemma}) implies that if constraints of (\ref{eq:problem}) are not considered, then the first order optimality conditions determine the global optimal solution. On the other hand, when constraints are imposed, local optima and local stationary points can occur.
 Now we define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
