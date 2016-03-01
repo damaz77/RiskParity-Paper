@@ -443,19 +443,7 @@ bar width=6pt,
 xtick=data,
 title=\textbf{Probability to converge to an RP solution}
 ]
-\addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,99)
-(100,85.4)
-(200,40)
-(300,22)
-(500,0)
-(750,0)
-(1000,0)
-(1250,0)
- };
+
  
  \addplot coordinates { 
 (5,100)         
@@ -467,6 +455,20 @@ title=\textbf{Probability to converge to an RP solution}
 (300,24)
 (500,6)
 (750,2)
+(1000,0)
+(1250,0)
+ };
+ 
+ \addplot coordinates { 
+(5,100)         
+(10,100)
+(20,100)
+(50,99)
+(100,85.4)
+(200,40)
+(300,22)
+(500,0)
+(750,0)
 (1000,0)
 (1250,0)
  };
@@ -485,13 +487,13 @@ title=\textbf{Probability to converge to an RP solution}
 (1250,0)
  };
 
-\addlegendentry{DEC$_{(ALS)}$ }
-\addlegendentry{DEC$_{(ELS)}$}
+\addlegendentry{DEC$_{(ELS)}$ }
+\addlegendentry{DEC$_{(QLS)}$}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
 }
-\caption{Probability to converge to a Risk Parity solution using $x^{0}_i = 1/n \quad \forall i$ for the decomposition algorithm (DEC) (with ALS or ELS) and SNOPT.}
+\caption{Probability to converge to a Risk Parity solution using $x^{0}_i = 1/n \quad \forall i$ for the decomposition algorithm (DEC) (with QLS or ELS) and SNOPT.}
 \label{fig:convergence1}
 \vspace{2em}
 \makebox[\textwidth][c]{
@@ -510,19 +512,7 @@ xtick=data,
 ymin=-10,
 title=\textbf{Probability to converge to an RP solution}
 ]
-\addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,100)
-(100,99.9)
-(200,100)
-(300,100)
-(500,99.5)
-(750,99.5)
-(1000,98)
-(1250,91.5)
- };
+
  
  \addplot coordinates { 
 (5,100)         
@@ -538,6 +528,20 @@ title=\textbf{Probability to converge to an RP solution}
 (1250,93.2)
  };
  
+\addplot coordinates { 
+(5,100)         
+(10,100)
+(20,100)
+(50,100)
+(100,99.9)
+(200,100)
+(300,100)
+(500,99.5)
+(750,99.5)
+(1000,98)
+(1250,91.5)
+ };
+
   \addplot coordinates { 
 (5,100)         
 (10,99.9)
@@ -552,13 +556,13 @@ title=\textbf{Probability to converge to an RP solution}
 (1250,73)
  };
 
-\addlegendentry{DEC$_{(ALS)}$ }
-\addlegendentry{DEC$_{(ELS)}$}
+\addlegendentry{DEC$_{(ELS)}$ }
+\addlegendentry{DEC$_{(QLS)}$}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
 }
-\caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$ for the decomposition algorithm (DEC) (with ALS or ELS) and SNOPT.}
+\caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$ for the decomposition algorithm (DEC) (with QLS or ELS) and SNOPT.}
 \label{fig:convergence2}
 \end{figure}
 
