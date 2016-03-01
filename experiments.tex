@@ -17,7 +17,7 @@ In this section we use different combinations for the box constraints $l$ and $u
 \begin{equation}
 x_i^0 = \frac{1}{n} \quad \forall i \in \{1, .., n \}
 \end{equation}
-We denote with $x_{GS}$ the solution produced by the decomposition algorithm and with $x_{SNOPT}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{GS})$ with $f(x_{SNOPT})$ using different box constraints.
+We denote with $x_{GS}$ the solution produced by the decomposition algorithm and with $x_{SNOPT}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{GS})$ with $f(x_{SNOPT})$ using different box constraints when the two algorithms converges at two different critical points.
 
 \begin{figure}
 \makebox[\textwidth][c]{
@@ -200,20 +200,126 @@ title={$l_i = -1, \quad u_i = 1 \quad \forall i$}
 \label{fig:box}
 \end{figure}
 
+In Figure (\ref{subfig-1:time1}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT using 
+\begin{equation}
+x^0_i = \frac{1}{n} \quad \forall i
+\end{equation}
+and 
+\begin{equation}\label{eq:generalbox}
+l_i = \frac{1}{2n} \quad \forall i \qquad u_i = \frac{2}{n}  \quad \forall i
+\end{equation} 
+The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations1}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact).
+\begin{figure}
+\makebox[\textwidth][c]{
+\subfloat[Comparison of average execution time \label{subfig-1:time1}]{%
+\begin{tikzpicture}
+\begin{axis}[%
+xlabel={\# of assets},
+ylabel={Exe Time (s)},
+legend pos=north west,
+ylabel near ticks,
+width=.5\textwidth
+]
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+100	.105\\
+200	.214\\
+300	.340\\
+500	.737	\\
+750	1.713		\\
+1000 3.303 \\
+1250 5.400 \\
+1500 9.58\\
+};
+
+
+\addplot [color=red,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+100	 .068   \\
+200	 .158	\\
+300	 .258	\\
+500	 .620	\\
+750	 1.54	\\
+1000 3.42  \\
+1250 6.24\\
+1500 10.93 \\
+};
+
+
+\addplot [color=gr,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+100	.005	\\
+200	.014	\\
+300	.035	    \\
+500	.118	    \\
+750	 .286  \\
+1000 0.561	\\
+1250 0.824	\\
+1500 1.43 \\
+};
+
+\addlegendentry{DEC$_{(ELS)}$}
+\addlegendentry{DEC$_{(ALS)}$}
+\addlegendentry{SNOPT}
+\end{axis}
+\end{tikzpicture}
+}
+\hfill
+\hspace{1em}\subfloat[Comparison of average iterations\label{subfig-2:iterations1}]{%
+\begin{tikzpicture}
+\begin{axis}[%
+xlabel={\# of assets},
+ylabel={Iterations},
+legend pos=north west,
+ylabel near ticks,
+width=.5\textwidth
+]
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%
+100	445 \\
+200	819 \\
+300	1176 \\
+500	1888\\
+750	2874 \\
+1000	 3701\\
+1250	 4439\\
+1500 5634\\
+};
+
+\addplot [color=red,solid,mark=x,mark options={solid}]
+ table[row sep=crcr]{%
+100	543    \\
+200	1021	\\
+300	1466	\\
+500	2241	\\
+750	3387	\\
+1000	 4582	\\
+1250	 5789	\\
+1500	 6811\\
+};
+
+\addlegendentry{DEC$_{(ELS)}$}
+\addlegendentry{DEC$_{(ALS)}$}
+\end{axis}
+\end{tikzpicture}
+}
+}
+\caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:generalbox})}
+\end{figure}
 
 \subsection{Classical box constraints}
 In this section we use 
 \begin{equation}\label{eq:classicalbox}
 l_i = 0 \quad \forall i \qquad u_i = 1  \quad \forall i
 \end{equation} 
-In Figure (\ref{subfig-1:time}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT using 
+In Figure (\ref{subfig-1:time2}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT using 
 \begin{equation}
 x^0 = [1, 0, .., 0]
 \end{equation}
-The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact).
+The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations2}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact).
 \begin{figure}
 \makebox[\textwidth][c]{
-\subfloat[Comparison of average execution time with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset\label{subfig-1:time}]{%
+\subfloat[Comparison of average execution time\label{subfig-1:time2}]{%
 \begin{tikzpicture}
 \begin{axis}[%
 xlabel={\# of assets},
@@ -233,7 +339,7 @@ width=.5\textwidth
 1250 11.57 \\
 1500 18.6\\
 };
-\label{Subplot:exe_e6_exact}
+
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
@@ -246,7 +352,7 @@ width=.5\textwidth
 1250 17.16 \\
 1500 28.75 \\
 };
-\label{Subplot:exe_e6_armijo}
+
 
 \addplot [color=gr,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
@@ -259,7 +365,7 @@ width=.5\textwidth
 1250 6.617	\\
 1500 11.765 \\
 };
-\label{Subplot:exe_e6_snopt}
+
 \addlegendentry{DEC$_{(ELS)}$}
 \addlegendentry{DEC$_{(ALS)}$}
 \addlegendentry{SNOPT}
@@ -267,7 +373,7 @@ width=.5\textwidth
 \end{tikzpicture}
 }
 \hfill
-\hspace{1em}\subfloat[Comparison of average iterations performed to converge with {$\epsilon=10^{-10}$} on the NASDAQ-2196 dataset\label{subfig-2:iterations}]{%
+\hspace{1em}\subfloat[Comparison of average iterations\label{subfig-2:iterations2}]{%
 \begin{tikzpicture}
 \begin{axis}[%
 xlabel={\# of assets},
@@ -310,7 +416,7 @@ width=.5\textwidth
 \end{tikzpicture}
 }
 }
-\caption{}
+\caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:classicalbox})}
 \end{figure}
 
 \subsection{Convergence to a Risk Parity solution}
