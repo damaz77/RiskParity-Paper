@@ -1,23 +1,24 @@
 
 \subsection{Implementation details}
-In this section we compare the decomposition algorithm (both with Armijo and exact line search) against SNOPT \cite{snopt}.
+In this section we compare the decomposition algorithm (both with QLS and ELS) against SNOPT \cite{snopt}.
 The decomposition algorithm is written in \textit{Python 2.7} while we use the official Python interface for SNOPT. We also use \texttt{numpy} library, linked with \texttt{blas} and \texttt{ATLAS} libraries. The PC used for the experiments is equipped with and Intel i7 3630QM processor, 8GB of RAM and a Linux based distribution.\\
 
-\subsection{Test problems}
+\subsection{Test problems and stopping criterion}
+In all the following experiments we used the NASDAQ-2196 dataset\footnotemark[1]; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons. 
+\footnotetext[1]{NASDAQ-2196 dataset can be downloaded at \url{http://host.uniroma3.it/docenti/cesarone/datasetsw3_tardella.html}}
 In order to obtain comparable results, in our scheme we use a \textit{stop criterion} that is the same used by SNOPT, i.e. we stop the algorithm when
 \begin{equation}\label{eq:stop}
 \left| \frac{\partial f(x^k,y^k)}{d{x_{j(k)}}} - \frac{\partial f(x^k,y^k)}{d{x_{i(k)}} }\right| < \epsilon
 \end{equation}
 In SNOPT, this is (almost) equivalent to set the \texttt{Major optimality tolerance} optional parameter to $\epsilon$. 
-In all the following experiments we used the NASDAQ-2196 dataset\footnotemark[1]; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons. 
-\footnotetext[1]{NASDAQ-2196 dataset can be downloaded at \url{http://host.uniroma3.it/docenti/cesarone/datasetsw3_tardella.html}}
 
-\subsection{General box constraints}
+\subsection{Numerical results}
+\subsubsection{General box constraints}
 In this section we use different combinations for the box constraints $l$ and $u$ and we compare the values assumed by the objective function in the critical point reached by the different algorithms. In these tests we take:
 \begin{equation}
 x_i^0 = \frac{1}{n} \quad \forall i \in \{1, .., n \}
 \end{equation}
-We denote with $x_{GS}$ the solution produced by the decomposition algorithm and with $x_{SNOPT}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{GS})$ with $f(x_{SNOPT})$ using different box constraints when the two algorithms converges at two different critical points.
+We denote with $x_{D}$ the solution produced by the decomposition algorithm and with $x_{S}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{D})$ with $f(x_{S})$ using different box constraints when the two algorithms converges at two different critical points.
 
 \begin{figure}
 \makebox[\textwidth][c]{
@@ -60,8 +61,8 @@ title={$l_i = \frac{1}{2n}, \quad u_i = \frac{2}{n} \quad \forall i$},
 (500,0)
  };
 
-\addlegendentry{$f(x_{GS}) < f(x_{SNOPT})$}
-\addlegendentry{$f(x_{GS}) > f(x_{SNOPT})$}
+\addlegendentry{$f(x_{D}) < f(x_{S})$}
+\addlegendentry{$f(x_{D}) > f(x_{S})$}
 \end{axis}
 \end{tikzpicture}
 
@@ -104,8 +105,8 @@ title={$l_i = \frac{1}{4n}, \quad u_i = \frac{4}{n} \quad \forall i$}
 (500,8.6)
  };
 
-\addlegendentry{$f(x_{GS}) < f(x_{SNOPT})$}
-\addlegendentry{$f(x_{GS}) > f(x_{SNOPT})$}
+\addlegendentry{$f(x_{D}) < f(x_{S})$}
+\addlegendentry{$f(x_{D}) > f(x_{S})$}
 \end{axis}
 \end{tikzpicture}
 }
@@ -149,8 +150,8 @@ title={$l_i = -1, \quad u_i = \frac{2}{n} \quad \forall i$}
 (500,0)
  };
 
-\addlegendentry{$f(x_{GS}) < f(x_{SNOPT})$}
-\addlegendentry{$f(x_{GS}) > f(x_{SNOPT})$}
+\addlegendentry{$f(x_{D}) < f(x_{S})$}
+\addlegendentry{$f(x_{D}) > f(x_{S})$}
 \end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}
@@ -191,12 +192,12 @@ title={$l_i = -1, \quad u_i = 1 \quad \forall i$}
 (500,30)
  };
 
-\addlegendentry{$f(x_{GS}) < f(x_{SNOPT})$}
-\addlegendentry{$f(x_{GS}) > f(x_{SNOPT})$}
+\addlegendentry{$f(x_{D}) < f(x_{S})$}
+\addlegendentry{$f(x_{D}) > f(x_{S})$}
 \end{axis}
 \end{tikzpicture}
 }
-\caption{Comparison of objective function values for $x_{GS}$ and $x_{SNOPT}$ with different box constraints. For each $n$ we perform $1000$ experiments for both the algorithms.}
+\caption{Comparison of objective function values for $x_{D}$ and $x_{S}$ with different box constraints. For each $n$ we perform $1000$ experiments for both the algorithms.}
 \label{fig:box}
 \end{figure}
 
@@ -259,7 +260,7 @@ width=.5\textwidth
 };
 
 \addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(ALS)}$}
+\addlegendentry{DEC$_{(QLS)}$}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
@@ -299,7 +300,7 @@ width=.5\textwidth
 };
 
 \addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(ALS)}$}
+\addlegendentry{DEC$_{(QLS)}$}
 \end{axis}
 \end{tikzpicture}
 }
@@ -307,7 +308,7 @@ width=.5\textwidth
 \caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:generalbox})}
 \end{figure}
 
-\subsection{Classical box constraints}
+\subsubsection{Classical box constraints}
 In this section we use 
 \begin{equation}\label{eq:classicalbox}
 l_i = 0 \quad \forall i \qquad u_i = 1  \quad \forall i
@@ -367,7 +368,7 @@ width=.5\textwidth
 };
 
 \addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(ALS)}$}
+\addlegendentry{DEC$_{(QLS)}$}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
@@ -411,7 +412,7 @@ width=.5\textwidth
 };
 
 \addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(ALS)}$}
+\addlegendentry{DEC$_{(QLS)}$}
 \end{axis}
 \end{tikzpicture}
 }
@@ -419,7 +420,7 @@ width=.5\textwidth
 \caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:classicalbox})}
 \end{figure}
 
-\subsection{Convergence to a Risk Parity solution}
+\subsubsection{Convergence to a Risk Parity solution}
 In this section we evaluate the probability to converge to a critical point $(x^*,y^*)$ that is also a Risk Parity solution, i.e. that satisfies 
 \begin{equation}\label{eq:reseps}
 \max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
@@ -602,7 +603,7 @@ title=\textbf{Probability to converge to an RP solution}
 %\label{tab:second}
 %\end{table}
 
-\subsection{On the choosing of starting point}
+\subsubsection{On the choosing of starting point}
 From Figures (\ref{fig:convergence1}) and (\ref{fig:convergence2}) it is clear that the choice of the starting point $x^0$ strongly affects the probability of the algorithms to reach a Risk Parity solution. More in details, in Figure (\ref{fig:convergence1}) we use a fully dense starting point while in Figure (\ref{fig:convergence2}) we use the most sparse feasible starting point. In Figure (\ref{fig:sparsity}) we measure the probability to reach a Risk Parity solution varying the sparsity of the initial guess $x^0$, i.e. the percentage of components of $x^0$ fixed to 0. In the left side of Figure (\ref{fig:sparsity}) we use an equally distributed starting point:
 \begin{equation}
 x^{0} = [x^{0}_0, x^{0}_1, .. ,  x^{0}_k, x^{0}_{k+1} .., x^{0}_n] = [\frac{1}{k}, \frac{1}{k}, .., \frac{1}{k}, 0, .., 0]
