@@ -17,19 +17,28 @@ The adoption of a decomposition strategy with respect to the subvector $x$ is su
 whenever the number $n$ of variables is large.
 
 Note that the properties of the standard Armijo-type line search do not guarantee, without further assumptions
-on the descent search direction $d^k$, that the distance between successive points tends to
-zero, which is a usual requirement of decomposition methods. This motivates the employment
-of the Quadratic Line Searck (QLS) defined in the appendix and based on the acceptance condition
+on the descent search direction $d^k$, that the distance between successive points tends to zero, which is a usual requirement of decomposition methods. This motivates the employment of the Quadratic Line Searck (QLS) defined in the appendix and based on the acceptance condition
 $$
 f((x^k,y^k)+\alpha^kd^k)\le f((x^k),y^k))-\gamma (\alpha^k)^2\|d^k\|^2.
 $$
+At every step $k$ we choose a random subset $W^k\subset \{1,..,n\}$ such as
+$$
+\frac{|W^k|}{n} = \lambda
+$$
+For each $w \in W^k$, we compute the partial derivative $\frac{\partial f(x,\theta)}{\partial x_w}$ and we select the MVP among the indexes in $W^k$. If we don't find a violating pair in $W^k$, we randomly add indexes until we find one, and we use this violating pair to build the descent direction. To assure the global convergence properties, we evaluate the MVP among the full gradient $\nabla_x f(x,\theta)$ every $M$ iterations. \\
 The algorithm is formally described below.
 
 \begin{algorithm}[ht]
  \KwData{Given the initial feasible point $(x^{0}, y^{0})$}
  Set $k = 0$\\
  \While{(not convergence)}{
-  Let $(i(k), j(k))$ be a violating pair \\
+ \eIf{$k \enskip \text{mod} \enskip M = 0$}
+  {
+  Let $(i(k), j(k))$ be the MVP\\ 
+  }
+  {
+  Let $(i(k), j(k))$ be the MVP among indexes in $W^k$\\ 
+  }
   Compute a step $\alpha^{k}$  along the direction $d^k=d^{i(k),j(k)}$ by QLS\\
   Set $x_{i(k)}^{k+1} = x_{i(k)}^{k} + \alpha^{k}$, $x_{j(k)}^{k+1} = x_{j(k)}^{k} - \alpha^{k}$  \\
   Compute $y^{k+1}$ such that $f(x^{k+1},y^{k+1})\le f(x^{k+1},y^k)$ and $\nabla_yf(x^{k+1},y^{k+1})=0$\\
