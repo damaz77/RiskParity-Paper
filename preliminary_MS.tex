@@ -1,0 +1,131 @@
+Let us consider the following optimization problem:
+\begin{subequations}\label{eq:problem} 
+\begin{align}
+\min_{x,y} & \quad f(x,y)  \\
+\text{s.t.} & \quad l \leq x \leq u \\
+& \quad \mathds{1}^T x = 1 
+\end{align}
+\end{subequations}
+where $x \in \R^n$, $y \in \R^m$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. 
+
+We define the feasible set $\mathcal{F}$  of Problem (\ref{eq:problem}):
+\begin{equation}
+\mathcal{F} = \{(x,y) \in \R^{n+m} : \mathds{1}^T x = 1, l \leq x \leq u\}.
+\end{equation}
+A vector $d\in \R^{n+m}$ is partitioned as follows
+$$
+d=\left(
+\begin{array}{c}
+d_x\\
+d_y
+\end{array}
+\right ),
+$$
+where $d_x\in R^n$ and $d_y\in R^m$.
+
+Given $(x,y) \in \mathcal{F}$, the set of feasible directions in $(x,y)$ is the cone
+\begin{equation}
+ \mathcal{D}(x,y)=\{ d \in \R^{n+m}: \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(x), d_i\le 0 \ \forall i \in U(x)\}
+\end{equation}
+where
+\begin{equation}
+ \begin{aligned}
+  &L(x)=\{ i: \ x_i=l_i\}\\
+  &U(x)=\{ i: \ x_i=u_i\}
+ \end{aligned}
+\end{equation}
+Given $(\bar x,\bar y) \in \mathcal{F}$, we say that $(\bar x,\bar y)$ is a {\it critical point} if
+$$
+\nabla f(\bar x,\bar y)^Td\ge 0\quad\quad \forall d\in  \mathcal{D}(\bar x,\bar y).
+$$
+We can state the following result.
+\begin{proposition}\label{optimality}
+A point $(\bar x,\bar y) \in \mathcal{F}$ is a critical point if and only if
+\begin{equation}\label{on_x}
+\nabla_xf(\bar x,\bar y)^Td_x\ge 0\quad\quad \forall d_x\in R^n \ s.t. \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(\bar x), d_i\le 0 \ \forall i \in U(\bar x)
+\end{equation}
+\begin{equation}\label{on_y}
+ \nabla_yf(\bar x,\bar y)=0.
+\end{equation} 
+\end{proposition}
+
+In correspondence to a feasible point $(x,y)$ we introduce the index sets
+$$
+R(x)=L(x)\cup C(x)
+$$
+$$
+S(x)=U(x)\cup C(x),
+$$
+where 
+$$
+C(x)=\{i: l_i<x_i<u_i\}.
+$$
+We can state the following propositions (Propositions 2.2 and 2.3 in Jota2009).
+\begin{proposition}\label{2.2}
+ A feasible point $(\bar x,\bar y)$ is a critical point if and only if for each pair $(i,j)$,
+$i\in R(\bar x)$, $j\in S(\bar x)$, we have
+\begin{equation}\label{on_RS}
+ {{\partial f(\bar x,\bar y)}\over{\partial x_i}}\ge
+ {{\partial f(\bar x,\bar y)}\over{\partial x_j}}
+\end{equation}
+\begin{equation}\label{on_y2}
+\nabla_yf(\bar x,\bar y)=0.
+\end{equation}
+\end{proposition}
+\begin{proposition}\label{2.3}
+ Let $\{(x^k,y^k)\}$ be a sequence of feasible points convergent to a point $(\bar x,\bar y)$.
+Then, for sufficiently large values of $k$, we have
+$$
+R(\bar x)\subseteq R(x^k) \quad \quad {\rm and}\quad \quad S(\bar x)\subseteq S(x^k).
+$$
+\end{proposition}
+
+\subsection{Set of sparse feasible directions}
+In our decomposition framework we will employ feasible directions having only two
+nonzero components.
+Then, in this subsection we introduce these sparse feasible directions and we show their important properties.
+
+Given $i, j\in  \{1, \ldots ,n\}$, with $i\ne j$,
+we indicate by $d^{i,j}\in  \R^{n+m}$ such that
+\begin{equation}\label{eq:direction}
+d_h^{i,j}= 
+\begin{cases}
+1, \quad \text{    } h=i\\
+-1, \text{    } \text{    } h=j\\
+0, \quad \text{    } \text{otherwise}
+\end{cases}
+\end{equation}
+Note that, by definition, the components $d_h^{i,j}$ with $h=n+1,\ldots,n+m$ are always set to zero.
+
+Given $(x, y) \in \mathcal{F}$ and the corresponding index sets $R(x)$ and $S(x)$, we indicate by $D_{RS}(x,y)$
+the set of directions $d^{i,j}$ with $i \in R(x)$ and $j \in S(x)$, namely
+$$
+D_{RS}(x,y)=\cup_{i\in R(x),j\in S(x)}d^{i,j}.
+$$
+\begin{proposition}\label{3.1}
+Let $(\bar x,\bar y)$ be a feasible point. For each pair $i \in R(x)$ and $j \in S(x)$, the
+direction $d^{i,j}\in \R^{n+m}$ is a feasible direction at $(\bar x,\bar y)$, i.e. $d \in D(\bar x,\bar y)$.
+\end{proposition}
+\begin{proposition}\label{3.2}
+A feasible point $(\bar x,\bar y)$
+ is a critical point if and only
+\begin{equation}\label{on_x2}
+\nabla f(\bar x,\bar y)^Td^{i,j}\ge 0\quad\quad \forall d^{i,j}\in D_{RS}(\bar x,\bar y)
+\end{equation}
+\begin{equation}\label{on_y2}
+ \nabla_y f(\bar x,\bar y)=0.
+\end{equation} 
+\end{proposition}
+Given a feasible point $(\bar x,\bar y)$, a pair $i\in R(\bar x)$ and $j\in S(\bar x)$ such that
+$$
+\nabla f(\bar x,\bar y)^Td^{i,j}<0
+$$
+is said a {\it Violating Pair} (VP).
+
+A violating pair $(i^\star,j^\star)$ such that 
+\begin{equation}\label{mvp}
+ \nabla f(\bar x,\bar y)^Td^{i^\star,j^\star}\le \nabla f(\bar x,\bar y)^Td^{i,j} \forall i\in R(\bar x), \ j\in S(\bar x).
+\end{equation}
+is the {\it Most Violating Pair} (MVP).
+
+
