@@ -46,3 +46,54 @@ The algorithm is formally described below.
  }
  \caption{Decomposition Algorithm}
 \end{algorithm}
+\subsection{Proximal Point approximation}
+In this section we propose a version of previous algorithm which uses proximal point approximation.
+
+Let us redefine selected variable $x_{i(k)},x_{j(k)}$ as $x_{i},x_{j}$ for ease of notation.
+
+The idea behind proximal point modification is that at every iteration $k$ it's easy to solve the subproblem:
+\begin{align}
+ &\min_{x_i,x_j} f(x_i,x_j)+ \frac{\tau}{2} ||(x_i,x_j)-(x_i^k,x_j^k)||^2\\
+ &x_i+x_j = \underbrace{1-\sum_{h \ne i,j} x^k_h}_{c^k}\\
+ &l \le x_i,x_j\le u
+ \end{align}
+with $\tau>0$.
+
+In fact thanks to simplex constraint, the objective function depends only on one of the selected variables (e.g. $x_j$). 
+Additionally it is simply a 4-degree polynomial in $x_j$.
+Because of a continuous function admits minimum in a compact set, we have to find it between zeros of derivative and the limit points of the feasible set.
+
+Let us define $h'(\xi)$ as objective function derivative, then we can define set of possible global minima as:
+\begin{equation}
+ O_k = \{ \xi < x_j^k: h'(\xi)=0\} \cup \{\min\{l_j,x_i^k\} \}
+\end{equation}
+
+then we set:
+\begin{equation}
+x_j^{k+1}= \arg \min_{\xi \in O_k} \{h(\xi)\}
+\end{equation}
+and:
+\begin{equation}
+x_i^{k+1}= c^{k}-x^{k+1}_j
+\end{equation}
+
+
+
+\begin{algorithm}[ht]
+ \KwData{Given the initial feasible point $(x^{0}, y^{0})$}
+ Set $k = 0$\\
+ \While{(not convergence)}{
+ \eIf{$k \enskip \text{mod} \enskip M = 0$}
+  {
+  Let $(i(k), j(k))$ be the MVP\\ 
+  }
+  {
+  Let $(i(k), j(k))$ be the MVP among indexes in $W^k$\\ 
+  }
+  Compute $x_{i(k)},x_{j(k)}\in \arg \min f(\xi,\zeta)+\frac{\tau}{2} ||(\xi,\zeta)-(x_{i(k)}^k,x_{j(k)}^k)||^2$\\
+  Compute $y^{k+1}$ such that $f(x^{k+1},y^{k+1})\le f(x^{k+1},y^k)$ and $\nabla_yf(x^{k+1},y^{k+1})=0$\\
+  Set $k = k + 1$
+ }
+ \caption{Decomposition Algorithm with proximal point}
+\end{algorithm}
+
