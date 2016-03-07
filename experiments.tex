@@ -2,14 +2,10 @@
 \subsection{Implementation details}
 In this section we compare the decomposition algorithm (both with QLS and ELS) against SNOPT \cite{snopt}.
 The decomposition algorithm is written in \textit{Python 2.7} while we use the official Python interface for SNOPT. We also use \texttt{numpy} library, linked with \texttt{blas} and \texttt{ATLAS} libraries. The PC used for the experiments is equipped with and Intel i7 3630QM processor, 8GB of RAM and a Linux based distribution.\\
-We use \texttt{time.clock()} to determine the execution time of an algorithm, in this way:
-\begin{center}
-\texttt{init = time.clock()}
-
-\texttt{..execute algorithm..}
-
-\texttt{return time.clock() - init}
-\end{center}
+We use \texttt{time.clock()} to determine the execution time of an algorithm, in this way:\\
+\texttt{init = time.clock()}\\
+\texttt{..execute algorithm..}\\
+\texttt{exetime = time.clock() - init}\\
 
 \subsection{Test problems and stopping criterion}
 In all the following experiments we used the NASDAQ-2196 dataset\footnotemark[1]; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons. 
@@ -25,9 +21,9 @@ In the following experiments, we denote with DEC$_{\text{MVP}}$ the decompositio
 \subsubsection{General box constraints}
 In this section we use different combinations for the box constraints $l$ and $u$ and we compare the values assumed by the objective function in the critical point reached by the different algorithms. In these tests we take:
 \begin{equation}
-x_i^0 = \frac{1}{n} \quad \forall i \in \{1, .., n \}
+x_i^0 = \frac{1}{n} \quad \forall i \in \left\{1, .., n \right\}
 \end{equation}
-We denote with $x_{D}$ the solution produced by DEC$_{\text{MVP}}$ and with $x_{S}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{D})$ with $f(x_{S})$ using different box constraints when the two algorithms converges at two different critical points.
+We denote with $x_{D}$ the solution produced by DEC$_{\text{MVP}}$ and with $x_{S}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{D})$ with $f(x_{S})$ when the two algorithms converges at two different critical points ($x_D \neq x_S$) using different combinations of box constraints.
 
 \begin{figure}
 \makebox[\textwidth][c]{
@@ -393,7 +389,7 @@ l_i = 0 \quad \forall i \qquad u_i = 1  \quad \forall i
 \end{equation} 
 In Figure (\ref{subfig-1:time2}) we compare the average execution time of the decomposition algorithm (with different values of $\lambda$) against SNOPT using 
 \begin{equation}
-x^0 = [1, 0, .., 0]
+x^0 = \left[1, 0, .., 0 \right]
 \end{equation}
 The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations2}) we compare the average number of iterations performed by the decomposition algorithm using different values of $\lambda$.
 \begin{figure}
@@ -683,12 +679,12 @@ legend style={at={(0.5,-0.3)},anchor=north}
 \subsubsection{On the choosing of starting point}
 From our experiments, it turns out that the choice of the starting point $x^0$ strongly affects the probability of the algorithms to reach a Risk Parity solution.  In Figure (\ref{fig:sparsity}) we measure the probability to reach a Risk Parity solution varying the sparsity of the initial guess $x^0$, i.e. the percentage of components of $x^0$ fixed to 0. In Figure (\ref{subfig-3:equally}) we use an equally distributed starting point:
 \begin{equation}
-x^{0} = [x^{0}_0, x^{0}_1, .. ,  x^{0}_k, x^{0}_{k+1} .., x^{0}_n] = [\frac{1}{k}, \frac{1}{k}, .., \frac{1}{k}, 0, .., 0]
+x^{0} = \left[x^{0}_0, x^{0}_1, .. ,  x^{0}_k, x^{0}_{k+1} .., x^{0}_n \right] = \left[\frac{1}{k}, \frac{1}{k}, .., \frac{1}{k}, 0, .., 0 \right]
 \end{equation}
 In Figure (\ref{subfig-3:random}) we use a random distributed starting point:
 \begin{equation}
 \begin{aligned}
-&a^{0} = [r_0, r_1, ..,r_k, 0, .., 0] \qquad \text{where} \quad r_i \sim \mathcal{U}[0,1]\\
+&a^{0} = \left[r_0, r_1, ..,r_k, 0, .., 0 \right] \qquad \text{where} \quad r_i \sim \mathcal{U}[0,1]\\
 &x^0 = \frac{a^{0}}{\mathds{1}^T a^0}
 \end{aligned}
 \end{equation}
