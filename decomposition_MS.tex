@@ -22,9 +22,9 @@ $$
 f((x^k,y^k)+\alpha^kd^k)\le f((x^k),y^k))-\gamma (\alpha^k)^2\|d^k\|^2.
 $$
 At every step $k$ we choose a random subset $W^k\subset \{1,..,n\}$ such as
-$$
-\frac{|W^k|}{n} = \lambda
-$$
+\begin{equation}\label{eq:lambda}
+\frac{|W^k|}{n} \times 100 = \lambda
+\end{equation}
 For each $w \in W^k$, we compute the partial derivative $\frac{\partial f(x,\theta)}{\partial x_w}$ and we select the MVP among the indexes in $W^k$. If we don't find a violating pair in $W^k$, we randomly add indexes until we find one, and we use this violating pair to build the descent direction. To assure the global convergence properties, we evaluate the MVP among the full gradient $\nabla_x f(x,\theta)$ every $M$ iterations. \\
 The algorithm is formally described below.
 
@@ -53,7 +53,7 @@ Let us redefine selected variable $x_{i(k)},x_{j(k)}$ as $x_{i},x_{j}$ for ease 
 
 The idea behind proximal point modification is that at every iteration $k$ it's easy to solve the subproblem:
 \begin{align}
- &\min_{x_i,x_j} f(x_i,x_j)+ \frac{1}{2} 1tau||(x_i,x_j)-(x_i^k,x_j^k)||^2\\
+ &\min_{x_i,x_j} f(x_i,x_j)+ \frac{1}{2} \tau||(x_i,x_j)-(x_i^k,x_j^k)||^2\\
  &x_i+x_j = \underbrace{1-\sum_{h \ne i,j} x^k_h}_{c^k}\\
  &l \le x_i,x_j\le u
  \end{align}
