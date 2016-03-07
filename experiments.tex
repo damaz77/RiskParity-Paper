@@ -10,7 +10,8 @@ In order to obtain comparable results, in our scheme we use a \textit{stop crite
 \begin{equation}\label{eq:stop}
 \left| \frac{\partial f(x^k,y^k)}{d{x_{j(k)}}} - \frac{\partial f(x^k,y^k)}{d{x_{i(k)}} }\right| < \epsilon
 \end{equation}
-In SNOPT, this is (almost) equivalent to set the \texttt{Major optimality tolerance} optional parameter to $\epsilon$. 
+In SNOPT, this is (almost) equivalent to set the \texttt{Major optimality tolerance} optional parameter to $\epsilon$.\\
+In the following experiments, we denote with DEC$_{\text{MVP}}$ the decomposition algorithm with $M=1$ (we compute the MVP among the full gradient $\nabla_x f(x,y)$ at each iteration), while we denote with DEC$_{\text{MVP-}\lambda\%}$ the decomposition algorithm where we use $\lambda$ in (\ref{eq:lambda}). For DEC$_{\text{MVP-}\lambda\%}$ we evaluate the stop criterion (\ref{eq:stop}) every $M$ iterations (in the following experiments we always set $M=100$ for DEC$_{\text{MVP-}\lambda\%}$).
 
 \subsection{Numerical results}
 \subsubsection{General box constraints}
@@ -18,7 +19,7 @@ In this section we use different combinations for the box constraints $l$ and $u
 \begin{equation}
 x_i^0 = \frac{1}{n} \quad \forall i \in \{1, .., n \}
 \end{equation}
-We denote with $x_{D}$ the solution produced by the decomposition algorithm and with $x_{S}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{D})$ with $f(x_{S})$ using different box constraints when the two algorithms converges at two different critical points.
+We denote with $x_{D}$ the solution produced by DEC$_{\text{MVP}}$ and with $x_{S}$ the solution produced by SNOPT. In Figure (\ref{fig:box}), we compare the value of $f(x_{D})$ with $f(x_{S})$ using different box constraints when the two algorithms converges at two different critical points.
 
 \begin{figure}
 \makebox[\textwidth][c]{
@@ -201,7 +202,7 @@ title={$l_i = -1, \quad u_i = 1 \quad \forall i$}
 \label{fig:box}
 \end{figure}
 
-In Figure (\ref{subfig-1:time1}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT using 
+In Figure (\ref{subfig-1:time1}) we compare the average execution time of the decomposition algorithm (with different values of $\lambda$) against SNOPT using 
 \begin{equation}
 x^0_i = \frac{1}{n} \quad \forall i
 \end{equation}
@@ -209,99 +210,168 @@ and
 \begin{equation}\label{eq:generalbox}
 l_i = \frac{1}{2n} \quad \forall i \qquad u_i = \frac{2}{n}  \quad \forall i
 \end{equation} 
-The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations1}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact).
+The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations1}) we compare the average number of iterations performed by the decomposition algorithm using different values of $\lambda$.
 \begin{figure}
 \makebox[\textwidth][c]{
-\subfloat[Comparison of average execution time \label{subfig-1:time1}]{%
+\subfloat[Comparison of average execution time\label{subfig-1:time1}]{
 \begin{tikzpicture}
 \begin{axis}[%
+width=0.5\textwidth,
 xlabel={\# of assets},
-ylabel={Exe Time (s)},
+ylabel={Average Exe Time (s)},
+scaled y ticks=false,
 legend pos=north west,
-ylabel near ticks,
-width=.5\textwidth
+legend cell align=left
 ]
-\addplot [color=blue,solid,mark=x,mark options={solid}]
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
-100	.105\\
-200	.214\\
-300	.340\\
+%100	.105\\
+%200	.214\\
+%300	.340\\
 500	.737	\\
 750	1.713		\\
 1000 3.303 \\
 1250 5.400 \\
-1500 9.58\\
+1500 8.56\\
+1750 12.92\\
+2000 18.39\\
 };
-
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-100	 .068   \\
-200	 .158	\\
-300	 .258	\\
-500	 .620	\\
-750	 1.54	\\
-1000 3.42  \\
-1250 6.24\\
-1500 10.93 \\
+  table[row sep=crcr]{%10
+%100 .146\\
+%250 .341\\
+500 .853\\
+750 1.56\\
+1000 2.69 \\
+1250 4.09\\
+1500 5.75\\
+1750 8.10\\
+2000 11.08\\
 };
 
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+%100 .190\\
+%250 .355\\
+500 .759 \\
+750 1.33 \\
+1000 2.14 \\
+1250 3.23\\
+1500 4.50 \\
+1750 6.16 \\
+2000 7.81 \\
+};
 
-\addplot [color=gr,solid,mark=x,mark options={solid}]
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+%100 .299\\
+%250 .468\\
+500  .854\\
+750  1.44\\
+1000 2.07 \\
+1250 2.92 \\
+1500 3.91 \\
+1750 5.22 \\
+2000 6.64\\
+};
+\addplot [color=green,solid,mark=x,mark options={solid}]
   table[row sep=crcr]{%
-100	.005	\\
-200	.014	\\
-300	.035	    \\
+%100	.005	\\
+%200	.014	\\
+%300	.035	    \\
 500	.118	    \\
 750	 .286  \\
 1000 0.561	\\
 1250 0.824	\\
 1500 1.43 \\
+1750 1.96 \\
+2000 2.68\\
 };
 
-\addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(QLS)}$}
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
 \addlegendentry{SNOPT}
 \end{axis}
+
 \end{tikzpicture}
 }
 \hfill
 \hspace{1em}\subfloat[Comparison of average iterations\label{subfig-2:iterations1}]{%
 \begin{tikzpicture}
+
 \begin{axis}[%
+width=0.5\textwidth,
 xlabel={\# of assets},
-ylabel={Iterations},
+ylabel={Average Iterations},
+ymax=12000,
+scaled y ticks=false,
 legend pos=north west,
-ylabel near ticks,
-width=.5\textwidth
+legend cell align=left
 ]
-\addplot [color=blue,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-100	445 \\
-200	819 \\
-300	1176 \\
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%MVP
+%100	445 \\
+%200	819 \\
+%300	1176 \\
 500	1888\\
 750	2874 \\
 1000	 3701\\
 1250	 4439\\
-1500 5634\\
+1500 5134\\
+1750 6082\\
+2000 7041\\
 };
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
- table[row sep=crcr]{%
-100	543    \\
-200	1021	\\
-300	1466	\\
-500	2241	\\
-750	3387	\\
-1000	 4582	\\
-1250	 5789	\\
-1500	 6811\\
+  table[row sep=crcr]{%10
+%100 607\\
+%250 1134\\
+500 2087\\ 
+750 2895 \\
+1000 3962 \\
+1250 4854 \\
+1500 5676 \\
+1750 6800 \\
+2000 8043\\
 };
 
-\addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(QLS)}$}
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+%100 841\\
+%250 1349\\
+500 2283   \\
+750 3207 \\
+1000 4229  \\
+1250 5340 \\
+1500 6382 \\
+1750 7648\\
+2000 8541\\
+};
+
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+%100 1346\\
+%250 1857\\
+500 2780 \\
+750 3832\\
+1000 4934  \\
+1250 6053\\
+1500 7238\\
+1750 8021\\
+2000 9341\\
+};
+
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
 \end{axis}
+
 \end{tikzpicture}
 }
 }
@@ -313,107 +383,152 @@ In this section we use
 \begin{equation}\label{eq:classicalbox}
 l_i = 0 \quad \forall i \qquad u_i = 1  \quad \forall i
 \end{equation} 
-In Figure (\ref{subfig-1:time2}) we compare the average execution time of the decomposition algorithm (with inexact and exact line search) against SNOPT using 
+In Figure (\ref{subfig-1:time2}) we compare the average execution time of the decomposition algorithm (with different values of $\lambda$) against SNOPT using 
 \begin{equation}
 x^0 = [1, 0, .., 0]
 \end{equation}
-The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations2}) we compare the average number of iterations performed by the decomposition algorithm using the two different strategies for step computation (inexact and exact).
+The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations2}) we compare the average number of iterations performed by the decomposition algorithm using different values of $\lambda$.
 \begin{figure}
 \makebox[\textwidth][c]{
 \subfloat[Comparison of average execution time\label{subfig-1:time2}]{%
 \begin{tikzpicture}
 \begin{axis}[%
+width=0.5\textwidth,
 xlabel={\# of assets},
-ylabel={Exe Time (s)},
+ylabel={Average Exe Time (s)},
+scaled y ticks=false,
 legend pos=north west,
-ylabel near ticks,
-width=.5\textwidth
+legend cell align=left
 ]
-\addplot [color=blue,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-100	.148\\
-200	.346	\\
-300	.583	\\
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%MVP
 500	1.486	\\
-750	3.147		\\
+750	3.147	\\
 1000 6.431 \\
 1250 11.57 \\
-1500 18.6\\
+1500 18.6  \\
+1750 27.68 \\
+2000 40.08\\
 };
-
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-100	 .101   \\
-200	 .269	\\
-300	 .481	\\
-500	 1.417	\\
-750	 3.763	\\
-1000 8.72  \\
-1250 17.16 \\
-1500 28.75 \\
+  table[row sep=crcr]{%10
+500 1.54\\
+750 3.05\\
+1000 5.28 \\
+1250 7.97\\
+1500 11.74\\
+1750 16.32\\
+2000 22.06\\
 };
 
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+500 1.34 \\
+750 2.47 \\
+1000 4.10 \\
+1250 5.92\\
+1500 8.44 \\
+1750 11.32 \\
+2000 15.00 \\
+};
 
-\addplot [color=gr,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-100	.008		\\
-200	.028		\\
-300	.074	    \\
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+500  1.50\\
+750  2.53\\
+1000 3.77 \\
+1250 5.40 \\
+1500 7.23 \\
+1750 9.49 \\
+2000 12.26\\
+};
+
+\addplot [color=green,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%SNOPT
 500	.353	    \\
 750	 1.197  \\
 1000 3.15	\\
 1250 6.617	\\
 1500 11.765 \\
+1750 19.84\\
+2000 30.32 \\
 };
 
-\addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(QLS)}$}
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
 \addlegendentry{SNOPT}
 \end{axis}
+
 \end{tikzpicture}
 }
 \hfill
 \hspace{1em}\subfloat[Comparison of average iterations\label{subfig-2:iterations2}]{%
 \begin{tikzpicture}
+
 \begin{axis}[%
+width=0.5\textwidth,
 xlabel={\# of assets},
-ylabel={Iterations},
+ylabel={Average Iterations},
+scaled y ticks=false,
+ymax=20000,
 legend pos=north west,
-ylabel near ticks,
-width=.5\textwidth
+legend cell align=left
 ]
-\addplot [color=blue,solid,mark=x,mark options={solid}]
-  table[row sep=crcr]{%
-%50	242\\
-%75	379\\
-100	609 \\
-200	1315 \\
-300	2053 \\
-500	3538\\
-750	5343 \\
-1000	7200\\
-1250	9251\\
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%MVP
+500	 3538\\
+750	 5343 \\
+1000	  7200\\
+1250 	9151\\
 1500    11011\\
+1750 13141\\
+2000 15241\\
 };
 
 \addplot [color=red,solid,mark=x,mark options={solid}]
- table[row sep=crcr]{%
-%%50	309    \\
-%%75	483    \\
-100	782    \\
-200	1754		\\
-300	2763		\\
-500	5048		\\
-750	8225		\\
-1000	 11871	\\
-1250	 15552	\\
-1500	 19347\\
+  table[row sep=crcr]{%10
+500 3644  \\
+750 5503 \\
+1000 7377 \\
+1250 9255 \\
+1500 11257 \\
+1750 13392 \\
+2000 15540\\
 };
 
-\addlegendentry{DEC$_{(ELS)}$}
-\addlegendentry{DEC$_{(QLS)}$}
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+500 3840   \\
+750 5719 \\
+1000 7616  \\
+1250 9652 \\
+1500 11624 \\
+1750 13776\\
+2000 16029 \\
+};
+
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+500 4718 \\
+750 6667\\
+1000 8545  \\
+1250 10710\\
+1500 12685\\
+1750 15052\\
+2000 17413\\
+};
+
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
 \end{axis}
+
 \end{tikzpicture}
 }
 }
@@ -425,145 +540,95 @@ In this section we evaluate the probability to converge to a critical point $(x^
 \begin{equation}\label{eq:reseps}
 \max_i \left| \frac{RC_i}{\mathcal{R}(x^*,y^*)} - \frac{1}{n} \right| < 10^{-6}
 \end{equation}
-where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$. In Figure (\ref{fig:convergence1}) and (\ref{fig:convergence2}) we compare the probability to reach a Risk Parity solution for both the decomposition algorithm (with inexact and exact line search) and SNOPT, using different choices of the starting point $x^0$. 
+where $RC_i$ is the risk contribution of the asset $i$ and ${\mathcal{R}(x^*,y^*)}$ is the total risk of the invested portfolio. Equation (\ref{eq:reseps}) express the fact that the (normalized) max deviation from Risk Parity of the solutions is less than $10^{-6}$. In Figure (\ref{fig:convergence1}) we compare the probability to reach a Risk Parity solution for both the decomposition algorithm (with different values of $\lambda$) and SNOPT. 
 
 \begin{figure}
 \makebox[\textwidth][c]{
 \begin{tikzpicture}
 \begin{axis}[%
 ybar,
-width=\textwidth,
+width=1\textwidth,
 height=0.5\textwidth,
 xlabel={\# of assets},
 ylabel={\% of attempts},
 ylabel near ticks,
 legend pos=south west,
-symbolic x coords = {5,10,20,50,100,200,300,500,750,1000,1250},
+symbolic x coords = {5, 50, 500, 750, 1000, 1250, 1500, 2000},
 bar width=6pt,
 xtick=data,
-title=\textbf{Probability to converge to an RP solution}
+ymin=40,
+title=\textbf{Probability to converge to an RP solution},
+legend cell align=left,
+legend style={at={(0.5,-0.3)},anchor=north}
 ]
 
  
- \addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,99.4)
-(100,87)
-(200,45)
-(300,24)
-(500,6)
-(750,2)
-(1000,0)
-(1250,0)
- };
- 
- \addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,99)
-(100,85.4)
-(200,40)
-(300,22)
-(500,0)
-(750,0)
-(1000,0)
-(1250,0)
- };
- 
-  \addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,99.5)
-(100,91.2)
-(200,52)
-(300,34)
-(500,3)
-(750,0)
-(1000,0)
-(1250,0)
- };
-
-\addlegendentry{DEC$_{(ELS)}$ }
-\addlegendentry{DEC$_{(QLS)}$}
-\addlegendentry{SNOPT}
-\end{axis}
-\end{tikzpicture}
-}
-\caption{Probability to converge to a Risk Parity solution using $x^{0}_i = 1/n \quad \forall i$ for the decomposition algorithm (DEC) (with QLS or ELS) and SNOPT.}
-\label{fig:convergence1}
-\vspace{2em}
-\makebox[\textwidth][c]{
-\begin{tikzpicture}
-\begin{axis}[%
-ybar,
-width=\textwidth,
-height=0.5\textwidth,
-xlabel={\# of assets},
-ylabel={\% of attempts},
-ylabel near ticks,
-legend pos=south west,
-symbolic x coords = {5,10,20,50,100,200,300,500,750,1000,1250},
-bar width=6pt,
-xtick=data,
-ymin=-10,
-title=\textbf{Probability to converge to an RP solution}
-]
-
- 
- \addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
-(50,99.9)
-(100,100)
-(200,100)
-(300,100)
+ \addplot [color=black ,fill=black, fill opacity=0.3] coordinates { %MVP
+%(5,100)
+(50,100)
 (500,99.2)
 (750,99.2)
 (1000,95.2)
 (1250,93.2)
+(1500,85.0)
+(2000,68.5)
  };
  
-\addplot coordinates { 
-(5,100)         
-(10,100)
-(20,100)
+\addplot [color=red,fill=red, fill opacity=0.3] coordinates { % 10%
+%(5,100)
 (50,100)
-(100,99.9)
-(200,100)
-(300,100)
-(500,99.5)
-(750,99.5)
-(1000,98)
-(1250,91.5)
+(500,99.0)     
+(750,97.0)    
+(1000,97.0)
+(1250,87.5)
+(1500,86.5)
+(2000,75.4)
  };
-
-  \addplot coordinates { 
-(5,100)         
-(10,99.9)
-(20,100)
+ 
+ \addplot [color=blue, fill=blue, fill opacity=0.3] coordinates { % 5%
+%(5,100)   
+(50,99.5)
+(500,96.0)
+(750,94.5)
+(1000,94)
+(1250,88.5)
+(1500,86)
+(2000,79)
+ };
+ 
+ \addplot [color=magenta, fill=magenta, fill opacity=0.3] coordinates { % 2.5%
+%(5,100)   
+(50,99.5)
+(500,94)
+(750,89.5)
+(1000,88)
+(1250,86)
+(1500,79.5)
+(2000,69.6)
+ }; 
+ 
+\addplot [color=green, fill=green, fill opacity=0.3] coordinates { 
+%(5,100)         
 (50,99.9)
-(100,99.6)
-(200,98.8)
-(300,96.6)
 (500,88)
 (750,83)
 (1000,83)
 (1250,73)
+(1500,70.5)
+(2000,64.2)
  };
 
-\addlegendentry{DEC$_{(ELS)}$ }
-\addlegendentry{DEC$_{(QLS)}$}
+
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
 \addlegendentry{SNOPT}
 \end{axis}
 \end{tikzpicture}
 }
-\caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$ for the decomposition algorithm (DEC) (with QLS or ELS) and SNOPT.}
-\label{fig:convergence2}
+\caption{Probability to converge to a Risk Parity solution using $x^{0}= [1, 0, .., 0]$ for the decomposition algorithm (with different values of $\lambda$) and SNOPT.}
+\label{fig:convergence1}
 \end{figure}
 
 %\begin{table}
@@ -608,11 +673,11 @@ title=\textbf{Probability to converge to an RP solution}
 %\end{table}
 
 \subsubsection{On the choosing of starting point}
-From Figures (\ref{fig:convergence1}) and (\ref{fig:convergence2}) it is clear that the choice of the starting point $x^0$ strongly affects the probability of the algorithms to reach a Risk Parity solution. More in details, in Figure (\ref{fig:convergence1}) we use a fully dense starting point while in Figure (\ref{fig:convergence2}) we use the most sparse feasible starting point. In Figure (\ref{fig:sparsity}) we measure the probability to reach a Risk Parity solution varying the sparsity of the initial guess $x^0$, i.e. the percentage of components of $x^0$ fixed to 0. In the left side of Figure (\ref{fig:sparsity}) we use an equally distributed starting point:
+From our experiments, it turns out that the choice of the starting point $x^0$ strongly affects the probability of the algorithms to reach a Risk Parity solution.  In Figure (\ref{fig:sparsity}) we measure the probability to reach a Risk Parity solution varying the sparsity of the initial guess $x^0$, i.e. the percentage of components of $x^0$ fixed to 0. In Figure (\ref{subfig-3:equally}) we use an equally distributed starting point:
 \begin{equation}
 x^{0} = [x^{0}_0, x^{0}_1, .. ,  x^{0}_k, x^{0}_{k+1} .., x^{0}_n] = [\frac{1}{k}, \frac{1}{k}, .., \frac{1}{k}, 0, .., 0]
 \end{equation}
-In the right side of Figure (\ref{fig:sparsity}) we use a random distributed starting point:
+In Figure (\ref{subfig-3:random}) we use a random distributed starting point:
 \begin{equation}
 \begin{aligned}
 &a^{0} = [r_0, r_1, ..,r_k, 0, .., 0] \qquad \text{where} \quad r_i \sim \mathcal{U}[0,1]\\
@@ -622,14 +687,14 @@ In the right side of Figure (\ref{fig:sparsity}) we use a random distributed sta
 
 \begin{figure}
 \makebox[\textwidth][c]{
+\hspace{1em}\subfloat[With equally distributed $x_0$\label{subfig-3:equally}]{%
 \begin{tikzpicture}
 \begin{axis}[%
 xlabel={\% of sparsity of $x_0$},
 ylabel={\% of convergence at RP},
 scaled y ticks=false,
 width=0.5\textwidth,
-legend pos=south east,
-title=\textbf{with equally distributed $x_0$}
+legend pos=south east
 ]
 
 \addplot [color=blue,solid,mark=none,mark options={solid}]
@@ -735,14 +800,14 @@ title=\textbf{with equally distributed $x_0$}
 \addlegendentry{n=50}
 \end{axis}
 \end{tikzpicture}
-
+}
+\hspace{1em}\subfloat[With random $x_0$\label{subfig-3:random}]{%
 \begin{tikzpicture}
 \begin{axis}[%
 width=0.5\textwidth,
 xlabel={\% of sparsity of $x_0$},
 ylabel={\% of convergence},
-legend pos=south east,
-title=\textbf{with random $x_0$}
+legend pos=south east
 ]
 
 \addplot [color=blue,solid,mark=none,mark options={solid}]
@@ -855,8 +920,8 @@ title=\textbf{with random $x_0$}
 \end{axis}
 \end{tikzpicture}
 }
-
-\caption{Percentage of computations that find an RP solution, varying the sparsity of the initial guess $x^0$, for different number of assets $n$}
+}
+\caption{Percentage of computations of DEC$_{\text{MVP}}$ that find an RP solution, varying the sparsity of the initial guess $x^0$, for different number of assets $n$}
 \label{fig:sparsity}
 \end{figure}
 
