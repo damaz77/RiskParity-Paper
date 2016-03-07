@@ -2,6 +2,14 @@
 \subsection{Implementation details}
 In this section we compare the decomposition algorithm (both with QLS and ELS) against SNOPT \cite{snopt}.
 The decomposition algorithm is written in \textit{Python 2.7} while we use the official Python interface for SNOPT. We also use \texttt{numpy} library, linked with \texttt{blas} and \texttt{ATLAS} libraries. The PC used for the experiments is equipped with and Intel i7 3630QM processor, 8GB of RAM and a Linux based distribution.\\
+We use \texttt{time.clock()} to determine the execution time of an algorithm, in this way:
+\begin{center}
+\texttt{init = time.clock()}
+
+\texttt{..execute algorithm..}
+
+\texttt{return time.clock() - init}
+\end{center}
 
 \subsection{Test problems and stopping criterion}
 In all the following experiments we used the NASDAQ-2196 dataset\footnotemark[1]; from the covariance matrix contained in the dataset, we compute the correlation matrix and we use that instead of the covariance one for numerical reasons. 
@@ -806,7 +814,7 @@ legend pos=south east
 \begin{axis}[%
 width=0.5\textwidth,
 xlabel={\% of sparsity of $x_0$},
-ylabel={\% of convergence},
+ylabel={\% of convergence at RP},
 legend pos=south east
 ]
 
