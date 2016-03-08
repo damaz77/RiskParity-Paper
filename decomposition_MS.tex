@@ -59,11 +59,11 @@ The idea behind proximal point modification is that at every iteration $k$ it's 
  \end{align}
 with $\tau>0$.
 
-In fact thanks to simplex constraint, the objective function depends only on one of the selected variables (e.g. $x_j$). 
+In fact, thanks to simplex constraint, the objective function depends only on one of the selected variables (e.g. $x_j$). 
 Additionally it is simply a 4-degree polynomial in $x_j$.
 Because of a continuous function admits minimum in a compact set, we have to find it between zeros of derivative and the limit points of the feasible set.
 
-Let us define $h'(\xi)$ as objective function derivative, then we can define set of possible global minima as:
+Let us define $h'(\xi)$ as objective function derivative, then we can define the set of possible global minima as:
 \begin{equation}
  O_k = \{ \xi < x_j^k: h'(\xi)=0\} \cup \{\min\{l_j,x_i^k\} \}
 \end{equation}

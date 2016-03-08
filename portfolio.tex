@@ -1,24 +1,42 @@
-In this section, we show that the general framework presented above can be used to a specific class of portfolio selection problem, namely the Risk Parity portfolio selection. Let $x \in \R^n$ be the portfolio, where $x_i$ represents the fraction of budget that is invested in the asset $i$, and let $Q$ be the covariance matrix between the assets; in \cite{bai} is introduced the following least-square optimization problem:
-\begin{subequations}\label{eq:riskparity} 
+In this section, we show that the general framework presented above can be used to a specific class of portfolio selection problem, namely the Risk Parity portfolio selection. We use volatility as risk measure of the fully invested portfolio, i.e.
+\begin{equation}
+\mathcal{R}(x) = \sigma(x) = \sqrt{x^T Q x}
+\end{equation}
+where $Q$ is the covariance matrix. Using the Euler decomposition, we can express the total risk as the sum of contributions from each asset in the portfolio:
+\begin{equation}
+\mathcal{R}(x) = \sum_{i=1}^n RC_i 
+\end{equation}
+where $RC_i$ is the risk contribution of the $i$-th asset, that has the form
+\begin{equation}
+RC_i = x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}
+\end{equation}
+In the Risk Parity formulation, our aim is to satisfy the following set of constraints:
+\begin{equation}\label{eq:rpconst}
+x_i \frac{\partial \mathcal{R}(x)}{\partial x_i}= x_j \frac{\partial \mathcal{R}(x)}{\partial x_j} \quad \forall i,j
+\end{equation}
+We can also express (\ref{eq:rpconst}) in the following equivalent way:
+\begin{equation}
+x_i (Q x)_i = x_j (Q x)_j \quad \forall i,j
+\end{equation}
+In \cite{maillard} is proposed a least-square approach for solving the Risk Parity problem:
+\begin{subequations}
 \begin{align}
-\min_{x,\theta} & \quad f(x,\theta) = \sum_{i=i}^n \left({x_i q_i^T \cdot x} - \theta \right)^2\\
+\min_x & \quad \sum_{i=i}^n \sum_{j=1}^{n}\left(x_i(Q x)_i - x_j(Q x)_j\right)^2\\
 \text{s.t.} & \quad l \leq x \leq u \\
-& \quad \mathbf{1}^T x = 1 
+& \quad \mathds{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $\theta \in \R$ and $q_i$ is the $i$-th column of $Q$. Note that the problem is not necessary convex with respect to $x$ but it is strictly convex and coercive with respect to $\theta$. Infact we have:
-\begin{equation}
-\frac{\partial^2}{d^2\theta} f(x,\theta) = 2 
-\end{equation}
-which is a sufficient condition for a strictly convex function. At each iteration $k$, we have 
-\begin{equation}
-\theta^{k+1} = \argmin_\theta f(x^{k},\theta)
-\end{equation}
-$f$ is strictly convex with respect to $\theta$, so we can find $\theta^{k+1}$ as a solution of
-\begin{equation}
-\frac{\partial f(x^{k},\theta)}{d\theta} = 0 
-\end{equation}
-That is
-\begin{equation}
-\theta^{k+1} = \frac{\sum_{i=1}^n x_i^{k} q_i^T \cdot x^{k}}{n}
-\end{equation}
+The formulation proposed in \cite{tutuncu} introduces a free variable $y$ that is also optimized:
+\begin{subequations}\label{eq:problemRP} 
+\begin{align}
+\min_{x,y} & \quad f(x,y) =  \sum_{i=i}^n \left(x_i(Q x)_i - y\right)^2 \\
+\text{s.t.} & \quad l \leq x \leq u \\
+& \quad \mathds{1}^T x = 1 
+\end{align}
+\end{subequations}
+where $x \in \R^n$, $y \in \R$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. \\
+It is easy to see that Problem (\ref{eq:problemRP}) is a specific case of Problem (\ref{eq:problem}). Note that the formulation (\ref{eq:problemRP}) is non-convex.  If the optimization problem above has an optimal value of zero, then the RP portfolio is achieved. Otherwise, the value of $\sum_{i=i}^n \left( x_i(Q x)_i - y\right)^2$  can be regarded as a minimum variance measure towards our goal. Note that, since (\ref{eq:problemRP}) is a non-convex problem, in theory it is hard to solve and may produce local solutions. Anyway, we have the following lemma (for the proof see \cite{tutuncu}):
+\begin{lemma}\label{rplemma}
+Let $f(x,y) = \sum_{i=i}^n \left( x_i(Q x)_i - y \right)^2$. A solution pair $\{x,y\}$ is a global optimum with $f(x,y)=0$ if and only if $\nabla_xf(x,y) = 0$ and $\frac{\partial f(x,y)}{\partial y} = 0$.
+\end{lemma}
+Lemma (\ref{rplemma}) implies that if constraints of (\ref{eq:problemRP}) are not considered, then the first order optimality conditions determine the global optimal solution. On the other hand, when constraints are imposed, local optima and local stationary points can occur.
