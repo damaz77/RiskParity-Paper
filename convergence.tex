@@ -2,13 +2,13 @@ Let us consider the following subset of indexes at $x^k$:
 
 \begin{equation}\label{eq:indexes}
  \begin{aligned}
-   L(x^k) =\{ i \in\{1,\ldots,n \}: x^k_i = a_i\}\\
-  U(x^k) =\{i \in\{1,\ldots,n \} : x^k_i = b_i\}
+   L(x^k) =\{ i \in\{1,\ldots,n \}: x^k_i = l_i\}\\
+  U(x^k) =\{i \in\{1,\ldots,n \} : x^k_i = u_i\}
  \end{aligned}
 \end{equation}
 Also we define set:
 \begin{equation}
- C(x^k)=\{ i \in\{1,\ldots,n \}: a_i<x^k_i < b_i\}\\
+ C(x^k)=\{ i \in\{1,\ldots,n \}: l_i<x^k_i < u_i\}\\
 \end{equation}
 We use the following lemma:
 \begin{lemma}\label{lem:direction}
@@ -33,7 +33,7 @@ Suppose that the level set $\mathcal{L}_0$ is a compact set. Let $\{(x^k, y^k)\}
 \end{proposition}
 
 \begin{proof}
-From (\ref{eq:updatey}) we have
+From the update of $y$ in the decomposition algorithm, we have
 \begin{equation}
 f(x^{k+1}, y^{k}) \leq f(x^{k}, y^{k})
 \end{equation}
@@ -59,7 +59,7 @@ By contradiction, let us assume that $(\overline{x},\overline{y})$ is not a solu
 &\exists \enskip i, j \enskip  \text{s.t.} \enskip \overline{x}_i > l_i \enskip  \text{and} \enskip  \nabla_x f(\overline{x},\overline{y})^T d^{i,j} = -\eta < 0 \label{eq:b}
 \end{align}
 \end{subequations}
-For Point (\ref{eq:a}), we recall that for (\ref{eq:updatey}) $y^{k+1}$ minimizes $f(x^{k+1},y)$ with respect to $y$. So, if we imagine to perform QLS along a descent direction (for example, $-\nabla_y f(x^{k+1},y^{k})$) we have
+For Point (\ref{eq:a}), we recall that $y^{k+1}$ minimizes $f(x^{k+1},y)$ with respect to $y$. So, if we imagine to perform QLS along a descent direction (for example, $-\nabla_y f(x^{k+1},y^{k})$) we have
 \begin{equation}\label{eq:dis}
 f(x^{k+1}, y^{k+1}) \leq f(x^{k+1}, y^{k}) - \gamma (\alpha \parallel \nabla_y f(x^{k+1}, y^{k}) \parallel) ^2 \qquad \forall \alpha, \gamma > 0
 \end{equation}

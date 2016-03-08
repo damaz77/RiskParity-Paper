@@ -42,7 +42,10 @@ We can state the following result.
 \begin{proposition}\label{optimality}
 A point $(\bar x,\bar y) \in \mathcal{F}$ is a critical point if and only if
 \begin{equation}\label{on_x}
-\nabla_xf(\bar x,\bar y)^Td_x\ge 0\quad\quad \forall d_x\in R^n \ s.t. \mathds{1}^Td_x=0, d_i\ge 0 \ \forall i \in L(\bar x), d_i\le 0 \ \forall i \in U(\bar x)
+\begin{aligned}
+&\nabla_xf(\bar x,\bar y)^Td_x\ge 0 \quad \forall d_x\in R^n & \\ 
+&\text{s.t.} \quad \mathds{1}^Td_x=0,\quad d_i\ge 0 \ \forall i \in L(\bar x), \quad d_i\le 0 \ \forall i \in U(\bar x)&
+\end{aligned}
 \end{equation}
 \begin{equation}\label{on_y}
  \nabla_yf(\bar x,\bar y)=0.
@@ -124,7 +127,7 @@ is said a {\it Violating Pair} (VP).
 
 A violating pair $(i^\star,j^\star)$ such that 
 \begin{equation}\label{mvp}
- \nabla f(\bar x,\bar y)^Td^{i^\star,j^\star}\le \nabla f(\bar x,\bar y)^Td^{i,j} \forall i\in R(\bar x), \ j\in S(\bar x).
+ \nabla f(\bar x,\bar y)^Td^{i^\star,j^\star}\le \nabla f(\bar x,\bar y)^Td^{i,j} \quad \forall i\in R(\bar x), \ j\in S(\bar x).
 \end{equation}
 is the {\it Most Violating Pair} (MVP).
 
