@@ -25,7 +25,7 @@ At every step $k$ we choose a random subset $W^k\subset \{1,..,n\}$ such as
 \begin{equation}\label{eq:lambda}
 \frac{|W^k|}{n} \times 100 = \lambda
 \end{equation}
-For each $w \in W^k$, we compute the partial derivative $\frac{\partial f(x,\theta)}{\partial x_w}$ and we select the MVP among the indexes in $W^k$. If we don't find a violating pair in $W^k$, we randomly add indexes until we find one, and we use this violating pair to build the descent direction. To assure the global convergence properties, we evaluate the MVP among the full gradient $\nabla_x f(x,\theta)$ every $M$ iterations. \\
+For each $w \in W^k$, we compute the partial derivative $\frac{\partial f(x,y)}{\partial x_w}$ and we select the MVP among the indexes in $W^k$. If we don't find a violating pair in $W^k$, we randomly add indexes until we find one, and we use this violating pair to build the descent direction. To assure the global convergence properties, we evaluate the MVP among the full gradient $\nabla_x f(x,y)$ every $M$ iterations. \\
 The algorithm is formally described below.
 
 \begin{algorithm}[ht]
