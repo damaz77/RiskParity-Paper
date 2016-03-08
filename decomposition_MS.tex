@@ -90,7 +90,7 @@ x_i^{k+1}= c^{k}-x^{k+1}_j
   {
   Let $(i(k), j(k))$ be the MVP among indexes in $W^k$\\ 
   }
-  Compute $x_{i(k)},x_{j(k)}\in \arg \min f(\xi,\zeta)+\frac{1}{2}\tau ||(\xi,\zeta)-(x_{i(k)}^k,x_{j(k)}^k)||^2$\\
+  Compute $\displaystyle x_{i(k)},x_{j(k)}\in \arg \min_{\xi,\zeta} f(\xi,\zeta)+\frac{1}{2}\tau ||(\xi,\zeta)-(x_{i(k)}^k,x_{j(k)}^k)||^2$\\
   Compute $y^{k+1}$ such that $f(x^{k+1},y^{k+1})\le f(x^{k+1},y^k)$ and $\nabla_yf(x^{k+1},y^{k+1})=0$\\
   Set $k = k + 1$
  }
