@@ -26,18 +26,18 @@ In \cite{maillard} is proposed a least-square approach for solving the Risk Pari
 & \quad \mathds{1}^T x = 1 
 \end{align}
 \end{subequations}
-The formulation proposed in \cite{tutuncu} introduces a free variable $y$ that is also optimized:
+The formulation proposed in \cite{tutuncu} introduces a free variable $\theta$ that is also optimized:
 \begin{subequations}\label{eq:problemRP} 
 \begin{align}
-\min_{x,y} & \quad f(x,y) =  \sum_{i=i}^n \left(x_i(Q x)_i - y\right)^2 \\
+\min_{x,\theta} & \quad f(x,\theta) =  \sum_{i=i}^n \left(x_i(Q x)_i - \theta\right)^2 \\
 \text{s.t.} & \quad l \leq x \leq u \\
 & \quad \mathds{1}^T x = 1 
 \end{align}
 \end{subequations}
-where $x \in \R^n$, $y \in \R$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. \\
-It is easy to see that Problem (\ref{eq:problemRP}) is a specific case of Problem (\ref{eq:problem}). Note that the formulation (\ref{eq:problemRP}) is non-convex.  If the optimization problem above has an optimal value of zero, then the RP portfolio is achieved. Otherwise, the value of $\sum_{i=i}^n \left( x_i(Q x)_i - y\right)^2$  can be regarded as a minimum variance measure towards our goal. Note that, since (\ref{eq:problemRP}) is a non-convex problem, in theory it is hard to solve and may produce local solutions. Anyway, we have the following lemma (for the proof see \cite{tutuncu}):
+where $x \in \R^n$, $\theta \in \R$, $f$ continuously differentiable, $l, u \in \R^n$ with $l < u$ and $\mathds{1} \in \R^n$ is all composed by ones. \\
+It is easy to see that Problem (\ref{eq:problemRP}) is a specific case of Problem (\ref{eq:problem}). Note that the formulation (\ref{eq:problemRP}) is non-convex, but $f(x,\theta)$ is quadratic and strictly convex with respect to $\theta$.  If the optimization problem above has an optimal value of zero, then the RP portfolio is achieved. Otherwise, the value of $\sum_{i=i}^n \left( x_i(Q x)_i - \theta\right)^2$  can be regarded as a minimum variance measure towards our goal. Note that, since (\ref{eq:problemRP}) is a non-convex problem, in theory it is hard to solve and may produce local solutions. Anyway, we have the following lemma (for the proof see \cite{tutuncu}):
 \begin{lemma}\label{rplemma}
-Let $f(x,y) = \sum_{i=i}^n \left( x_i(Q x)_i - y \right)^2$. A solution pair $\{x,y\}$ is a global optimum with $f(x,y)=0$ if and only if $\nabla_xf(x,y) = 0$ and $\frac{\partial f(x,y)}{\partial y} = 0$.
+Let $f(x,\theta) = \sum_{i=i}^n \left( x_i(Q x)_i - \theta\right)^2$. A solution pair $\{x,\theta\}$ is a global optimum with $f(x,\theta)=0$ if and only if $\nabla_xf(x,\theta) = 0$ and $\frac{\partial f(x,\theta)}{\partial \theta} = 0$.
 \end{lemma}
 Lemma (\ref{rplemma}) implies that if constraints of (\ref{eq:problemRP}) are not considered, then the first order optimality conditions determine the global optimal solution. On the other hand, when constraints are imposed, local optima and local stationary points can occur.
 \subsection{Proximal Point modification}
@@ -140,8 +140,7 @@ Taking the limit for $k \in K, k \to \infty$ we obtain:
 Now we have to prove that $|\theta^{k+1}-\theta^{k}|\to 0$, using the property that $f$ is quadratic and strictly convex with respect to $\theta$. 
 We have to prove the following lemma:
 \begin{lemma}
-Let $f$ defined in \ref{eq:problemRP}, $f$ quadratic and strictly convex with respect to $\theta$. Let us define a sequence 
-then if $\lim_{k \to \infty} f(x^{k},\theta^k)-f(x^{k},\theta^{k+1})=0$ then:
+Let $f(x, \theta)$ defined in (\ref{eq:problemRP}). If $\lim_{k \to \infty} f(x^{k},\theta^k)-f(x^{k},\theta^{k+1})=0$ then:
 \begin{equation}
  \lim_{k\to \infty} |\theta^{k+1} -\theta^k| = 0 
 \end{equation}
@@ -168,15 +167,8 @@ and from \ref{eq:upTheta} and \ref{eq:quadratic} :
 \begin{equation}
   \lim_{k\to \infty} |\theta^{k+1} -\theta^k| = 0 
 \end{equation}
-
-
- 
 \end{proof}
  
-
-
-
-
 Next convergence steps are equal to previous proposition.
 \end{proof}
 
