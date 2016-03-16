@@ -387,11 +387,11 @@ In this section we use
 \begin{equation}\label{eq:classicalbox}
 l_i = 0 \quad \forall i \qquad u_i = 1  \quad \forall i
 \end{equation} 
-In Figure (\ref{subfig-1:time2}) we compare the average execution time of the decomposition algorithm (with different values of $\lambda$) against SNOPT using 
+In Figure (\ref{fig:100}) and Figure (\ref{fig:10}) we compare the average execution time and the average number of iterations performed by the decomposition algorithm (with different values of $\lambda$) against SNOPT using 
 \begin{equation}
 x^0 = \left[1, 0, .., 0 \right]
 \end{equation}
-The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{subfig-2:iterations2}) we compare the average number of iterations performed by the decomposition algorithm using different values of $\lambda$.
+The $\epsilon$ in the stop criterion (\ref{eq:stop}) is set to $10^{-10}$. In Figure (\ref{fig:100}) we set $M=100$, while in Figure (\ref{fig:10}) we set $M=10$.
 \begin{figure}
 \makebox[\textwidth][c]{
 \subfloat[Comparison of average execution time\label{subfig-1:time2}]{%
@@ -478,7 +478,7 @@ width=0.5\textwidth,
 xlabel={\# of assets},
 ylabel={Average Iterations},
 scaled y ticks=false,
-ymax=20000,
+ymax=24000,
 legend pos=north west,
 legend cell align=left
 ]
@@ -536,7 +536,157 @@ legend cell align=left
 \end{tikzpicture}
 }
 }
-\caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:classicalbox})}
+\caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:classicalbox}) with $M=100$}
+\label{fig:100}
+\end{figure}
+
+\begin{figure}
+\centering
+\makebox[\textwidth][c]{
+\subfloat[Comparison of average execution time\label{subfig-1:time3}]{%
+\begin{tikzpicture}
+\begin{axis}[%
+width=0.5\textwidth,
+xlabel={\# of assets},
+ylabel={Average Exe Time (s)},
+scaled y ticks=false,
+legend pos=north west,
+legend cell align=left
+]
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%MVP
+500	1.486	\\
+750	3.147	\\
+1000 6.431 \\
+1250 11.57 \\
+1500 18.6  \\
+1750 27.68 \\
+2000 40.08\\
+};
+
+\addplot [color=red,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%10
+500 1.43\\
+750 2.94\\
+1000 5.21 \\
+1250 8.13\\
+1500 12.09\\
+1750 16.99\\
+2000 23.08\\
+};
+
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+500 1.22 \\
+750 2.36 \\
+1000 4.06 \\
+1250 6.24\\
+1500 9.03 \\
+1750 12.43 \\
+2000 16.72 \\
+};
+
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+500  1.28\\
+750  2.30\\
+1000 3.72 \\
+1250 5.64 \\
+1500 7.94 \\
+1750 10.65 \\
+2000 14.06\\
+};
+
+\addplot [color=green,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%SNOPT
+500	.353	    \\
+750	 1.197  \\
+1000 3.15	\\
+1250 6.617	\\
+1500 11.765 \\
+1750 19.84\\
+2000 30.32 \\
+};
+
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
+\addlegendentry{SNOPT}
+\end{axis}
+
+\end{tikzpicture}
+}
+\hfill
+\hspace{1em}\subfloat[Comparison of average iterations\label{subfig-2:iterations3}]{%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.5\textwidth,
+xlabel={\# of assets},
+ylabel={Average Iterations},
+scaled y ticks=false,
+legend pos=north west,
+legend cell align=left,
+ymax=24000
+]
+
+\addplot [color=black,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%MVP
+500	 3538\\
+750	 5343 \\
+1000	  7200\\
+1250 	9151\\
+1500    11011\\
+1750 13141\\
+2000 15241\\
+};
+
+\addplot [color=red,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%10
+500 3565  \\
+750 5422 \\
+1000 7263 \\
+1250 9155 \\
+1500 11101 \\
+1750 13089 \\
+2000 15289\\
+};
+
+\addplot [color=blue,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%5
+500 3654   \\
+750 5522 \\
+1000 7418  \\
+1250 9314 \\
+1500 11285 \\
+1750 13317\\
+2000 15526\\
+};
+
+\addplot [color=magenta,solid,mark=x,mark options={solid}]
+  table[row sep=crcr]{%2.5
+500 4037 \\
+750 5885\\
+1000 7803  \\
+1250 9835\\
+1500 11800\\
+1750 13925\\
+2000 16214\\
+};
+
+\addlegendentry{DEC$_{\text{MVP}}$}
+\addlegendentry{DEC$_{\text{MVP-}10\%}$}
+\addlegendentry{DEC$_{\text{MVP-}5\%}$}
+\addlegendentry{DEC$_{\text{MVP-}2.5\%}$}
+\end{axis}
+
+\end{tikzpicture}
+}
+}
+\caption{Comparison of performances using $\epsilon = 10^{-10}$ in (\ref{eq:stop}) with box constraints defined in (\ref{eq:classicalbox}) with $M=10$}
+\label{fig:10}
 \end{figure}
 
 \subsubsection{Convergence to a Risk Parity solution}
