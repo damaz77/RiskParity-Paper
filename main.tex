@@ -1,9 +1,8 @@
 
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[smallextended]{svjour3}[2017 April 7th]
 
 \usepackage{amssymb}
 \usepackage{amsmath,dsfont}
-\usepackage{amsthm}
 \usepackage[ruled,vlined, linesnumbered]{algorithm2e}
 \usepackage{pgfplots}
 \usepackage[utf8]{inputenc}
@@ -13,23 +12,17 @@
 \usepackage{subfig}
 \tikzset{
   font={\fontsize{9pt}{12}\selectfont}}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{oss}{Remark}
 
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \definecolor{gr}{HTML}{00BB00}
 \setlength\parindent{0pt}
 
-\journal{European Journal of Operational Research}
 
 \begin{document}
 
-\begin{frontmatter}
 
 %% Title, authors and addresses
 
@@ -58,58 +51,36 @@
 %% \address[label1]{}
 %% \address[label2]{}
 
-\author[mosek]{A.Cassioli\fnref{mail-cassioli}}
-\author[firenze]{G.Cocchi\fnref{mail-cocchi}}
-\author[firenze]{F.D'Amato\fnref{mail-damato}}
-\author[firenze]{M.Sciandrone\fnref{mail-sciandrone}}
+\author{A.Cassioli\and G.Cocchi \and F.D'Amato\and M.Sciandrone}
 
-\address[mosek]{MOSEK ApS, Copenhagen, Denmark}
-\address[firenze]{Dipartimento di Ingegneria dell'Informazione, Università di Firenze, Firenze, Italy}
-
-
-\fntext[mail-cassioli]{andrea.cassioli@mosek.com}
-\fntext[mail-cocchi]{guido.cocchi@unifi.it}
-\fntext[mail-damato]{federico.damato@stud.unifi.it}
-\fntext[mail-sciandrone]{marco.sciandrone@unifi.it}
+\institute{A.Cassioli \at MOSEK ApS, Copenhagen, Denmark, \email{andrea.cassioli@mosek.com}}
+\institute{G.Cocchi \and F.-D'Amato \and M.Sciandrone \at Dipartimento di Ingegneria dell'Informazione, Università di Firenze, Firenze, Italy, \email{guido.cocchi@unifi.it},\email{federico.damato@stud.unifi.it},\email{marco.sciandrone@unifi.it}
+}
 
 \begin{abstract}
-%% Text of abstract
+The abstract
 
 \end{abstract}
-
-\begin{keyword}
-TODO\sep Portfolio\sep Risk-Parity \sep decomposition \sep optimization
-%% keywords here, in the form: keyword \sep keyword
-
-%% PACS codes here, in the form: \PACS code \sep code
-
-%% MSC codes here, in the form: \MSC code \sep code
-%% or \MSC[2008] code \sep code (2000 is the default)
-
-\end{keyword}
-
-\end{frontmatter}
-
 %% \linenumbers
 
 %% main text
 \section{Introduction}
-\input{introduction}
+\input{sections/introduction/introduction}
 \clearpage
 \section{Preliminary background}\label{sect:2}
-\input{preliminary_MS}
+\input{sections/preliminaries/preliminary}
 \clearpage
 \section{A general decomposition framework}
-\input{decomposition_MS}
+\input{sections/decomposition/decomposition}
 \clearpage
 %\section{Convergence analysis}
 %\input{convergence}
 %\clearpage
 \section{An use case: Risk Parity portofolios}
-\input{portfolio}
+\input{sections/portfolio/portfolio}
 \clearpage
 \section{Computational experiments}
-\input{experiments}
+\input{sections/experiments/experiments}
 \clearpage
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections

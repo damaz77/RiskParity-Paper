@@ -1,0 +1,31 @@
+%%write something
+The most important problem in budget allocation is making a good porfolio in terms of expected return and volatility. 
+A lot of models were based on the Markowitz theory, stated in 1950s, for finding portfolio in the efficient frontier. 
+All these approaches are proved to be unsuitable to real contexts, due to the market unstability and the ill-conditions of the problems. 
+% aggiungere diversificazione
+So the scientific community did a lot of works to find a way to minimize only the risk or the diversification. 
+Many naive techniques as Equally Weighting (EW) portfolios were adopted in several real contexts showing poor perfomance, altought they have good theoretical performance. 
+The Risk Parity concept was proposed in \cite{qian2005} to construct a portfolio such that all the asset contributions to the total risk are equal to each other \cite{maillard}.
+Many different formulations were used to deal with Risk Parity, depending also on the absence of the \emph{short-selling} constraint (i.e. $x\ge0$).
+In \cite{maillard} a nonlinear nonconvex least-squares optimization model without short-selling constraint was proposed.
+
+In \cite{tardella2016} an equally bounded risk formulation was proposed, in which all the risk contributions are equally upper bounded by the same variable. It can be proved that an optimal solution for the long-short ERB is also a Risk Parity solution with minimum variance.
+In \cite{feng2016} a scalarized version of a multi-objective optimization problem considering the expected return the risk the sparsity and the risk parity was addressed with a successive convex approximations.
+In \cite{tutuncu} a lightly modification of the least-squares approach was proposed considering another optimization variable $\theta$ which represents the value around which all risk contribution will stay.
+\begin{subequations}\label{eq:problemRP} 
+\begin{align}
+\min_{x,\theta} & \quad f(x,\theta) =  \sum_{i=i}^n \left(x_i(Q x)_i - \theta\right)^2 \\
+\text{s.t.} & \quad l \leq x \leq u \\
+& \quad \mathds{1}^T x = 1 
+\end{align}
+\end{subequations}
+Due to its more readable form and its lower evaluating cost, we consider that formulation as our optimization problem.
+Because of Sequential Quadratic Programming has poor performance when the number of assets increases, we proposed a globally convergent decomposition algorithm which uses a two level decomposition framework.
+We use a Gauss-Seidel decomposition with respect to the two blocks $x,\theta$, then when we have to optimize the $x$ block we use a Gauss-Southwell decomposition which select the Most Violating Pair for the optimality conditions among all the asset variables. Then we decrease the objective function with a line search considering only the MVP pair.
+
+The paper proceeds as follow: in section blablablabla.
+
+
+\begin{proposition}
+evbrfretre
+\end{proposition}
